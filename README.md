@@ -1,7 +1,7 @@
-=========================================================================
 National Space Science Data Center      Data set  PT-11B         Mar 1996 
 =========================================================================
 
+```
 NSSDC-Id     PT-11B (combines PT-11A, MT-18A, MT-18B, MT-2AA, MT-2AB)
 
 NAME: 	     Models of trapped particle fluxes AE-8 (electrons) and
@@ -28,10 +28,11 @@ CONTENT:     12 files					      *.*   blocks
 
 	     user manual with examples  		RADBELT.LOG   48
              This file                                AAAREADME.DOC    9
+```
 
-BRIEF DESCRIPTION:
+### BRIEF DESCRIPTION:
 
-	These empirical models describe the differential or
+These empirical models describe the differential or
 integral, omnidirectional fluxes of electrons (AE-8) and protons
 (AP-8) in the inner and outer radiation belts (electrons: L=1.1 
 to 11, protons: L=1.1 to 7) for two epochs representing solar 
@@ -43,20 +44,23 @@ starting in the early sixties. The models are based on almost all
 available satellite data. It is IMPORTANT that the models maps for
 solar maximum are used with a magnetic field model for epoch=1970
 and for solar minimum for epoch=1964.
-	For each epoch and particle the model consists of a three-
+
+For each epoch and particle the model consists of a three-
 dimensional table of (logarithm of) particle fluxes in energy, L-value, 
 and B/B0 (magnetic field strength normalized to the equator). The program 
 MODEL finds the particle fluxes for given energy, L-value and B/B0 by 
 interpolating in energy (subroutine TRARA1) and in L * B/B0 space (TRARA2). 
 The program RADBELT produces tables of integral or differential fluxes
 for different energies varying with L or B/B0.
-	The coefficient files are provided in VAX/VMS binary (*.bin) and
+
+The coefficient files are provided in VAX/VMS binary (*.bin) and
 ASCII (*.asc) format. For all systems other than VMS the use of the ASCII
 files is recommended. If using the ASCII coefficient one needs to slightly 
 modify the RADBELT.FOR program as described in a comment statement in
 RADBELT (this comments are found after the OPEN statement for the coefficient 
 file).
-	In March 1995 the earlier used compressed model maps AP8MIC and AP8MAC
+
+In March 1995 the earlier used compressed model maps AP8MIC and AP8MAC
 were replaced with the full maps AP8MIN/MAX with the help of D. Heynderickx 
 (BIRA, Brussel, Belgium) and A. Beliaev (INP/MSU, Moscow, Russia). Heynderickx 
 and Beliaev (1995) had found and corrected a small error in the AP8MIN map; 
@@ -67,7 +71,7 @@ AVAILABILITY:
 (2) Model parameters can be computed and plotted online at http://nssdc.gsfc.nasa.gov/space/model/ .
 
 
-REFERENCES:
+### REFERENCES:
 
 G.W. Singley, and J.I. Vette, The AE-4 Model of the Outer Radiation
   Zone Electron Environment, NSSDC/WDC-A-R&S 72-06, 1972.
@@ -104,6 +108,5 @@ J.I. Vette, The NASA/National Space Science Data Center Trapped
 
 D. Heynderickx and A. Beliaev, J. Spacecraft and Rockets 32, 190-192, 1995.
 
-=========================================================================
 National Space Science Data Center      Data set  PT-11B         Mar 1996 
 =========================================================================
