@@ -1,0 +1,24 @@
+name = "radbelt"
+version = "0.0.0"
+author = "Jacob Williams"
+maintainer = "Jacob Williams"
+copyright = "Copyright (c) 2024, Jacob Williams"
+license = "Public Domain"
+description = "radbelt"
+homepage = "https://github.com/jacobwilliams/igrf"
+
+[library]
+source-dir = "src"
+
+[install]
+library = true
+
+[fortran]
+implicit-typing = false
+implicit-external = true
+source-form = "default"
+
+[build]
+auto-executables = true
+auto-examples = true
+auto-tests = true
