@@ -1,0 +1,669 @@
+       **** AE-8, AP-8 TRAPPED PARTICLE MODELS ****
+
+   This program allows you to produce tables of integral
+   or differential particle flux for up to 6 energies
+   varying in L-value or normalized magnetic field strength.
+   In each of the following windows you will be asked to
+   enter one or more parameters, defining the conditions
+   for your model tables.
+   In each window the current value(s) is (are) displayed
+   in the right upper corner. You can choose the current
+   value(s) by entering / at the prompt.
+   If you enter a wrong character or a value outside the
+   allowed parameter range, the program will ask you for
+   a new entry.
+   After your tables are displayed you can exit or
+   calculate tables for new input parameters.
+************************** GOOD LUCK **************************
+
+DO YOU WANT YOUR TABLES                                  #0#
+    DISPLAYED ON YOUR MONITOR:  ENTER  0  AT PROMPT
+    STORED IN FILE OUTPUT.AEP:  ENTER  1  AT PROMPT
+    DISPLAYED AND STORED:       ENTER  2  AT PROMPT
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+;
+Your input is ouside the value range:   0 to   2, try again
+0
+
+MTYPE                  * choose model *                  #7#
+------------------------------------------------------------
+1   AP8MAC, protons, solar maximum
+2   AP8MIC, protons, solar minimum
+3   AE4MAX, electrons, solar maximum
+4   AE4MIN, electrons, solar minimum
+5   AEI7HI, electrons, high estimate
+6   AEI7LO, electrons, low estimate
+7   AE8MAX, electrons, solar maximum
+8   AE8MIN, electrons, solar minimum
+
+You must have the corrosponding binary data file in
+your account e.g., AE8MAX.BIN, if you enter MTYPE=7.
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+8
+
+
+
+
+
+NE          * Number of Energies *        <max=6>       # 0#
+------------------------------------------------------------
+If you enter 0, you will be asked for the BEGIN, END
+and STEPSIZE of your energy grid.
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+/
+
+
+BEGIN, END, STEPSIZE    * MeV *     #  1.00,   6.00,   1.00#
+------------------------------------------------------------
+  Begin, end, and stepsize of energy grid in MeV.
+  The number of grid points is restricted to 10 or less !
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+0.5,6,.5
+
+
+
+NL          * Number of L-values *         <max=10>    #  0#
+------------------------------------------------------------
+If you enter 0, you will be asked for the BEGIN, END
+and STEPSIZE of your L-value grid.
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+/
+
+
+BEGIN, END, STEPSIZE     * L *      #  1.00,  10.00,   1.00#
+------------------------------------------------------------
+  Begin, end, and stepsize of L-value grid.
+  The number of grid points is restricted to 10 or less !
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1.5,10,1
+
+
+
+
+
+NB         * Number of B/B0 values *        <max=10>   #  0#
+------------------------------------------------------------
+If you enter 0, you will be asked for the BEGIN, END
+and STEPSIZE of your B/B0 value grid.
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+10
+
+
+B/B0(1), ... B/B0(10)
+
+#   0.00,   0.00,   0.00,   0.00,   0.00,   0.00
+    0.00,   0.00,   0.00,   0.00#
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1,2,3,4,5,6,10,15,20,50
+
+
+TABLE OPTIONS:      integral            differential flux     #1#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1
+
+FOR WHICH B/B0 ?         * enter index number, not value*         # 1#
+----------------------------------------------------------------------
+Nr:     1     2     3     4     5     6     7     8     9    10
+B/B0:   1.0   2.0   3.0   4.0   5.0   6.0  10.0  15.0  20.0  50.0
+----------------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1
+
+                        integral     flux [ELECTRONS/cm*cm*sec]    
+ L  \\ E/MeV   0.50      1.00      1.50      2.00      2.50      3.00
+------\\--------------------------------------------------------------
+   1.50 I  4.095E+06 8.601E+05 3.603E+05 1.700E+05 7.986E+04 1.099E+04
+   2.50 I  6.994E+05 7.499E+04 1.398E+04 2.595E+03 4.794E+02 7.499E+01
+   3.50 I  1.547E+06 6.686E+05 3.198E+05 1.719E+05 8.022E+04 4.794E+04
+   4.50 I  6.793E+06 2.648E+06 1.079E+06 4.313E+05 1.819E+05 6.994E+04
+   5.50 I  7.791E+06 1.747E+06 5.388E+05 2.008E+05 6.392E+04 2.298E+04
+   6.50 I  3.202E+06 5.414E+05 1.385E+05 4.644E+04 1.248E+04 4.433E+03
+   7.50 I  8.486E+05 9.978E+04 1.946E+04 4.593E+03 1.129E+03 4.892E+02
+   8.50 I  6.978E+04 4.661E+03 6.457E+02 1.540E+02 5.823E+01 3.082E+01
+   9.50 I  1.373E+03 6.118E+01 9.745E+00 4.997E+00 3.391E+00 2.606E+00
+-------------------- flux values below 10 are not reliable -----------
+Model: AE8MIN          B/B0=    1.00
+**********************************************************************
+TABLE OPTIONS:      integral            differential flux     #1#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+2
+
+FOR WHICH  L   ?         * enter index number, not value*         # 1#
+----------------------------------------------------------------------
+Nr:     1     2     3     4     5     6     7     8     9    10
+ L  :   1.5   2.5   3.5   4.5   5.5   6.5   7.5   8.5   9.5   0.0
+----------------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+3
+
+                        integral     flux [ELECTRONS/cm*cm*sec]    
+B/B0\\ E/MeV   0.50      1.00      1.50      2.00      2.50      3.00
+------\\--------------------------------------------------------------
+   1.00 I  1.547E+06 6.686E+05 3.198E+05 1.719E+05 8.022E+04 4.794E+04
+   2.00 I  1.217E+06 5.261E+05 2.516E+05 1.353E+05 6.312E+04 3.772E+04
+   3.00 I  9.575E+05 4.139E+05 1.980E+05 1.064E+05 4.966E+04 2.967E+04
+   4.00 I  7.723E+05 3.338E+05 1.597E+05 8.584E+04 4.005E+04 2.393E+04
+   5.00 I  6.332E+05 2.737E+05 1.309E+05 7.038E+04 3.284E+04 1.962E+04
+   6.00 I  5.193E+05 2.245E+05 1.074E+05 5.771E+04 2.693E+04 1.609E+04
+  10.00 I  3.344E+05 1.446E+05 6.914E+04 3.717E+04 1.734E+04 1.036E+04
+  15.00 I  2.241E+05 9.686E+04 4.632E+04 2.490E+04 1.162E+04 6.944E+03
+  20.00 I  1.610E+05 6.957E+04 3.328E+04 1.789E+04 8.347E+03 4.988E+03
+  50.00 I  2.751E+04 1.189E+04 5.687E+03 3.058E+03 1.427E+03 8.525E+02
+-------------------- flux values below 10 are not reliable -----------
+Model: AE8MIN           L  =    3.50
+**********************************************************************
+TABLE OPTIONS:      integral            differential flux     #2#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+2
+
+FOR WHICH  L   ?         * enter index number, not value*         # 3#
+----------------------------------------------------------------------
+Nr:     1     2     3     4     5     6     7     8     9    10
+ L  :   1.5   2.5   3.5   4.5   5.5   6.5   7.5   8.5   9.5   0.0
+----------------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+6
+
+                        integral     flux [ELECTRONS/cm*cm*sec]    
+B/B0\\ E/MeV   0.50      1.00      1.50      2.00      2.50      3.00
+------\\--------------------------------------------------------------
+   1.00 I  3.202E+06 5.414E+05 1.385E+05 4.644E+04 1.248E+04 4.433E+03
+   2.00 I  2.566E+06 4.339E+05 1.110E+05 3.722E+04 1.000E+04 3.552E+03
+   3.00 I  2.056E+06 3.477E+05 8.892E+04 2.982E+04 8.015E+03 2.847E+03
+   4.00 I  1.701E+06 2.877E+05 7.359E+04 2.468E+04 6.632E+03 2.355E+03
+   5.00 I  1.478E+06 2.499E+05 6.391E+04 2.143E+04 5.759E+03 2.045E+03
+   6.00 I  1.283E+06 2.170E+05 5.550E+04 1.861E+04 5.002E+03 1.776E+03
+  10.00 I  8.855E+05 1.497E+05 3.830E+04 1.284E+04 3.451E+03 1.226E+03
+  15.00 I  6.634E+05 1.122E+05 2.869E+04 9.622E+03 2.585E+03 9.182E+02
+  20.00 I  5.360E+05 9.063E+04 2.318E+04 7.773E+03 2.089E+03 7.417E+02
+  50.00 I  2.810E+05 4.751E+04 1.215E+04 4.073E+03 1.094E+03 3.885E+02
+-------------------- flux values below 10 are not reliable -----------
+Model: AE8MIN           L  =    6.50
+**********************************************************************
+TABLE OPTIONS:      integral            differential flux     #2#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+3
+
+FOR WHICH B/B0 ?         * enter index number, not value*         # 6#
+----------------------------------------------------------------------
+Nr:     1     2     3     4     5     6     7     8     9    10
+B/B0:   1.0   2.0   3.0   4.0   5.0   6.0  10.0  15.0  20.0  50.0
+----------------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1
+
+                        differential flux [ELECTRONS/cm*cm*sec*MeV]
+ L  \\ E/MeV   0.50      1.00      1.50      2.00      2.50      3.00
+------\\--------------------------------------------------------------
+   1.50 I        6.47E+06  1.00E+06  3.81E+05  1.80E+05  1.38E+05 
+   2.50 I        1.25E+06  1.22E+05  2.28E+04  4.23E+03  8.09E+02 
+   3.50 I        1.76E+06  6.98E+05  2.96E+05  1.83E+05  6.46E+04 
+   4.50 I        8.29E+06  3.14E+06  1.30E+06  4.99E+05  2.24E+05 
+   5.50 I        1.21E+07  2.42E+06  6.76E+05  2.74E+05  8.19E+04 
+   6.50 I        5.32E+06  8.06E+05  1.84E+05  6.79E+04  1.61E+04 
+   7.50 I        1.50E+06  1.61E+05  2.97E+04  6.93E+03  1.28E+03 
+   8.50 I        1.30E+05  8.03E+03  9.83E+02  1.92E+02  5.48E+01 
+   9.50 I        2.62E+03  1.03E+02  9.49E+00  3.21E+00  1.57E+00 
+-------------------- flux values below 10 are not reliable -----------
+Model: AE8MIN          B/B0=    1.00
+**********************************************************************
+TABLE OPTIONS:      integral            differential flux     #3#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+4
+
+FOR WHICH  L   ?         * enter index number, not value*         # 1#
+----------------------------------------------------------------------
+Nr:     1     2     3     4     5     6     7     8     9    10
+ L  :   1.5   2.5   3.5   4.5   5.5   6.5   7.5   8.5   9.5   0.0
+----------------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+3
+
+                        differential flux [ELECTRONS/cm*cm*sec*MeV]
+B/B0\\ E/MeV   0.50      1.00      1.50      2.00      2.50      3.00
+------\\--------------------------------------------------------------
+   1.00 I        1.76E+06  6.98E+05  2.96E+05  1.83E+05  6.46E+04 
+   2.00 I        1.38E+06  5.49E+05  2.33E+05  1.44E+05  5.08E+04 
+   3.00 I        1.09E+06  4.32E+05  1.83E+05  1.14E+05  4.00E+04 
+   4.00 I        8.77E+05  3.48E+05  1.48E+05  9.16E+04  3.22E+04 
+   5.00 I        7.19E+05  2.86E+05  1.21E+05  7.51E+04  2.64E+04 
+   6.00 I        5.90E+05  2.34E+05  9.93E+04  6.16E+04  2.17E+04 
+  10.00 I        3.80E+05  1.51E+05  6.39E+04  3.97E+04  1.40E+04 
+  15.00 I        2.54E+05  1.01E+05  4.28E+04  2.66E+04  9.35E+03 
+  20.00 I        1.83E+05  7.26E+04  3.08E+04  1.91E+04  6.72E+03 
+  50.00 I        3.12E+04  1.24E+04  5.26E+03  3.26E+03  1.15E+03 
+-------------------- flux values below 10 are not reliable -----------
+Model: AE8MIN           L  =    3.50
+**********************************************************************
+TABLE OPTIONS:      integral            differential flux     #4#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+5
+
+
+
+
+
+WHICH PARAMETER DO YOU WANT TO CHANGE ?
+------------------------------------------------------------
+    0  NO MORE CHANGES, CALCULATE PROFILES
+    1  STORE OR DISPLAY             4  L-VALUES
+    2  MODEL                        5  B/B0
+    3  ENERGIES
+------------------------------------------------------------
+ENTER NUMBER
+3
+
+
+
+
+
+NE          * Number of Energies *        <max=6>       # 6#
+------------------------------------------------------------
+If you enter 0, you will be asked for the BEGIN, END
+and STEPSIZE of your energy grid.
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+/
+
+
+E(1), ... E(6)     * MeV *
+
+#   0.50,   1.00,   1.50,   2.00,   2.50,   3.00#
+------------------------------------------------------------
+Enter energies in ascending order.
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+0.05,.1,.5,1,3,6
+
+
+
+
+
+WHICH PARAMETER DO YOU WANT TO CHANGE ?
+------------------------------------------------------------
+    0  NO MORE CHANGES, CALCULATE PROFILES
+    1  STORE OR DISPLAY             4  L-VALUES
+    2  MODEL                        5  B/B0
+    3  ENERGIES
+------------------------------------------------------------
+ENTER NUMBER
+4
+
+
+
+NL          * Number of L-values *         <max=10>    #  9#
+------------------------------------------------------------
+If you enter 0, you will be asked for the BEGIN, END
+and STEPSIZE of your L-value grid.
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+10
+
+
+L(1), ... L(10)     * L-values *
+
+#   1.50,   2.50,   3.50,   4.50,   5.50,   6.50
+    7.50,   8.50,   9.50,   0.00#
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1.5,2,2.5,3,4,5,6,7,8,10
+
+
+
+
+
+WHICH PARAMETER DO YOU WANT TO CHANGE ?
+------------------------------------------------------------
+    0  NO MORE CHANGES, CALCULATE PROFILES
+    1  STORE OR DISPLAY             4  L-VALUES
+    2  MODEL                        5  B/B0
+    3  ENERGIES
+------------------------------------------------------------
+ENTER NUMBER
+0
+
+
+TABLE OPTIONS:      integral            differential flux     #5#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1
+
+FOR WHICH B/B0 ?         * enter index number, not value*         # 3#
+----------------------------------------------------------------------
+Nr:     1     2     3     4     5     6     7     8     9    10
+B/B0:   1.0   2.0   3.0   4.0   5.0   6.0  10.0  15.0  20.0  50.0
+----------------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1
+
+                        integral     flux [ELECTRONS/cm*cm*sec]    
+ L  \\ E/MeV   0.05      0.10      0.50      1.00      3.00      6.00
+------\\--------------------------------------------------------------
+   1.50 I  1.002E+08 7.449E+07 4.095E+06 8.601E+05 1.099E+04 0.000E+00
+   2.00 I  9.524E+07 6.747E+07 1.009E+06 7.809E+04 1.089E+02 0.000E+00
+   2.50 I  5.037E+07 3.249E+07 6.994E+05 7.499E+04 7.499E+01 0.000E+00
+   3.00 I  1.914E+07 8.582E+06 7.791E+05 2.745E+05 1.398E+04 1.998E+02
+   4.00 I  1.988E+07 1.319E+07 3.293E+06 1.398E+06 7.169E+04 1.048E+01
+   5.00 I  5.018E+07 3.933E+07 9.390E+06 2.745E+06 4.198E+04 0.000E+00
+   6.00 I  5.157E+07 3.743E+07 5.292E+06 9.978E+05 1.109E+04 0.000E+00
+   7.00 I  3.515E+07 2.398E+07 1.848E+06 2.595E+05 1.547E+03 0.000E+00
+   8.00 I  2.055E+07 9.496E+06 3.148E+05 2.897E+04 1.398E+02 0.000E+00
+  10.00 I  3.991E+06 2.794E+05 1.219E+02 4.992E+00 0.000E+00 0.000E+00
+-------------------- flux values below 10 are not reliable -----------
+Model: AE8MIN          B/B0=    1.00
+**********************************************************************
+TABLE OPTIONS:      integral            differential flux     #1#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+2
+
+FOR WHICH  L   ?         * enter index number, not value*         # 1#
+----------------------------------------------------------------------
+Nr:     1     2     3     4     5     6     7     8     9    10
+ L  :   1.5   2.0   2.5   3.0   4.0   5.0   6.0   7.0   8.0  10.0
+----------------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+3
+
+                        integral     flux [ELECTRONS/cm*cm*sec]    
+B/B0\\ E/MeV   0.05      0.10      0.50      1.00      3.00      6.00
+------\\--------------------------------------------------------------
+   1.00 I  5.037E+07 3.249E+07 6.994E+05 7.499E+04 7.499E+01 0.000E+00
+   2.00 I  3.235E+07 2.086E+07 4.491E+05 4.816E+04 4.816E+01 0.000E+00
+   3.00 I  1.128E+07 7.275E+06 1.566E+05 1.679E+04 1.679E+01 0.000E+00
+   4.00 I  4.272E+06 2.756E+06 5.933E+04 6.361E+03 6.188E+00 0.000E+00
+   5.00 I  1.976E+06 1.275E+06 2.744E+04 2.942E+03 2.737E+00 0.000E+00
+   6.00 I  1.018E+06 6.566E+05 1.414E+04 1.516E+03 1.421E+00 0.000E+00
+  10.00 I  1.104E+05 7.121E+04 1.533E+03 1.644E+02 0.000E+00 0.000E+00
+  15.00 I  3.426E+03 2.210E+03 4.758E+01 4.724E+00 0.000E+00 0.000E+00
+  20.00 I  0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+  50.00 I  0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+-------------------- flux values below 10 are not reliable -----------
+Model: AE8MIN           L  =    2.50
+**********************************************************************
+TABLE OPTIONS:      integral            differential flux     #2#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+5
+
+
+
+
+
+WHICH PARAMETER DO YOU WANT TO CHANGE ?
+------------------------------------------------------------
+    0  NO MORE CHANGES, CALCULATE PROFILES
+    1  STORE OR DISPLAY             4  L-VALUES
+    2  MODEL                        5  B/B0
+    3  ENERGIES
+------------------------------------------------------------
+ENTER NUMBER
+2
+
+MTYPE                  * choose model *                  #8#
+------------------------------------------------------------
+1   AP8MAC, protons, solar maximum
+2   AP8MIC, protons, solar minimum
+3   AE4MAX, electrons, solar maximum
+4   AE4MIN, electrons, solar minimum
+5   AEI7HI, electrons, high estimate
+6   AEI7LO, electrons, low estimate
+7   AE8MAX, electrons, solar maximum
+8   AE8MIN, electrons, solar minimum
+
+You must have the corrosponding binary data file in
+your account e.g., AE8MAX.BIN, if you enter MTYPE=7.
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1
+
+
+
+
+
+WHICH PARAMETER DO YOU WANT TO CHANGE ?
+------------------------------------------------------------
+    0  NO MORE CHANGES, CALCULATE PROFILES
+    1  STORE OR DISPLAY             4  L-VALUES
+    2  MODEL                        5  B/B0
+    3  ENERGIES
+------------------------------------------------------------
+ENTER NUMBER
+0
+
+
+TABLE OPTIONS:      integral            differential flux     #5#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1
+
+FOR WHICH B/B0 ?         * enter index number, not value*         # 3#
+----------------------------------------------------------------------
+Nr:     1     2     3     4     5     6     7     8     9    10
+B/B0:   1.0   2.0   3.0   4.0   5.0   6.0  10.0  15.0  20.0  50.0
+----------------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1
+
+                        integral     flux [PROTONS  /cm*cm*sec]    
+ L  \\ E/MeV   0.05      0.10      0.50      1.00      3.00      6.00
+------\\--------------------------------------------------------------
+   1.50 I  5.346E+05 5.328E+05 5.195E+05 5.025E+05 4.298E+05 3.338E+05
+   2.00 I  1.817E+07 1.712E+07 1.176E+07 8.467E+06 3.412E+06 9.647E+05
+   2.50 I  1.644E+08 1.420E+08 6.436E+07 3.010E+07 3.355E+06 2.751E+05
+   3.00 I  3.726E+08 3.293E+08 1.224E+08 3.803E+07 1.302E+06 2.738E+04
+   4.00 I  1.711E+08 1.351E+08 2.392E+07 2.859E+06 4.763E+03 6.167E+00
+   5.00 I  6.619E+07 4.352E+07 1.667E+06 3.368E+04 0.000E+00 0.000E+00
+   6.00 I  3.064E+07 1.600E+07 2.759E+05 2.600E+03 0.000E+00 0.000E+00
+   7.00 I  2.349E+06 1.217E+06 2.838E+04 4.668E+02 0.000E+00 0.000E+00
+   8.00 I  1.767E+04 1.140E+04 9.305E+02 6.018E+01 0.000E+00 0.000E+00
+  10.00 I  0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+-------------------- flux values below 10 are not reliable -----------
+Model: AP8MAC          B/B0=    1.00
+**********************************************************************
+TABLE OPTIONS:      integral            differential flux     #1#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+2
+
+FOR WHICH  L   ?         * enter index number, not value*         # 1#
+----------------------------------------------------------------------
+Nr:     1     2     3     4     5     6     7     8     9    10
+ L  :   1.5   2.0   2.5   3.0   4.0   5.0   6.0   7.0   8.0  10.0
+----------------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+3
+
+                        integral     flux [PROTONS  /cm*cm*sec]    
+B/B0\\ E/MeV   0.05      0.10      0.50      1.00      3.00      6.00
+------\\--------------------------------------------------------------
+   1.00 I  1.644E+08 1.420E+08 6.436E+07 3.010E+07 3.355E+06 2.751E+05
+   2.00 I  2.596E+07 2.288E+07 9.950E+06 4.279E+06 4.278E+05 3.768E+04
+   3.00 I  1.081E+07 9.663E+06 4.123E+06 1.680E+06 1.804E+05 1.743E+04
+   4.00 I  5.879E+06 5.246E+06 2.237E+06 9.235E+05 1.041E+05 1.091E+04
+   5.00 I  3.577E+06 3.174E+06 1.351E+06 5.688E+05 6.677E+04 7.395E+03
+   6.00 I  2.273E+06 2.011E+06 8.522E+05 3.692E+05 4.556E+04 5.239E+03
+  10.00 I  3.353E+05 2.993E+05 1.354E+05 6.095E+04 8.493E+03 1.121E+03
+  15.00 I  1.680E+00 1.413E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+  20.00 I  0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+  50.00 I  0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+-------------------- flux values below 10 are not reliable -----------
+Model: AP8MAC           L  =    2.50
+**********************************************************************
+TABLE OPTIONS:      integral            differential flux     #2#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+5
+
+
+
+
+
+WHICH PARAMETER DO YOU WANT TO CHANGE ?
+------------------------------------------------------------
+    0  NO MORE CHANGES, CALCULATE PROFILES
+    1  STORE OR DISPLAY             4  L-VALUES
+    2  MODEL                        5  B/B0
+    3  ENERGIES
+------------------------------------------------------------
+ENTER NUMBER
+3
+
+
+
+
+
+NE          * Number of Energies *        <max=6>       # 6#
+------------------------------------------------------------
+If you enter 0, you will be asked for the BEGIN, END
+and STEPSIZE of your energy grid.
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+/
+
+
+E(1), ... E(6)     * MeV *
+
+#   0.05,   0.10,   0.50,   1.00,   3.00,   6.00#
+------------------------------------------------------------
+Enter energies in ascending order.
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+0.1,1,10,50,100,300
+
+
+
+
+
+WHICH PARAMETER DO YOU WANT TO CHANGE ?
+------------------------------------------------------------
+    0  NO MORE CHANGES, CALCULATE PROFILES
+    1  STORE OR DISPLAY             4  L-VALUES
+    2  MODEL                        5  B/B0
+    3  ENERGIES
+------------------------------------------------------------
+ENTER NUMBER
+0
+
+
+TABLE OPTIONS:      integral            differential flux     #5#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1
+
+FOR WHICH B/B0 ?         * enter index number, not value*         # 3#
+----------------------------------------------------------------------
+Nr:     1     2     3     4     5     6     7     8     9    10
+B/B0:   1.0   2.0   3.0   4.0   5.0   6.0  10.0  15.0  20.0  50.0
+----------------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+1
+
+                        integral     flux [PROTONS  /cm*cm*sec]    
+ L  \\ E/MeV   0.10      1.00     10.00     50.00    100.00    300.00
+------\\--------------------------------------------------------------
+   1.50 I  5.328E+05 5.025E+05 1.972E+05 2.371E+04 1.331E+04 1.570E+03
+   2.00 I  1.712E+07 8.467E+06 2.288E+05 1.719E+03 4.179E+02 1.451E+01
+   2.50 I  1.420E+08 3.010E+07 4.050E+04 5.700E+01 4.461E+00 0.000E+00
+   3.00 I  3.293E+08 3.803E+07 2.298E+03 0.000E+00 0.000E+00 0.000E+00
+   4.00 I  1.351E+08 2.859E+06 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+   5.00 I  4.352E+07 3.368E+04 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+   6.00 I  1.600E+07 2.600E+03 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+   7.00 I  1.217E+06 4.668E+02 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+   8.00 I  1.140E+04 6.018E+01 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+  10.00 I  0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+-------------------- flux values below 10 are not reliable -----------
+Model: AP8MAC          B/B0=    1.00
+**********************************************************************
+TABLE OPTIONS:      integral            differential flux     #1#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+2
+
+FOR WHICH  L   ?         * enter index number, not value*         # 1#
+----------------------------------------------------------------------
+Nr:     1     2     3     4     5     6     7     8     9    10
+ L  :   1.5   2.0   2.5   3.0   4.0   5.0   6.0   7.0   8.0  10.0
+----------------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+3
+
+                        integral     flux [PROTONS  /cm*cm*sec]    
+B/B0\\ E/MeV   0.10      1.00     10.00     50.00    100.00    300.00
+------\\--------------------------------------------------------------
+   1.00 I  1.420E+08 3.010E+07 4.050E+04 5.700E+01 4.461E+00 0.000E+00
+   2.00 I  2.288E+07 4.279E+06 7.271E+03 2.812E+01 2.250E+00 0.000E+00
+   3.00 I  9.663E+06 1.680E+06 3.736E+03 1.811E+01 1.503E+00 0.000E+00
+   4.00 I  5.246E+06 9.235E+05 2.432E+03 1.342E+01 1.146E+00 0.000E+00
+   5.00 I  3.174E+06 5.688E+05 1.730E+03 9.985E+00 0.000E+00 0.000E+00
+   6.00 I  2.011E+06 3.692E+05 1.253E+03 7.752E+00 0.000E+00 0.000E+00
+  10.00 I  2.993E+05 6.095E+04 2.931E+02 2.360E+00 0.000E+00 0.000E+00
+  15.00 I  1.413E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+  20.00 I  0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+  50.00 I  0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+-------------------- flux values below 10 are not reliable -----------
+Model: AP8MAC           L  =    2.50
+**********************************************************************
+TABLE OPTIONS:      integral            differential flux     #2#
+                    ----------------------------------------
+ 0  EXIT            1  E * L TABLE      3  E * L TABLE
+ 5  NEW PARAMETER   2  E * B/B0 TABLE   4  E * B/B0 TABLE
+------------------------------------------------------------
+enter /, to continue with current value(s); Ctrl Z, to exit
+0
