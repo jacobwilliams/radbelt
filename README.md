@@ -66,10 +66,15 @@ were replaced with the full maps AP8MIN/MAX with the help of D. Heynderickx
 and Beliaev (1995) had found and corrected a small error in the AP8MIN map; 
 two lines had been exchanged.
 
-AVAILABILITY:
+### AVAILABILITY:
+
 (1) FORTRAN source code from this directory.
 (2) Model parameters can be computed and plotted online at http://nssdc.gsfc.nasa.gov/space/model/ .
 
+
+### See also
+
+* [NASA ModelWebArchive](https://git.smce.nasa.gov/ccmc-share/modelwebarchive)
 
 ### REFERENCES:
 
