@@ -1,189 +1,187 @@
-!*==trara1.f90 processed by SPAG 8.01MH 17:13 30 Jan 2024
-!!SPAG Open source Personal, Educational or Academic User  NON-COMMERCIAL USE - Not for use on proprietary or closed source code
-! TRMFUN.FOR	1987
-!
-!********************************************************************
-!*************** SUBROUTINES, FUNCTIONS *****************************
-!********************************************************************
-!******************* TRARA1, TRARA2 *********************************
-!********************************************************************
-!
-SUBROUTINE trara1(Descr,Map,Fl,Bb0,E,F,N)
-   IMPLICIT NONE
-!*** Start of declarations inserted by SPAG
-   REAL Bb0 , E , e0 , e1 , e2 , escale , F , f0 , f1 , f2 , Fistep , Fl , fscale , trara2 , xnl
-   INTEGER i0 , i1 , i2 , i3 , ie , l3 , Map , N , nb , nl
-!*** End of declarations inserted by SPAG
+module radbelt_module 
+
+   ! trmfun.for	1987
+
+   implicit none 
+
+   private 
+
+   public :: trara1, trara2
+
+   contains
+
 !***********************************************************************
-!*** TRARA1 FINDS PARTICLE FLUXES FOR GIVEN ENERGIES, MAGNETIC FIELD ***
-!*** STRENGTH AND L-VALUE. FUNCTION TRARA2 IS USED TO INTERPOLATE IN ***
-!*** B-L-SPACE.                                                      ***
-!***   INPUT: DESCR(8)   HEADER OF SPECIFIED TRAPPED RADITION MODEL  ***
-!***          MAP(...)   MAP OF TRAPPED RADITION MODEL               ***
-!***                     (DESCR AND MAP ARE EXPLAINED AT THE BEGIN   ***
-!***                     OF THE MAIN PROGRAM MODEL)                  ***
-!***          N          NUMBER OF ENERGIES                          ***
-!***          E(N)       ARRAY OF ENERGIES IN MEV                    ***
-!***          FL         L-VALUE                                     ***
-!***          BB0        =B/B0  MAGNETIC FIELD STRENGTH NORMALIZED   ***
-!***                     TO FIELD STRENGTH AT MAGNETIC EQUATOR       ***
-!***  OUTPUT: F(N)       DECADIC LOGARITHM OF INTEGRAL FLUXES IN     ***
-!***                     PARTICLES/(CM*CM*SEC)                       ***
+!*** trara1 finds particle fluxes for given energies, magnetic field ***
+!*** strength and l-value. function trara2 is used to interpolate in ***
+!*** b-l-space.                                                      ***
+!***   input: descr(8)   header of specified trapped radition model  ***
+!***          map(...)   map of trapped radition model               ***
+!***                     (descr and map are explained at the begin   ***
+!***                     of the main program model)                  ***
+!***          n          number of energies                          ***
+!***          e(n)       array of energies in mev                    ***
+!***          fl         l-value                                     ***
+!***          bb0        =b/b0  magnetic field strength normalized   ***
+!***                     to field strength at magnetic equator       ***
+!***  output: f(n)       decadic logarithm of integral fluxes in     ***
+!***                     particles/(cm*cm*sec)                       ***
 !***********************************************************************
-   LOGICAL s0 , s1 , s2
-   DIMENSION E(N) , F(N) , Map(*)
-   INTEGER Descr(8)
-   COMMON /tra2  / Fistep
-   DATA f1 , f2/1.001 , 1.002/
+subroutine trara1(descr,map,fl,bb0,e,f,n)
+ 
+   real bb0 , e , e0 , e1 , e2 , escale , f , f0 , f1 , f2 , fistep , fl , fscale , xnl
+   integer i0 , i1 , i2 , i3 , ie , l3 , map , n , nb , nl
+   logical s0 , s1 , s2
+   dimension e(n) , f(n) , map(*)
+   integer descr(8)
+   common /tra2  / fistep
+   data f1 , f2/1.001 , 1.002/
 !
-   Fistep = Descr(7)/Descr(2)
-   escale = Descr(4)
-   fscale = Descr(7)
-   xnl = amin1(15.6,abs(Fl))
-   nl = xnl*Descr(5)
-   IF ( Bb0<1. ) Bb0 = 1.
-   nb = (Bb0-1.)*Descr(6)
+   fistep = descr(7)/descr(2)
+   escale = descr(4)
+   fscale = descr(7)
+   xnl = amin1(15.6,abs(fl))
+   nl = xnl*descr(5)
+   if ( bb0<1. ) bb0 = 1.
+   nb = (bb0-1.)*descr(6)
 !
-! I2 IS THE NUMBER OF ELEMENTS IN THE FLUX MAP FOR THE FIRST ENERGY.
-! I3 IS THE INDEX OF THE LAST ELEMENT OF THE SECOND ENERGY MAP.
-! L3 IS THE LENGTH OF THE MAP FOR THE THIRD ENERGY.
-! E1 IS THE ENERGY OF THE FIRST ENERGY MAP (UNSCALED)
-! E2 IS THE ENERGY OF THE SECOND ENERGY MAP (UNSCALED)
+! i2 is the number of elements in the flux map for the first energy.
+! i3 is the index of the last element of the second energy map.
+! l3 is the length of the map for the third energy.
+! e1 is the energy of the first energy map (unscaled)
+! e2 is the energy of the second energy map (unscaled)
 !
    i1 = 0
-   i2 = Map(1)
-   i3 = i2 + Map(i2+1)
-   l3 = Map(i3+1)
-   e1 = Map(i1+2)/escale
-   e2 = Map(i2+2)/escale
+   i2 = map(1)
+   i3 = i2 + map(i2+1)
+   l3 = map(i3+1)
+   e1 = map(i1+2)/escale
+   e2 = map(i2+2)/escale
 !
-! S0, S1, S2 ARE LOGICAL VARIABLES WHICH INDICATE WHETHER THE FLUX FOR
-! A PARTICULAR E, B, L POINT HAS ALREADY BEEN FOUND IN A PREVIOUS CALL
-! TO FUNCTION TRARA2. IF NOT, S.. =.TRUE.
+! s0, s1, s2 are logical variables which indicate whether the flux for
+! a particular e, b, l point has already been found in a previous call
+! to function trara2. if not, s.. =.true.
 !
-   s1 = .TRUE.
-   s2 = .TRUE.
+   s1 = .true.
+   s2 = .true.
 !
-!			ENERGY LOOP
+!			energy loop
 !
-   DO ie = 1 , N
+   do ie = 1 , n
 !
-! FOR EACH ENERGY E(I) FIND THE SUCCESSIVE ENERGIES E0,E1,E2 IN
-! MODEL MAP, WHICH OBEY  E0 < E1 < E(I) < E2 .
+! for each energy e(i) find the successive energies e0,e1,e2 in
+! model map, which obey  e0 < e1 < e(i) < e2 .
 !
-      DO WHILE ( (E(ie)>e2) .AND. (l3/=0) )
+      do while ( (e(ie)>e2) .and. (l3/=0) )
          i0 = i1
          i1 = i2
          i2 = i3
          i3 = i3 + l3
-         l3 = Map(i3+1)
+         l3 = map(i3+1)
          e0 = e1
          e1 = e2
-         e2 = Map(i2+2)/escale
+         e2 = map(i2+2)/escale
          s0 = s1
          s1 = s2
-         s2 = .TRUE.
+         s2 = .true.
          f0 = f1
          f1 = f2
-      ENDDO
+      enddo
 !
-! CALL TRARA2 TO INTERPOLATE THE FLUX-MAPS FOR E1,E2 IN L-B/B0-
-! SPACE TO FIND FLUXES F1,F2 [IF THEY HAVE NOT ALREADY BEEN
-! CALCULATED FOR A PREVIOUS E(I)].
+! call trara2 to interpolate the flux-maps for e1,e2 in l-b/b0-
+! space to find fluxes f1,f2 [if they have not already been
+! calculated for a previous e(i)].
 !
-      IF ( s1 ) f1 = trara2(Map(i1+3),nl,nb)/fscale
-      IF ( s2 ) f2 = trara2(Map(i2+3),nl,nb)/fscale
-      s1 = .FALSE.
-      s2 = .FALSE.
+      if ( s1 ) f1 = trara2(map(i1+3),nl,nb)/fscale
+      if ( s2 ) f2 = trara2(map(i2+3),nl,nb)/fscale
+      s1 = .false.
+      s2 = .false.
 !
-! FINALLY, INTERPOLATE IN ENERGY.
+! finally, interpolate in energy.
 !
-      F(ie) = f1 + (f2-f1)*(E(ie)-e1)/(e2-e1)
-      IF ( f2<=0.0 ) THEN
-         IF ( i1/=0 ) THEN
+      f(ie) = f1 + (f2-f1)*(e(ie)-e1)/(e2-e1)
+      if ( f2<=0.0 ) then
+         if ( i1/=0 ) then
 !
-! --------- SPECIAL INTERPOLATION ---------------------------------
-! IF THE FLUX FOR THE SECOND ENERGY CANNOT BE FOUND (I.E. F2=0.0),
-! AND THE ZEROTH ENERGY MAP HAS BEEN DEFINED (I.E. I1 NOT EQUAL 0),
-! THEN INTERPOLATE USING THE FLUX MAPS FOR THE ZEROTH AND FIRST
-! ENERGY AND CHOOSE THE MINIMUM OF THIS INTERPOLATIONS AND THE
-! INTERPOLATION THAT WAS DONE WITH F2=0.
+! --------- special interpolation ---------------------------------
+! if the flux for the second energy cannot be found (i.e. f2=0.0),
+! and the zeroth energy map has been defined (i.e. i1 not equal 0),
+! then interpolate using the flux maps for the zeroth and first
+! energy and choose the minimum of this interpolations and the
+! interpolation that was done with f2=0.
 !
-            IF ( s0 ) f0 = trara2(Map(i0+3),nl,nb)/fscale
-            s0 = .FALSE.
-            F(ie) = amin1(F(ie),f0+(f1-f0)*(E(ie)-e0)/(e1-e0))
-         ENDIF
-      ENDIF
+            if ( s0 ) f0 = trara2(map(i0+3),nl,nb)/fscale
+            s0 = .false.
+            f(ie) = amin1(f(ie),f0+(f1-f0)*(e(ie)-e0)/(e1-e0))
+         endif
+      endif
 !
-! THE LOGARITHMIC FLUX IS ALWAYS KEPT GREATER OR EQUAL ZERO.
+! the logarithmic flux is always kept greater or equal zero.
 !
-      F(ie) = amax1(F(ie),0.)
-   ENDDO
-END SUBROUTINE trara1
-!*==trara2.f90 processed by SPAG 8.01MH 17:13 30 Jan 2024
-!!SPAG Open source Personal, Educational or Academic User  NON-COMMERCIAL USE - Not for use on proprietary or closed source code
-!
-FUNCTION trara2(Map,Il,Ib)
-   IMPLICIT NONE
-!*** Start of declarations inserted by SPAG
-   REAL dfl , fincr1 , fincr2 , Fistep , fkb , fkb1 , fkb2 , fkbj1 , fkbj2 , fkbm , fll1 , fll2 , flog , flog1 , flog2 , flogm ,   &
-      & fnb , fnl , sl1 , sl2
-   REAL trara2
-   INTEGER i1 , i2 , Ib , Il , itime , j1 , j2 , kt , l1 , l2 , Map
-!*** End of declarations inserted by SPAG
+      f(ie) = amax1(f(ie),0.)
+   enddo
+end subroutine trara1
+
 !*****************************************************************
-!***  TRARA2 INTERPOLATES LINEARLY IN L-B/B0-MAP TO OBTAIN     ***
-!***  THE LOGARITHM OF INTEGRAL FLUX AT GIVEN L AND B/B0.      ***
-!***    INPUT: MAP(..) IS SUB-MAP (FOR SPECIFIC ENERGY) OF     ***
-!***                   TRAPPED RADIATION MODEL MAP             ***
-!***           IL      SCALED L-VALUE                          ***
-!***           IB      SCALED B/B0-1                           ***
-!***   OUTPUT: TRARA2  SCALED LOGARITHM OF PARTICLE FLUX       ***
+!***  trara2 interpolates linearly in l-b/b0-map to obtain     ***
+!***  the logarithm of integral flux at given l and b/b0.      ***
+!***    input: map(..) is sub-map (for specific energy) of     ***
+!***                   trapped radiation model map             ***
+!***           il      scaled l-value                          ***
+!***           ib      scaled b/b0-1                           ***
+!***   output: trara2  scaled logarithm of particle flux       ***
 !*****************************************************************
-!***  SEE MAIN PROGRAM 'MODEL' FOR EXPLANATION OF MAP FORMAT   ***
-!***  SCALING FACTORS.                                         ***
-!***  THE STEPSIZE FOR THE PARAMETERIZATION OF THE LOGARITHM   ***
-!***  OF FLUX IS OBTAINED FROM 'COMMON/TRA2/'.                 ***
+!***  see main program 'model' for explanation of map format   ***
+!***  scaling factors.                                         ***
+!***  the stepsize for the parameterization of the logarithm   ***
+!***  of flux is obtained from 'common/tra2/'.                 ***
 !*****************************************************************
-   DIMENSION Map(*)
-   COMMON /tra2  / Fistep
-   INTEGER :: spag_nextblock_1
+function trara2(map,il,ib)
+
+   real dfl , fincr1 , fincr2 , fistep , fkb , fkb1 , fkb2 , fkbj1 , fkbj2 , &
+        fkbm , fll1 , fll2 , flog , flog1 , flog2 , flogm ,   &
+        fnb , fnl , sl1 , sl2
+   real trara2
+   integer i1 , i2 , ib , il , itime , j1 , j2 , kt , l1 , l2 , map(*)
+
+   common /tra2  / fistep
+   integer :: spag_nextblock_1
+
    spag_nextblock_1 = 1
-   SPAG_DispatchLoop_1: DO
-      SELECT CASE (spag_nextblock_1)
-      CASE (1)
-         fnl = Il
-         fnb = Ib
+   main: do
+      select case (spag_nextblock_1)
+      case (1)
+         fnl = il
+         fnb = ib
          itime = 0
          i2 = 0
-         SPAG_Loop_1_1: DO
-!
-! FIND CONSECUTIVE SUB-SUB-MAPS FOR SCALED L-VALUES LS1,LS2,
-! WITH IL LESS OR EQUAL LS2.  L1,L2 ARE LENGTHS OF SUB-SUB-MAPS.
-! I1,I2 ARE INDECES OF FIRST ELEMENTS MINUS 1.
-!
-            l2 = Map(i2+1)
-            IF ( Map(i2+2)<=Il ) THEN
+         do
+            !
+            ! find consecutive sub-sub-maps for scaled l-values ls1,ls2,
+            ! with il less or equal ls2.  l1,l2 are lengths of sub-sub-maps.
+            ! i1,i2 are indeces of first elements minus 1.
+            !
+            l2 = map(i2+1)
+            if ( map(i2+2)<=il ) then
                i1 = i2
                l1 = l2
                i2 = i2 + l2
-!
-! IF SUB-SUB-MAPS ARE EMPTY, I. E. LENGTH LESS 4, THAN TRARA2=0
-!
-            ELSEIF ( (l1<4) .AND. (l2<4) ) THEN
+               !
+               ! if sub-sub-maps are empty, i. e. length less 4, than trara2=0
+               !
+            elseif ( (l1<4) .and. (l2<4) ) then
                trara2 = 0.
-               RETURN
-            ELSE
-!
-! IF FLOG2 LESS FLOG1, THAN LS2 FIRST MAP AND LS1 SECOND MAP
-!
-               IF ( Map(i2+3)<=Map(i1+3) ) EXIT SPAG_Loop_1_1
+               return
+            else
+               !
+               ! if flog2 less flog1, than ls2 first map and ls1 second map
+               !
+               if ( map(i2+3)<=map(i1+3) ) exit
                spag_nextblock_1 = 3
-               CYCLE SPAG_DispatchLoop_1
-            ENDIF
-         ENDDO SPAG_Loop_1_1
+               cycle main
+            endif
+         enddo
          spag_nextblock_1 = 2
-      CASE (2)
+      case (2)
          kt = i1
          i1 = i2
          i2 = kt
@@ -191,143 +189,145 @@ FUNCTION trara2(Map,Il,Ib)
          l1 = l2
          l2 = kt
          spag_nextblock_1 = 3
-      CASE (3)
-!
-! DETERMINE INTERPOLATE IN SCALED L-VALUE
-!
-         fll1 = Map(i1+2)
-         fll2 = Map(i2+2)
+      case (3)
+         !
+         ! determine interpolate in scaled l-value
+         !
+         fll1 = map(i1+2)
+         fll2 = map(i2+2)
          dfl = (fnl-fll1)/(fll2-fll1)
-         flog1 = Map(i1+3)
-         flog2 = Map(i2+3)
+         flog1 = map(i1+3)
+         flog2 = map(i2+3)
          fkb1 = 0.
          fkb2 = 0.
-         IF ( l1>=4 ) THEN
-!
-! B/B0 LOOP
-!
-            DO j2 = 4 , l2
-               fincr2 = Map(i2+j2)
-               IF ( fkb2+fincr2>fnb ) GOTO 10
+         if ( l1>=4 ) then
+            !
+            ! b/b0 loop
+            !
+            do j2 = 4 , l2
+               fincr2 = map(i2+j2)
+               if ( fkb2+fincr2>fnb ) goto 10
                fkb2 = fkb2 + fincr2
-               flog2 = flog2 - Fistep
-            ENDDO
+               flog2 = flog2 - fistep
+            enddo
             itime = itime + 1
-            IF ( itime==1 ) THEN
+            if ( itime==1 ) then
                spag_nextblock_1 = 2
-               CYCLE SPAG_DispatchLoop_1
-            ENDIF
+               cycle main
+            endif
             trara2 = 0.
-            RETURN
- 10         IF ( itime/=1 ) THEN
-               IF ( j2==4 ) THEN
+            return
+ 10         if ( itime/=1 ) then
+               if ( j2==4 ) then
                   spag_nextblock_1 = 4
-                  CYCLE SPAG_DispatchLoop_1
-               ENDIF
+                  cycle main
+               endif
                sl2 = flog2/fkb2
-               DO j1 = 4 , l1
-                  fincr1 = Map(i1+j1)
+               do j1 = 4 , l1
+                  fincr1 = map(i1+j1)
                   fkb1 = fkb1 + fincr1
-                  flog1 = flog1 - Fistep
-                  fkbj1 = ((flog1/Fistep)*fincr1+fkb1)/((fincr1/Fistep)*sl2+1.)
-                  IF ( fkbj1<=fkb1 ) GOTO 15
-               ENDDO
-               IF ( fkbj1<=fkb2 ) THEN
+                  flog1 = flog1 - fistep
+                  fkbj1 = ((flog1/fistep)*fincr1+fkb1)/((fincr1/fistep)*sl2+1.)
+                  if ( fkbj1<=fkb1 ) goto 15
+               enddo
+               if ( fkbj1<=fkb2 ) then
                   trara2 = 0.
-                  RETURN
-               ENDIF
- 15            IF ( fkbj1<=fkb2 ) THEN
+                  return
+               endif
+ 15            if ( fkbj1<=fkb2 ) then
                   fkbm = fkbj1 + (fkb2-fkbj1)*dfl
                   flogm = fkbm*sl2
-                  flog2 = flog2 - Fistep
+                  flog2 = flog2 - fistep
                   fkb2 = fkb2 + fincr2
                   sl1 = flog1/fkb1
                   sl2 = flog2/fkb2
                   spag_nextblock_1 = 5
-                  CYCLE SPAG_DispatchLoop_1
-               ELSE
+                  cycle main
+               else
                   fkb1 = 0.
-               ENDIF
-            ENDIF
+               endif
+            endif
             fkb2 = 0.
-         ENDIF
+         endif
          j2 = 4
-         fincr2 = Map(i2+j2)
-         flog2 = Map(i2+3)
-         flog1 = Map(i1+3)
+         fincr2 = map(i2+j2)
+         flog2 = map(i2+3)
+         flog1 = map(i1+3)
          spag_nextblock_1 = 4
-      CASE (4)
+      case (4)
          flogm = flog1 + (flog2-flog1)*dfl
          fkbm = 0.
          fkb2 = fkb2 + fincr2
-         flog2 = flog2 - Fistep
+         flog2 = flog2 - fistep
          sl2 = flog2/fkb2
-         IF ( l1<4 ) THEN
+         if ( l1<4 ) then
             fincr1 = 0.
             sl1 = -900000.
             spag_nextblock_1 = 6
-            CYCLE SPAG_DispatchLoop_1
-         ELSE
+            cycle main
+         else
             j1 = 4
-            fincr1 = Map(i1+j1)
+            fincr1 = map(i1+j1)
             fkb1 = fkb1 + fincr1
-            flog1 = flog1 - Fistep
+            flog1 = flog1 - fistep
             sl1 = flog1/fkb1
-         ENDIF
+         endif
          spag_nextblock_1 = 5
-      CASE (5)
-         DO WHILE ( sl1>=sl2 )
-            fkbj2 = ((flog2/Fistep)*fincr2+fkb2)/((fincr2/Fistep)*sl1+1.)
+      case (5)
+         do while ( sl1>=sl2 )
+            fkbj2 = ((flog2/fistep)*fincr2+fkb2)/((fincr2/fistep)*sl1+1.)
             fkb = fkb1 + (fkbj2-fkb1)*dfl
             flog = fkb*sl1
-            IF ( fkb>=fnb ) THEN
+            if ( fkb>=fnb ) then
                spag_nextblock_1 = 7
-               CYCLE SPAG_DispatchLoop_1
-            ENDIF
+               cycle main
+            endif
             fkbm = fkb
             flogm = flog
-            IF ( j1>=l1 ) THEN
+            if ( j1>=l1 ) then
                trara2 = 0.
-               RETURN
-            ELSE
+               return
+            else
                j1 = j1 + 1
-               fincr1 = Map(i1+j1)
-               flog1 = flog1 - Fistep
+               fincr1 = map(i1+j1)
+               flog1 = flog1 - fistep
                fkb1 = fkb1 + fincr1
                sl1 = flog1/fkb1
-            ENDIF
-         ENDDO
+            endif
+         enddo
          spag_nextblock_1 = 6
-      CASE (6)
-         fkbj1 = ((flog1/Fistep)*fincr1+fkb1)/((fincr1/Fistep)*sl2+1.)
+      case (6)
+         fkbj1 = ((flog1/fistep)*fincr1+fkb1)/((fincr1/fistep)*sl2+1.)
          fkb = fkbj1 + (fkb2-fkbj1)*dfl
          flog = fkb*sl2
-         IF ( fkb<fnb ) THEN
+         if ( fkb<fnb ) then
             fkbm = fkb
             flogm = flog
-            IF ( j2>=l2 ) THEN
+            if ( j2>=l2 ) then
                trara2 = 0.
-               RETURN
-            ELSE
+               return
+            else
                j2 = j2 + 1
-               fincr2 = Map(i2+j2)
-               flog2 = flog2 - Fistep
+               fincr2 = map(i2+j2)
+               flog2 = flog2 - fistep
                fkb2 = fkb2 + fincr2
                sl2 = flog2/fkb2
                spag_nextblock_1 = 5
-               CYCLE SPAG_DispatchLoop_1
-            ENDIF
-         ENDIF
+               cycle main
+            endif
+         endif
          spag_nextblock_1 = 7
-      CASE (7)
-         IF ( fkb<fkbm+1.E-10 ) THEN
+      case (7)
+         if ( fkb<fkbm+1.e-10 ) then
             trara2 = 0.
-         ELSE
+         else
             trara2 = flogm + (flog-flogm)*((fnb-fkbm)/(fkb-fkbm))
             trara2 = amax1(trara2,0.)
-            RETURN
-         ENDIF
-         EXIT SPAG_DispatchLoop_1
-      END SELECT
-   ENDDO SPAG_DispatchLoop_1
-END FUNCTION trara2
+            return
+         endif
+         exit main
+      end select
+   enddo main
+end function trara2
+
+end module radbelt_module

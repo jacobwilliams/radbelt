@@ -1,6 +1,9 @@
 !*==spag_program_1.f90 processed by SPAG 8.01MH 17:13 30 Jan 2024
 !!SPAG Open source Personal, Educational or Academic User  NON-COMMERCIAL USE - Not for use on proprietary or closed source code
 PROGRAM spag_program_1
+
+   use radbelt_module
+   
    IMPLICIT NONE
 !*** Start of declarations inserted by SPAG
    REAL af , bb0 , bbeg , bend , blv , bstep , df , e , ebeg , eda , ediff , eend , ei , estep , fl , flux , vbeg , vend , vstep , &
