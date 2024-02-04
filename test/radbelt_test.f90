@@ -3,35 +3,35 @@ program radbelt_test
     !! comparison to the python radbelt example
     
     use core 
+    use radbelt_kinds_module
 
     implicit none 
 
-    real :: lon, lat, height, year, xl,bbx 
-    REAL, DIMENSION(1) :: E
-    INTEGER :: Imname
-    REAL, DIMENSION(1) :: Flux, error
+    real(wp) :: lon, lat, height, year, e, flux, error, relerror
+    integer :: imname
    
-    lon = -45.0
-    lat = -30.0 
-    height = 500.0 
+    lon = -45.0_wp
+    lat = -30.0_wp
+    height = 500.0_wp
 
     ! >>> from astropy.time import Time
     ! >>> time = Time('2021-03-01')
     ! >>> time.utc.decimalyear
 
-    year = 2021.1616438356164  ! decimal year
-
+    year = 2021.1616438356164_wp  ! decimal year
     Imname = 4 ! 'p', 'max'
-    e = 20.0
+    e = 20.0_wp
 
-    call igrf(Lon,Lat,Height,Year,Xl,Bbx)
-    call aep8(E,Xl,Bbx,Imname,Flux)
+    flux = get_flux(lon,lat,height,year,e,imname)
 
-    error = Flux - 2642.50268555  ! difference from python wrapper version (radbelt)
+    ! error = Flux - 2642.50268555_wp  ! difference from python wrapper version (radbelt)
+    error = Flux - 2642.50370051985726336559603128948869_wp ! difference from real128 version
+    relerror = abs(error/flux) 
 
-    write(*,*) 'Flux  = ', Flux
-    write(*,*) 'Error = ', error
+    write(*,*) 'Flux      = ', flux
+    write(*,*) 'Error     = ', error
+    write(*,*) 'Rel Error = ', relerror 
 
-    if (abs(error(1))>1.0e-9) error stop 'error'
+    if (relerror>10*epsilon(1.0_wp)) error stop 'error'
 
 end program radbelt_test

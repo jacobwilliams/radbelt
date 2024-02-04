@@ -1,147 +1,49 @@
+!>
+!  
+!
+!  * SHELLIG.FOR, Version 2.0, January 1992
+!  * 11/01/91-DKB- SHELLG: lowest starting point for B0 search is 2
+!  * 1/27/92-DKB- Adopted to IGRF-91 coeffcients model
+!  * 2/05/92-DKB- Reduce variable-names: INTER(P)SHC,EXTRA(P)SHC,INITI(ALI)ZE
+!  * 8/08/95-DKB- Updated to IGRF-45-95; new coeff. DGRF90, IGRF95, IGRF95S
+!  * 5/31/00-DKB- Updated to IGRF-45-00; new coeff.: IGRF00, IGRF00s
+!  * 3/24/05-DKB- Updated to IGRF-45-10; new coeff.: IGRF05, IGRF05s
 
    module shellig_module 
 
+      use radbelt_kinds_module
+
       implicit none 
 
+      private 
+
+      ! parameters formerly in `gener` common block
+      real(wp),parameter :: Era = 6371.2_wp !! earth radius for normalization of cartesian coordinates (6371.2 km)
+      real(wp),parameter :: erequ = 6378.16_wp
+      real(wp),parameter :: erpol = 6356.775_wp
+      real(wp),parameter :: Aquad = erequ*erequ !! square of major half axis for 
+                                                !! earth ellipsoid as recommended by international 
+                                                !! astronomical union
+      real(wp),parameter :: Bquad = erpol*erpol !! square of minor half axis for 
+                                                !! earth ellipsoid as recommended by international 
+                                                !! astronomical union
+      real(wp),parameter :: Umr = atan(1.0_wp)*4.0_wp/180.0_wp !! atan(1.0)*4./180.   <degree>*umr=<radiant>
+   
+      public :: feldcof
+      public :: feldg
+      public :: shellg
+      public :: findb0
+         
       contains 
-
-! SHELLIG.FOR, Version 2.0, January 1992
-!
-! 11/01/91-DKB- SHELLG: lowest starting point for B0 search is 2
-!  1/27/92-DKB- Adopted to IGRF-91 coeffcients model
-!  2/05/92-DKB- Reduce variable-names: INTER(P)SHC,EXTRA(P)SHC,INITI(ALI)ZE
-!  8/08/95-DKB- Updated to IGRF-45-95; new coeff. DGRF90, IGRF95, IGRF95S
-!  5/31/00-DKB- Updated to IGRF-45-00; new coeff.: IGRF00, IGRF00s
-!  3/24/05-DKB- Updated to IGRF-45-10; new coeff.: IGRF05, IGRF05s
-!
-
-!
-! SUBROUTINE findb0(Stps,Bdel,Value,Bequ,Rr0)
-!    IMPLICIT NONE
-! !*** Start of declarations inserted by SPAG
-!    REAL b , Bdel , bdelta , Bequ , bmin , bold , bq1 , bq2 , bq3 , p , r1 , r2 , r3 , rold , Rr0 , Sp , step , step12 , Stps , zz
-!    INTEGER i , irun , j , n
-! !*** End of declarations inserted by SPAG
-! !--------------------------------------------------------------------
-! ! FINDS SMALLEST MAGNETIC FIELD STRENGTH ON FIELD LINE
-! !
-! ! INPUT:   STPS   STEP SIZE FOR FIELD LINE TRACING
-! !  	COMMON/FIDB0/
-! !	   SP     DIPOLE ORIENTED COORDINATES FORM SHELLG; P(1,*),
-! ! 		  P(2,*), P(3,*) CLOSEST TO MAGNETIC EQUATOR
-! !	   BDEL   REQUIRED ACCURACY  = [ B(LAST) - BEQU ] / BEQU
-! !		  B(LAST)  IS FIELD STRENGTH BEFORE BEQU
-! !
-! ! OUTPUT:  VALUE  =.FALSE., IF BEQU IS NOT MINIMAL VALUE ON FIELD LINE
-! !	   BEQU	  MAGNETIC FIELD STRENGTH AT MAGNETIC EQUATOR
-! !	   RR0	  EQUATORIAL RADIUS NORMALIZED TO EARTH RADIUS
-! !	   BDEL	  FINAL ACHIEVED ACCURACY
-! !--------------------------------------------------------------------
-!    DIMENSION p(8,4) , Sp(3)
-!    LOGICAL Value
-!    COMMON /fidb0 / Sp
-!    INTEGER :: spag_nextblock_1
-!    spag_nextblock_1 = 1
-!    SPAG_DispatchLoop_1: DO
-!       SELECT CASE (spag_nextblock_1)
-!       CASE (1)
-! !
-!          step = Stps
-!          irun = 0
-!          spag_nextblock_1 = 2
-!       CASE (2)
-!          irun = irun + 1
-!          IF ( irun>5 ) THEN
-!             Value = .FALSE.
-!             spag_nextblock_1 = 3
-!             CYCLE SPAG_DispatchLoop_1
-!          ENDIF
-! !*********************FIRST THREE POINTS
-!          p(1,2) = Sp(1)
-!          p(2,2) = Sp(2)
-!          p(3,2) = Sp(3)
-!          step = -sign(step,p(3,2))
-!          CALL stoer(p(1,2),bq2,r2)
-!          p(1,3) = p(1,2) + 0.5*step*p(4,2)
-!          p(2,3) = p(2,2) + 0.5*step*p(5,2)
-!          p(3,3) = p(3,2) + 0.5*step
-!          CALL stoer(p(1,3),bq3,r3)
-!          p(1,1) = p(1,2) - step*(2.*p(4,2)-p(4,3))
-!          p(2,1) = p(2,2) - step*(2.*p(5,2)-p(5,3))
-!          p(3,1) = p(3,2) - step
-!          CALL stoer(p(1,1),bq1,r1)
-!          p(1,3) = p(1,2) + step*(20.*p(4,3)-3.*p(4,2)+p(4,1))/18.
-!          p(2,3) = p(2,2) + step*(20.*p(5,3)-3.*p(5,2)+p(5,1))/18.
-!          p(3,3) = p(3,2) + step
-!          CALL stoer(p(1,3),bq3,r3)
-! !******************INVERT SENSE IF REQUIRED
-!          IF ( bq3>bq1 ) THEN
-!             step = -step
-!             r3 = r1
-!             bq3 = bq1
-!             DO i = 1 , 5
-!                zz = p(i,1)
-!                p(i,1) = p(i,3)
-!                p(i,3) = zz
-!             ENDDO
-!          ENDIF
-! !******************INITIALIZATION
-!          step12 = step/12.
-!          Value = .TRUE.
-!          bmin = 1.E4
-!          bold = 1.E4
-! !******************CORRECTOR (FIELD LINE TRACING)
-!          n = 0
-!          SPAG_Loop_1_1: DO
-!             p(1,3) = p(1,2) + step12*(5.*p(4,3)+8.*p(4,2)-p(4,1))
-!             n = n + 1
-!             p(2,3) = p(2,2) + step12*(5.*p(5,3)+8.*p(5,2)-p(5,1))
-! !******************PREDICTOR (FIELD LINE TRACING)
-!             p(1,4) = p(1,3) + step12*(23.*p(4,3)-16.*p(4,2)+5.*p(4,1))
-!             p(2,4) = p(2,3) + step12*(23.*p(5,3)-16.*p(5,2)+5.*p(5,1))
-!             p(3,4) = p(3,3) + step
-!             CALL stoer(p(1,4),bq3,r3)
-!             DO j = 1 , 3
-!                DO i = 1 , 8
-!                   p(i,j) = p(i,j+1)
-!                ENDDO
-!             ENDDO
-!             b = sqrt(bq3)
-!             IF ( b<bmin ) bmin = b
-!             IF ( b<=bold ) THEN
-!                bold = b
-!                rold = 1./r3
-!                Sp(1) = p(1,4)
-!                Sp(2) = p(2,4)
-!                Sp(3) = p(3,4)
-!                CYCLE
-!             ENDIF
-!             IF ( bold/=bmin ) Value = .FALSE.
-!             bdelta = (b-bold)/bold
-!             IF ( bdelta>Bdel ) THEN
-!                step = step/10.
-!                spag_nextblock_1 = 2
-!                CYCLE SPAG_DispatchLoop_1
-!             ENDIF
-!             EXIT SPAG_Loop_1_1
-!          ENDDO SPAG_Loop_1_1
-!          spag_nextblock_1 = 3
-!       CASE (3)
-!          Rr0 = rold
-!          Bequ = bold
-!          Bdel = bdelta
-!          EXIT SPAG_DispatchLoop_1
-!       END SELECT
-!    ENDDO SPAG_DispatchLoop_1
-! END SUBROUTINE findb0
 
     subroutine findb0(stps,bdel,value,bequ,rr0)
 
-      REAL b , Bdel , bdelta , Bequ , bmin , bold , bq1 , bq2 , bq3 , p , r1 , r2 , r3 , &
-           rold , Rr0 , Sp , step , step12 , Stps , zz
-      INTEGER i , irun , j , n
+      real(wp) :: b , bdel , bdelta , bequ , bmin , bold , bq1 , &
+                  bq2 , bq3 , p , r1 , r2 , r3 , &
+                  rold , rr0 , sp , step , step12 , stps , zz
+      integer :: i , irun , j , n
       dimension p(8,4),sp(3)
-      logical   value
+      logical :: value
 
       common/fidb0/ sp
 
@@ -160,16 +62,16 @@
         p(3,2)=sp(3)
         step=-sign(step,p(3,2))
         call stoer(p(1,2),bq2,r2)
-        p(1,3)=p(1,2)+0.5*step*p(4,2)
-        p(2,3)=p(2,2)+0.5*step*p(5,2)
-        p(3,3)=p(3,2)+0.5*step
+        p(1,3)=p(1,2)+0.5_wp*step*p(4,2)
+        p(2,3)=p(2,2)+0.5_wp*step*p(5,2)
+        p(3,3)=p(3,2)+0.5_wp*step
         call stoer(p(1,3),bq3,r3)
-        p(1,1)=p(1,2)-step*(2.*p(4,2)-p(4,3))
-        p(2,1)=p(2,2)-step*(2.*p(5,2)-p(5,3))
+        p(1,1)=p(1,2)-step*(2.0_wp*p(4,2)-p(4,3))
+        p(2,1)=p(2,2)-step*(2.0_wp*p(5,2)-p(5,3))
         p(3,1)=p(3,2)-step
         call stoer(p(1,1),bq1,r1)
-        p(1,3)=p(1,2)+step*(20.*p(4,3)-3.*p(4,2)+p(4,1))/18.
-        p(2,3)=p(2,2)+step*(20.*p(5,3)-3.*p(5,2)+p(5,1))/18.
+        p(1,3)=p(1,2)+step*(20.0_wp*p(4,3)-3.*p(4,2)+p(4,1))/18.0_wp
+        p(2,3)=p(2,2)+step*(20.0_wp*p(5,3)-3.*p(5,2)+p(5,1))/18.0_wp
         p(3,3)=p(3,2)+step
         call stoer(p(1,3),bq3,r3)
         !******************invert sense if required
@@ -184,19 +86,19 @@
             end do
         end if
         !******************initialization 
-        step12=step/12.
+        step12=step/12.0_wp
         value=.true.
-        bmin=1.e4
-        bold=1.e4
+        bmin=1.0e4_wp
+        bold=1.0e4_wp
         !******************corrector (field line tracing)
         n=0
         corrector : do
-            p(1,3)=p(1,2)+step12*(5.*p(4,3)+8.*p(4,2)-p(4,1))
+            p(1,3)=p(1,2)+step12*(5.0_wp*p(4,3)+8.0_wp*p(4,2)-p(4,1))
             n=n+1
-            p(2,3)=p(2,2)+step12*(5.*p(5,3)+8.*p(5,2)-p(5,1))
+            p(2,3)=p(2,2)+step12*(5.0_wp*p(5,3)+8.0_wp*p(5,2)-p(5,1))
             !******************predictor (field line tracing)
-            p(1,4)=p(1,3)+step12*(23.*p(4,3)-16.*p(4,2)+5.*p(4,1))
-            p(2,4)=p(2,3)+step12*(23.*p(5,3)-16.*p(5,2)+5.*p(5,1))
+            p(1,4)=p(1,3)+step12*(23.0_wp*p(4,3)-16.0_wp*p(4,2)+5.0_wp*p(4,1))
+            p(2,4)=p(2,3)+step12*(23.0_wp*p(5,3)-16.0_wp*p(5,2)+5.0_wp*p(5,1))
             p(3,4)=p(3,3)+step
             call stoer(p(1,4),bq3,r3)
             do j=1,3
@@ -208,7 +110,7 @@
             if (b<bmin) bmin=b
             if (b>bold) exit corrector
             bold=b
-            rold=1./r3
+            rold=1.0_wp/r3
             sp(1)=p(1,4)
             sp(2)=p(2,4)
             sp(3)=p(3,4)
@@ -218,7 +120,7 @@
         endif
         bdelta=(b-bold)/bold
         if (bdelta<=bdel) exit main
-        step=step/10.
+        step=step/10.0_wp
     end do main
 
     rr0=rold
@@ -227,68 +129,59 @@
      
   end subroutine findb0
 
-!--------------------------------------------------------------------
+!>
 ! CALCULATES L-VALUE FOR SPECIFIED GEODAETIC COORDINATES, ALTITUDE
 ! AND GEMAGNETIC FIELD MODEL.
-! REF: G. KLUGE, EUROPEAN SPACE OPERATIONS CENTER, INTERNAL NOTE
-!      NO. 67, 1970.
-!      G. KLUGE, COMPUTER PHYSICS COMMUNICATIONS 3, 31-35, 1972
-!--------------------------------------------------------------------
-! CHANGES (D. BILITZA, NOV 87):
+!
+!### Reference
+!  * G. KLUGE, EUROPEAN SPACE OPERATIONS CENTER, INTERNAL NOTE
+!    NO. 67, 1970.
+!  * G. KLUGE, COMPUTER PHYSICS COMMUNICATIONS 3, 31-35, 1972
+! 
+!### History
+! * CHANGES (D. BILITZA, NOV 87):
 !   - USING CORRECT DIPOL MOMENT I.E.,DIFFERENT COMMON/MODEL/
 !   - USING IGRF EARTH MAGNETIC FIELD MODELS FROM 1945 TO 1990
-!--------------------------------------------------------------------
-!  INPUT:  ENTRY POINT SHELLG
-!	 	GLAT  GEODETIC LATITUDE IN DEGREES (NORTH)
-!         	GLON  GEODETIC LONGITUDE IN DEGREES (EAST)
-!         	ALT   ALTITUDE IN KM ABOVE SEA LEVEL
-!
-!	   ENTRY POINT SHELLC
-!		V(3)  CARTESIAN COORDINATES IN EARTH RADII (6371.2 KM)
-!			X-AXIS POINTING TO EQUATOR AT 0 LONGITUDE
-!			Y-AXIS POINTING TO EQUATOR AT 90 LONG.
-!			Z-AXIS POINTING TO NORTH POLE
-!
-!	   DIMO	      DIPOL MOMENT IN GAUSS (NORMALIZED TO EARTH RADIUS)
-!
+  
+  subroutine shellg(glat,glon,alt,dimo,fl,icode,b0)
+
+   real(wp),intent(in) :: glat !! GEODETIC LATITUDE IN DEGREES (NORTH)
+   real(wp),intent(in) :: glon !! GEODETIC LONGITUDE IN DEGREES (EAST)
+   real(wp),intent(in) :: alt  !! ALTITUDE IN KM ABOVE SEA LEVEL
+   real(wp),intent(in) :: dimo !! DIPOL MOMENT IN GAUSS (NORMALIZED TO EARTH RADIUS)
+   real(wp),intent(out) :: fl  !! l-value
+   integer,intent(out) :: icode  !! * =1 normal completion
+                                 !! * =2 unphysical conjugate point (fl meaningless)
+                                 !! * =3 shell parameter greater than limit up to
+                                 !!   which accurate calculation is required;
+                                 !!   approximation is used.
+   real(wp),intent(out) :: b0 !! magnetic field strength in gauss
+
+   real(wp) :: arg1 , arg2 , bequ , bq1 , bq2 , bq3 , c0 , c1 , c2 , c3 , ct , d , d0 , d1 , d2
+   real(wp) :: dimob0 , e0 , e1 , e2 , ff , fi , gg , h , hli , oradik , oterm , p , r , r1 , r2 , r3
+   real(wp) :: r3h , radik , rlat , rlon , rmax , rmin , rq , sp , st , step , step12 , step2 , steq , stp , t , term , v , x
+   real(wp) :: xx , z , zq , zz
+   integer :: i , iequ , n
+
+   dimension v(3) , p(8,100) , sp(3)
+
+   real(wp),dimension(3,3),parameter ::  u = reshape([ +0.3511737_wp , -0.9148385_wp , -0.1993679_wp , &
+                                                       +0.9335804_wp , +0.3583680_wp , +0.0000000_wp , &
+                                                       +0.0714471_wp , -0.1861260_wp , +0.9799247_wp], [3,3])
+
 !	   COMMON
 !		X(3)	NOT USED
 !		H(144)	FIELD MODEL COEFFICIENTS ADJUSTED FOR SHELLG
-!-----------------------------------------------------------------------
-!  OUTPUT: FL   	L-VALUE
-!	   ICODE  	=1 NORMAL COMPLETION
-!			=2 UNPHYSICAL CONJUGATE POINT (FL MEANINGLESS)
-!			=3 SHELL PARAMETER GREATER THAN LIMIT UP TO
-!			   WHICH ACCURATE CALCULATION IS REQUIRED;
-!			   APPROXIMATION IS USED.
-! 	   B0   	MAGNETIC FIELD STRENGTH IN GAUSS
-!-----------------------------------------------------------------------
-  
-  SUBROUTINE shellg(Glat,Glon,Alt,Dimo,Fl,Icode,B0)
-   IMPLICIT NONE
-   REAL Alt , Aquad , arg1 , arg2 , B0 , bequ , bq1 , bq2 , bq3 , Bquad , c0 , c1 , c2 , c3 , ct , d , d0 , d1 , d2 , Dimo
-   REAL dimob0 , e0 , e1 , e2 , Era , ff , fi , Fl , gg , Glat , Glon , H , hli , oradik , oterm , p , r , r1 , r2 , r3
-   REAL r3h , radik , rlat , rlon , rmax , rmin , rq , Sp , st , step , step12 , step2 , steq , stp , t , term , Umr , V , X
-   REAL xx , z , zq , zz
-   INTEGER i , Icode , iequ , n
-
-   DIMENSION V(3) , p(8,100) , Sp(3)
-
-   real,dimension(3,3),parameter ::  u = reshape([ +0.3511737 , -0.9148385 , -0.1993679 , &
-                                                   +0.9335804 , +0.3583680 , +0.0000000 , &
-                                                   +0.0714471 , -0.1861260 , +0.9799247], [3,3])
-
    COMMON X(3) , H(144)
    COMMON /fidb0 / Sp
-   COMMON /gener / Umr , Era , Aquad , Bquad
 
    !-- RMIN, RMAX ARE BOUNDARIES FOR IDENTIFICATION OF ICODE=2 AND 3
    !-- STEP IS STEP SIZE FOR FIELD LINE TRACING
    !-- STEQ IS STEP SIZE FOR INTEGRATION
 
-   DATA rmin , rmax/0.05 , 1.01/
-   DATA step , steq/0.20 , 0.03/
-   bequ = 1.E10
+   DATA rmin , rmax/0.05_wp , 1.01_wp/
+   DATA step , steq/0.20_wp , 0.03_wp/
+   bequ = 1.0e10_wp
 
    !*****ENTRY POINT  SHELLG  TO BE USED WITH GEODETIC CO-ORDINATES
    rlat = Glat*Umr
@@ -304,6 +197,10 @@
    RETURN
 
 !*****ENTRY POINT  SHELLC  TO BE USED WITH CARTESIAN CO-ORDINATES
+!		V(3)  CARTESIAN COORDINATES IN EARTH RADII (6371.2 KM)
+!			X-AXIS POINTING TO EQUATOR AT 0 LONGITUDE
+!			Y-AXIS POINTING TO EQUATOR AT 90 LONG.
+!			Z-AXIS POINTING TO NORTH POLE
    ENTRY shellc(V,Fl,B0)
    X(1) = V(1)
    X(2) = V(2)
@@ -326,16 +223,16 @@ CONTAINS
       step = -sign(step,p(3,2))
       CALL stoer(p(1,2),bq2,r2)
       B0 = sqrt(bq2)
-      p(1,3) = p(1,2) + 0.5*step*p(4,2)
-      p(2,3) = p(2,2) + 0.5*step*p(5,2)
-      p(3,3) = p(3,2) + 0.5*step
+      p(1,3) = p(1,2) + 0.5_wp*step*p(4,2)
+      p(2,3) = p(2,2) + 0.5_wp*step*p(5,2)
+      p(3,3) = p(3,2) + 0.5_wp*step
       CALL stoer(p(1,3),bq3,r3)
-      p(1,1) = p(1,2) - step*(2.*p(4,2)-p(4,3))
-      p(2,1) = p(2,2) - step*(2.*p(5,2)-p(5,3))
+      p(1,1) = p(1,2) - step*(2.0_wp*p(4,2)-p(4,3))
+      p(2,1) = p(2,2) - step*(2.0_wp*p(5,2)-p(5,3))
       p(3,1) = p(3,2) - step
       CALL stoer(p(1,1),bq1,r1)
-      p(1,3) = p(1,2) + step*(20.*p(4,3)-3.*p(4,2)+p(4,1))/18.
-      p(2,3) = p(2,2) + step*(20.*p(5,3)-3.*p(5,2)+p(5,1))/18.
+      p(1,3) = p(1,2) + step*(20.0_wp*p(4,3)-3.*p(4,2)+p(4,1))/18.0_wp
+      p(2,3) = p(2,2) + step*(20.0_wp*p(5,3)-3.*p(5,2)+p(5,1))/18.0_wp
       p(3,3) = p(3,2) + step
       CALL stoer(p(1,3),bq3,r3)
       !*****INVERT SENSE IF REQUIRED
@@ -363,43 +260,43 @@ CONTAINS
          iequ = 3
       ENDIF
       !*****INITIALIZATION OF INTEGRATION LOOPS
-      step12 = step/12.
+      step12 = step/12.0_wp
       step2 = step + step
       steq = sign(steq,step)
-      fi = 0.
+      fi = 0.0_wp
       Icode = 1
-      oradik = 0.
-      oterm = 0.
+      oradik = 0.0_wp
+      oterm = 0.0_wp
       stp = r2*steq
       z = p(3,2) + stp
-      stp = stp/0.75
+      stp = stp/0.75_wp
       p(8,1) = step2*(p(1,1)*p(4,1)+p(2,1)*p(5,1))
       p(8,2) = step2*(p(1,2)*p(4,2)+p(2,2)*p(5,2))
       !*****MAIN LOOP (FIELD LINE TRACING)
       main: DO n = 3 , max_loop_index
          !*****CORRECTOR (FIELD LINE TRACING)
-         p(1,n) = p(1,n-1) + step12*(5.*p(4,n)+8.*p(4,n-1)-p(4,n-2))
-         p(2,n) = p(2,n-1) + step12*(5.*p(5,n)+8.*p(5,n-1)-p(5,n-2))
+         p(1,n) = p(1,n-1) + step12*(5.0_wp*p(4,n)+8.0_wp*p(4,n-1)-p(4,n-2))
+         p(2,n) = p(2,n-1) + step12*(5.0_wp*p(5,n)+8.0_wp*p(5,n-1)-p(5,n-2))
          !*****PREPARE EXPANSION COEFFICIENTS FOR INTERPOLATION
          !*****OF SLOWLY VARYING QUANTITIES
          p(8,n) = step2*(p(1,n)*p(4,n)+p(2,n)*p(5,n))
          c0 = p(1,n-1)**2 + p(2,n-1)**2
          c1 = p(8,n-1)
-         c2 = (p(8,n)-p(8,n-2))*0.25
-         c3 = (p(8,n)+p(8,n-2)-c1-c1)/6.0
+         c2 = (p(8,n)-p(8,n-2))*0.25_wp
+         c3 = (p(8,n)+p(8,n-2)-c1-c1)/6.0_wp
          d0 = p(6,n-1)
-         d1 = (p(6,n)-p(6,n-2))*0.5
-         d2 = (p(6,n)+p(6,n-2)-d0-d0)*0.5
+         d1 = (p(6,n)-p(6,n-2))*0.5_wp
+         d2 = (p(6,n)+p(6,n-2)-d0-d0)*0.5_wp
          e0 = p(7,n-1)
-         e1 = (p(7,n)-p(7,n-2))*0.5
-         e2 = (p(7,n)+p(7,n-2)-e0-e0)*0.5
+         e1 = (p(7,n)-p(7,n-2))*0.5_wp
+         e2 = (p(7,n)+p(7,n-2)-e0-e0)*0.5_wp
          inner: DO
             !*****INNER LOOP (FOR QUADRATURE)
             t = (z-p(3,n-1))/step
-            IF ( t>1. ) THEN
+            IF ( t>1.0_wp ) THEN
                !*****PREDICTOR (FIELD LINE TRACING)
-               p(1,n+1) = p(1,n) + step12*(23.*p(4,n)-16.*p(4,n-1)+5.*p(4,n-2))
-               p(2,n+1) = p(2,n) + step12*(23.*p(5,n)-16.*p(5,n-1)+5.*p(5,n-2))
+               p(1,n+1) = p(1,n) + step12*(23.0_wp*p(4,n)-16.0_wp*p(4,n-1)+5.0_wp*p(4,n-2))
+               p(2,n+1) = p(2,n) + step12*(23.0_wp*p(5,n)-16.0_wp*p(5,n-1)+5.0_wp*p(5,n-2))
                p(3,n+1) = p(3,n) + step
                CALL stoer(p(1,n+1),bq3,r3)
                !*****SEARCH FOR LOWEST MAGNETIC FIELD STRENGTH
@@ -409,22 +306,22 @@ CONTAINS
                ENDIF
                EXIT inner
             ELSE
-               hli = 0.5*(((c3*t+c2)*t+c1)*t+c0)
+               hli = 0.5_wp*(((c3*t+c2)*t+c1)*t+c0)
                zq = z*z
                r = hli + sqrt(hli*hli+zq)
                IF ( r<=rmin ) THEN
                   !*****APPROXIMATION FOR HIGH VALUES OF L.
                   Icode = 3
                   t = -p(3,n-1)/step
-                  Fl = 1./(abs(((c3*t+c2)*t+c1)*t+c0)+1E-15)
+                  Fl = 1.0_wp/(abs(((c3*t+c2)*t+c1)*t+c0)+1.0e-15_wp)
                   RETURN
                ENDIF
                rq = r*r
-               ff = sqrt(1.+3.*zq/rq)
+               ff = sqrt(1.0_wp+3.0_wp*zq/rq)
                radik = B0 - ((d2*t+d1)*t+d0)*r*rq*ff
                IF ( r>rmax ) THEN
                   Icode = 2
-                  radik = radik - 12.*(r-rmax)**2
+                  radik = radik - 12.0_wp*(r-rmax)**2
                ENDIF
                IF ( radik+radik<=oradik ) EXIT main
                term = sqrt(radik)*ff*((e2*t+e1)*t+e0)/(rq+zq)
@@ -440,79 +337,86 @@ CONTAINS
       Sp(1) = p(1,iequ-1)
       Sp(2) = p(2,iequ-1)
       Sp(3) = p(3,iequ-1)
-      IF ( oradik>=1E-15 ) fi = fi + stp/0.75*oterm*oradik/(oradik-radik)
+      IF ( oradik>=1.0e-15_wp ) fi = fi + stp/0.75_wp*oterm*oradik/(oradik-radik)
       !
       !-- The minimal allowable value of FI was changed from 1E-15 to 1E-12,
       !-- because 1E-38 is the minimal allowable arg. for ALOG in our envir.
       !-- D. Bilitza, Nov 87.
       !
-      fi = 0.5*abs(fi)/sqrt(B0) + 1E-12
+      fi = 0.5_wp*abs(fi)/sqrt(B0) + 1.0e-12_wp
       !*****COMPUTE L FROM B AND I.  SAME AS CARMEL IN INVAR.
       !
       !-- Correct dipole moment is used here. D. Bilitza, Nov 87.
       !
       dimob0 = Dimo/B0
-      arg1 = alog(fi)
-      arg2 = alog(dimob0)
+      arg1 = log(fi)
+      arg2 = log(dimob0)
 !       arg = FI*FI*FI/DIMOB0
-!       if(abs(arg).gt.88.0) arg=88.0
+!       if(abs(arg)>88.0_wp) arg=88.0_wp
       xx = 3*arg1 - arg2
-      IF ( xx>23.0 ) THEN
-         gg = xx - 3.0460681E0
+      IF ( xx>23.0_wp ) THEN
+         gg = xx - 3.0460681_wp
       ELSEIF ( xx>11.7 ) THEN
-         gg = (((((2.8212095E-8*xx-3.8049276E-6)*xx+2.170224E-4)*xx-6.7310339E-3)*xx+1.2038224E-1)*xx-1.8461796E-1)                &
-            & *xx + 2.0007187E0
+         gg = (((((2.8212095E-8_wp*xx-3.8049276E-6_wp)*xx+&
+                   2.170224E-4_wp)*xx-6.7310339E-3_wp)*xx+&
+                   1.2038224E-1_wp)*xx-1.8461796E-1_wp)*xx + 2.0007187_wp
       ELSEIF ( xx>+3.0 ) THEN
-         gg = ((((((((6.3271665E-10*xx-3.958306E-8)*xx+9.9766148E-07)*xx-1.2531932E-5)*xx+7.9451313E-5)*xx-3.2077032E-4)           &
-            & *xx+2.1680398E-3)*xx+1.2817956E-2)*xx+4.3510529E-1)*xx + 6.222355E-1
+         gg = ((((((((6.3271665E-10_wp*xx-3.958306E-8_wp)*xx+&
+                      9.9766148E-07_wp)*xx-1.2531932E-5_wp)*xx+&
+                      7.9451313E-5_wp)*xx-3.2077032E-4_wp)*xx+&
+                      2.1680398E-3_wp)*xx+1.2817956E-2_wp)*xx+&
+                      4.3510529E-1_wp)*xx + 6.222355E-1_wp
       ELSEIF ( xx>-3.0 ) THEN
-         gg = ((((((((2.6047023E-10*xx+2.3028767E-9)*xx-2.1997983E-8)*xx-5.3977642E-7)*xx-3.3408822E-6)*xx+3.8379917E-5)           &
-            & *xx+1.1784234E-3)*xx+1.4492441E-2)*xx+4.3352788E-1)*xx + 6.228644E-1
+         gg = ((((((((2.6047023E-10_wp*xx+2.3028767E-9_wp)*xx-&
+                      2.1997983E-8_wp)*xx-5.3977642E-7_wp)*xx-&
+                      3.3408822E-6_wp)*xx+3.8379917E-5_wp)*xx+&
+                      1.1784234E-3_wp)*xx+1.4492441E-2_wp)*xx+&
+                      4.3352788E-1_wp)*xx + 6.228644E-1_wp
       ELSEIF ( xx>-22. ) THEN
-         gg = ((((((((-8.1537735E-14*xx+8.3232531E-13)*xx+1.0066362E-9)*xx+8.1048663E-8)*xx+3.2916354E-6)*xx+8.2711096E-5)         &
-            & *xx+1.3714667E-3)*xx+1.5017245E-2)*xx+4.3432642E-1)*xx + 6.2337691E-1
+         gg = ((((((((-8.1537735E-14_wp*xx+8.3232531E-13_wp)*xx+&
+                       1.0066362E-9_wp)*xx+8.1048663E-8_wp)*xx+&
+                       3.2916354E-6_wp)*xx+8.2711096E-5_wp)*xx+&
+                       1.3714667E-3_wp)*xx+1.5017245E-2_wp)*xx+&
+                       4.3432642E-1_wp)*xx + 6.2337691E-1_wp
       ELSE
-         gg = 3.33338E-1*xx + 3.0062102E-1
+         gg = 3.33338E-1_wp*xx + 3.0062102E-1_wp
       ENDIF
-      Fl = exp(alog((1.+exp(gg))*dimob0)/3.0)
+      Fl = exp(log((1.0_wp+exp(gg))*dimob0)/3.0_wp)
       RETURN
    END SUBROUTINE spag_block_1
 
 END SUBROUTINE shellg
 
-!*==stoer.f90 processed by SPAG 8.01MH 09:18  3 Feb 2024
-!!SPAG Open source Personal, Educational or Academic User  NON-COMMERCIAL USE - Not for use on proprietary or closed source code
-!
-!
 SUBROUTINE stoer(P,Bq,R)
    IMPLICIT NONE
-!*** Start of declarations inserted by SPAG
-   REAL Bq , dr , dsq , dx , dxm , dy , dym , dz , dzm , fli , H , P , q , R , rq , u , wr , Xi , xm , ym
-   REAL zm
-!*** End of declarations inserted by SPAG
+   REAL(wp) Bq , dr , dsq , dx , dxm , dy , dym , dz , dzm , fli , &
+            H , P , q , R , rq , wr , Xi , xm , ym
+   REAL(wp) zm
 !*******************************************************************
 !* SUBROUTINE USED FOR FIELD LINE TRACING IN SHELLG                *
 !* CALLS ENTRY POINT FELDI IN GEOMAGNETIC FIELD SUBROUTINE FELDG   *
 !*******************************************************************
-   DIMENSION P(7) , u(3,3)
+   DIMENSION P(7)  
+   real(wp),dimension(3,3),parameter :: u = reshape([ +0.3511737_wp , -0.9148385_wp , -0.1993679_wp , &
+                                                      +0.9335804_wp , +0.3583680_wp , +0.0000000_wp , &
+                                                      +0.0714471_wp , -0.1861260_wp , +0.9799247_wp],[3,3])
    COMMON Xi(3) , H(144)
 !*****XM,YM,ZM ARE GEOMAGNETIC CARTESIAN INVERSE CO-ORDINATES
    zm = P(3)
-   fli = P(1)*P(1) + P(2)*P(2) + 1E-15
-   R = 0.5*(fli+sqrt(fli*fli+(zm+zm)**2))
+   fli = P(1)*P(1) + P(2)*P(2) + 1.0e-15_wp
+   R = 0.5_wp*(fli+sqrt(fli*fli+(zm+zm)**2))
    rq = R*R
    wr = sqrt(R)
    xm = P(1)*wr
    ym = P(2)*wr
 !*****TRANSFORM TO GEOGRAPHIC CO-ORDINATE SYSTEM
-   DATA u/ + 0.3511737 , -0.9148385 , -0.1993679 , +0.9335804 , +0.3583680 , +0.0000000 , +0.0714471 , -0.1861260 , +0.9799247/
    Xi(1) = xm*u(1,1) + ym*u(1,2) + zm*u(1,3)
    Xi(2) = xm*u(2,1) + ym*u(2,2) + zm*u(2,3)
    Xi(3) = xm*u(3,1) + zm*u(3,3)
 !*****COMPUTE DERIVATIVES
 ! Changed from CALL FELDI(XI,H); XI, H are in COMMON block; results
 ! are the same; dkb Feb 1998
-   CALL feldi
+   CALL feldi()
    q = H(1)/rq
    dx = H(3) + H(3) + q*Xi(1)
    dy = H(4) + H(4) + q*Xi(2)
@@ -523,187 +427,14 @@ SUBROUTINE stoer(P,Bq,R)
    dzm = u(1,3)*dx + u(2,3)*dy + u(3,3)*dz
    dr = (xm*dxm+ym*dym+zm*dzm)/R
 !*****FORM SLOWLY VARYING EXPRESSIONS
-   P(4) = (wr*dxm-0.5*P(1)*dr)/(R*dzm)
-   P(5) = (wr*dym-0.5*P(2)*dr)/(R*dzm)
+   P(4) = (wr*dxm-0.5_wp*P(1)*dr)/(R*dzm)
+   P(5) = (wr*dym-0.5_wp*P(2)*dr)/(R*dzm)
    dsq = rq*(dxm*dxm+dym*dym+dzm*dzm)
    Bq = dsq*rq*rq
    P(6) = sqrt(dsq/(rq+3.*zm*zm))
    P(7) = P(6)*(rq+zm*zm)/(rq*dzm)
 END SUBROUTINE stoer
 
-!*==feldg.f90 processed by SPAG 8.01MH 09:18  3 Feb 2024
-!!SPAG Open source Personal, Educational or Academic User  NON-COMMERCIAL USE - Not for use on proprietary or closed source code
-!
-!
-! SUBROUTINE feldg(Glat,Glon,Alt,Bnorth,Beast,Bdown,Babs)
-!    IMPLICIT NONE
-! !*** Start of declarations inserted by SPAG
-!    REAL Alt , Aquad , B , Babs , Bdown , Beast , Bnorth , Bquad , brho , bxxx , byyy , bzzz , cp , ct , d , Era , f , G , Glat ,   &
-!       & Glon
-!    REAL H , rho , rlat , rlon , rq , s , sp , st , t , Time , Umr , V , x , Xi , xxx , y , yyy , z , zzz
-!    INTEGER i , ih , ihmax , il , imax , is , k , last , m , Nmax
-! !*** End of declarations inserted by SPAG
-! !-------------------------------------------------------------------
-! ! CALCULATES EARTH MAGNETIC FIELD FROM SPHERICAL HARMONICS MODEL
-! ! REF: G. KLUGE, EUROPEAN SPACE OPERATIONS CENTRE, INTERNAL NOTE 61,
-! !      1970.
-! !--------------------------------------------------------------------
-! ! CHANGES (D. BILITZA, NOV 87):
-! !   - FIELD COEFFICIENTS IN BINARY DATA FILES INSTEAD OF BLOCK DATA
-! !   - CALCULATES DIPOL MOMENT
-! !--------------------------------------------------------------------
-! !  INPUT:  ENTRY POINT FELDG
-! !	 	GLAT  GEODETIC LATITUDE IN DEGREES (NORTH)
-! !         	GLON  GEODETIC LONGITUDE IN DEGREES (EAST)
-! !         	ALT   ALTITUDE IN KM ABOVE SEA LEVEL
-! !
-! !	   ENTRY POINT FELDC
-! !		V(3)  CARTESIAN COORDINATES IN EARTH RADII (6371.2 KM)
-! !			X-AXIS POINTING TO EQUATOR AT 0 LONGITUDE
-! !			Y-AXIS POINTING TO EQUATOR AT 90 LONG.
-! !			Z-AXIS POINTING TO NORTH POLE
-! !
-! !	   COMMON BLANK AND ENTRY POINT FELDI ARE NEEDED WHEN USED
-! !	     IN CONNECTION WITH L-CALCULATION PROGRAM SHELLG.
-! !
-! !	   COMMON /MODEL/ AND /GENER/
-! !		UMR     = ATAN(1.0)*4./180.   <DEGREE>*UMR=<RADIANT>
-! !		ERA	EARTH RADIUS FOR NORMALIZATION OF CARTESIAN
-! !			COORDINATES (6371.2 KM)
-! !		AQUAD, BQUAD   SQUARE OF MAJOR AND MINOR HALF AXIS FOR
-! !			EARTH ELLIPSOID AS RECOMMENDED BY INTERNATIONAL
-! !			ASTRONOMICAL UNION (6378.160, 6356.775 KM).
-! !		NMAX    MAXIMUM ORDER OF SPHERICAL HARMONICS
-! !		TIME	YEAR (DECIMAL: 1973.5) FOR WHICH MAGNETIC
-! !			FIELD IS TO BE CALCULATED
-! !		G(M)	NORMALIZED FIELD COEFFICIENTS (SEE FELDCOF)
-! !			M=NMAX*(NMAX+2)
-! !------------------------------------------------------------------------
-! !  OUTPUT: BABS   MAGNETIC FIELD STRENGTH IN GAUSS
-! !	   BNORTH, BEAST, BDOWN   COMPONENTS OF THE FIELD WITH RESPECT
-! !		  TO THE LOCAL GEODETIC COORDINATE SYSTEM, WITH AXIS
-! !		  POINTING IN THE TANGENTIAL PLANE TO THE NORTH, EAST
-! !		  AND DOWNWARD.
-! !-----------------------------------------------------------------------
-!    DIMENSION V(3) , B(3)
-!    CHARACTER*14 Name
-!    COMMON Xi(3) , H(144)
-!    COMMON /model / Name , Nmax , Time , G(144)
-!    COMMON /gener / Umr , Era , Aquad , Bquad
-!    INTEGER :: spag_nextblock_1
-!    INTEGER :: spag_nextblock_2
-!    spag_nextblock_1 = 1
-!    SPAG_DispatchLoop_1: DO
-!       SELECT CASE (spag_nextblock_1)
-!       CASE (1)
-! !
-! !-- IS RECORDS ENTRY POINT
-! !
-! !*****ENTRY POINT  FELDG  TO BE USED WITH GEODETIC CO-ORDINATES
-!          is = 1
-!          rlat = Glat*Umr
-!          ct = sin(rlat)
-!          st = cos(rlat)
-!          d = sqrt(Aquad-(Aquad-Bquad)*ct*ct)
-!          rlon = Glon*Umr
-!          cp = cos(rlon)
-!          sp = sin(rlon)
-!          zzz = (Alt+Bquad/d)*ct/Era
-!          rho = (Alt+Aquad/d)*st/Era
-!          xxx = rho*cp
-!          yyy = rho*sp
-!          spag_nextblock_1 = 2
-!          CYCLE SPAG_DispatchLoop_1
-! !
-! !*****ENTRY POINT  FELDC  TO BE USED WITH CARTESIAN CO-ORDINATES
-!          ENTRY feldc(V,B)
-!          is = 2
-!          xxx = V(1)
-!          yyy = V(2)
-!          zzz = V(3)
-!          spag_nextblock_1 = 2
-!       CASE (2)
-!          rq = 1./(xxx*xxx+yyy*yyy+zzz*zzz)
-!          Xi(1) = xxx*rq
-!          Xi(2) = yyy*rq
-!          Xi(3) = zzz*rq
-!          spag_nextblock_1 = 3
-!          CYCLE SPAG_DispatchLoop_1
-! !
-! !*****ENTRY POINT  FELDI  USED FOR L COMPUTATION
-!          ENTRY feldi
-!          is = 3
-!          spag_nextblock_1 = 3
-!       CASE (3)
-!          ihmax = Nmax*Nmax + 1
-!          last = ihmax + Nmax + Nmax
-!          imax = Nmax + Nmax - 1
-!          DO i = ihmax , last
-!             H(i) = G(i)
-!          ENDDO
-!          DO k = 1 , 3 , 2
-!             spag_nextblock_2 = 1
-!             SPAG_DispatchLoop_2: DO
-!                SELECT CASE (spag_nextblock_2)
-!                CASE (1)
-!                   i = imax
-!                   ih = ihmax
-!                   spag_nextblock_2 = 2
-!                CASE (2)
-!                   il = ih - i
-!                   f = 2./float(i-k+2)
-!                   x = Xi(1)*f
-!                   y = Xi(2)*f
-!                   z = Xi(3)*(f+f)
-!                   i = i - 2
-!                   IF ( i<1 ) THEN
-!                      spag_nextblock_2 = 3
-!                      CYCLE SPAG_DispatchLoop_2
-!                   ENDIF
-!                   IF ( i/=1 ) THEN
-!                      DO m = 3 , i , 2
-!                         H(il+m+1) = G(il+m+1) + z*H(ih+m+1) + x*(H(ih+m+3)-H(ih+m-1)) - y*(H(ih+m+2)+H(ih+m-2))
-!                         H(il+m) = G(il+m) + z*H(ih+m) + x*(H(ih+m+2)-H(ih+m-2)) + y*(H(ih+m+3)+H(ih+m-1))
-!                      ENDDO
-!                   ENDIF
-!                   H(il+2) = G(il+2) + z*H(ih+2) + x*H(ih+4) - y*(H(ih+3)+H(ih))
-!                   H(il+1) = G(il+1) + z*H(ih+1) + y*H(ih+4) + x*(H(ih+3)-H(ih))
-!                   spag_nextblock_2 = 3
-!                CASE (3)
-!                   H(il) = G(il) + z*H(ih) + 2.*(x*H(ih+1)+y*H(ih+2))
-!                   ih = il
-!                   IF ( i>=k ) THEN
-!                      spag_nextblock_2 = 2
-!                      CYCLE SPAG_DispatchLoop_2
-!                   ENDIF
-!                   EXIT SPAG_DispatchLoop_2
-!                END SELECT
-!             ENDDO SPAG_DispatchLoop_2
-!          ENDDO
-!          IF ( is==3 ) RETURN
-!          s = .5*H(1) + 2.*(H(2)*Xi(3)+H(3)*Xi(1)+H(4)*Xi(2))
-!          t = (rq+rq)*sqrt(rq)
-!          bxxx = t*(H(3)-s*xxx)
-!          byyy = t*(H(4)-s*yyy)
-!          bzzz = t*(H(2)-s*zzz)
-!          IF ( is==2 ) THEN
-!             B(1) = bxxx
-!             B(2) = byyy
-!             B(3) = bzzz
-!             RETURN
-!          ENDIF
-!          Babs = sqrt(bxxx*bxxx+byyy*byyy+bzzz*bzzz)
-!          Beast = byyy*cp - bxxx*sp
-!          brho = byyy*sp + bxxx*cp
-!          Bnorth = bzzz*st - brho*ct
-!          Bdown = -bzzz*ct - brho*st
-!          RETURN
-!       END SELECT
-!    ENDDO SPAG_DispatchLoop_1
-! END SUBROUTINE feldg
-
-!.... NOTE: this one was broken by SPAG (above)... so revert to original and see
-!           if we can manually refactor it.
 subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)           
    !-------------------------------------------------------------------
    ! calculates earth magnetic field from spherical harmonics model
@@ -748,19 +479,16 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
    !          and downward.   
    !-----------------------------------------------------------------------
    
-   !*** Start of declarations inserted by SPAG
-       REAL Alt , Aquad , B , Babs , Bdown , Beast , Bnorth , Bquad , brho , bxxx , &
-            byyy , bzzz , cp , ct , d , Era , f , G , Glat , Glon
-        REAL H , rho , rlat , rlon , rq , s , sp , st , t , Time , Umr , V , x , Xi , xxx , y , yyy , z , zzz
-        INTEGER i , ih , ihmax , il , imax , is , k , last , m , Nmax
-     !*** End of declarations inserted by SPAG
+         REAL(wp) Alt , B , Babs , Bdown , Beast , Bnorth , brho , bxxx , &
+                  byyy , bzzz , cp , ct , d , f , G , Glat , Glon
+         REAL(wp) H , rho , rlat , rlon , rq , s , sp , st , t , Time , V , x , Xi , xxx , y , yyy , z , zzz
+         INTEGER i , ih , ihmax , il , imax , is , k , last , m , Nmax
      
          dimension     v(3),b(3)   
          character*14     name
 
          common         xi(3),h(144)
          common/model/    name,nmax,time,g(144)  
-         common/gener/    umr,era,aquad,bquad
    !
    !-- is records entry point
    !
@@ -773,11 +501,11 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
          rlon=glon*umr
          cp=cos(rlon)                                                      
          sp=sin(rlon)                                                      
-          zzz=(alt+bquad/d)*ct/era
-          rho=(alt+aquad/d)*st/era
-          xxx=rho*cp                                                       
-          yyy=rho*sp                                                       
-          goto 10
+         zzz=(alt+bquad/d)*ct/era
+         rho=(alt+aquad/d)*st/era
+         xxx=rho*cp                                                       
+         yyy=rho*sp                                                       
+         goto 10
    !
    !*****entry point  feldc  to be used with cartesian co-ordinates        
          entry feldc(v,b)                                                  
@@ -792,7 +520,7 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
           goto 20                                                            
    !
    !*****entry point  feldi  used for l computation                        
-         entry feldi                                                       
+         entry feldi()                                                 
          is=3                                                              
    20    ihmax=nmax*nmax+1                                                 
          last=ihmax+nmax+nmax                                              
@@ -804,7 +532,7 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
             i=imax                                                            
             ih=ihmax                                                          
       1     il=ih-i                                                           
-            f=2./float(i-k+2)                                                 
+            f=2.0_wp/real(i-k+2, wp)                                                 
             x=xi(1)*f                                                         
             y=xi(2)*f                                                         
             z=xi(3)*(f+f)                                                     
@@ -819,13 +547,13 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
                h(il+2)=g(il+2)+z*h(ih+2)+x*h(ih+4)-y*(h(ih+3)+h(ih))             
                h(il+1)=g(il+1)+z*h(ih+1)+y*h(ih+4)+x*(h(ih+3)-h(ih))   
             end if
-            h(il)=g(il)+z*h(ih)+2.*(x*h(ih+1)+y*h(ih+2))
+            h(il)=g(il)+z*h(ih)+2.0_wp*(x*h(ih+1)+y*h(ih+2))
             ih=il                                                             
             if (i>=k) goto 1                                                   
          end do            
 
          if (is==3) return                                                 
-         s=.5*h(1)+2.*(h(2)*xi(3)+h(3)*xi(1)+h(4)*xi(2))                   
+         s=0.5_wp*h(1)+2.0_wp*(h(2)*xi(3)+h(3)*xi(1)+h(4)*xi(2))                   
          t=(rq+rq)*sqrt(rq)                                                
          bxxx=t*(h(3)-s*xxx)                                               
          byyy=t*(h(4)-s*yyy)                                               
@@ -844,16 +572,10 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
 
    end subroutine feldg        
 
-!*==feldcof.f90 processed by SPAG 8.01MH 09:18  3 Feb 2024
-!!SPAG Open source Personal, Educational or Academic User  NON-COMMERCIAL USE - Not for use on proprietary or closed source code
-!
-!
 SUBROUTINE feldcof(Year,Dimo)
    IMPLICIT NONE
-!*** Start of declarations inserted by SPAG
-   REAL Aquad , Bquad , Dimo , dte1 , dte2 , dtemod , Erad , Gh1 , gh2 , gha , sqrt2 , Time , Umr , Year
+   REAL(wp) Dimo , dte1 , dte2 , Erad , Gh1 , gh2 , gha , sqrt2 , Time , Year
    INTEGER i , ier , is , iu , iyea , j , l , m , n , Nmax , nmax1 , nmax2 , numye
-!*** End of declarations inserted by SPAG
 !------------------------------------------------------------------------
 !  DETERMINES COEFFICIENTS AND DIPOL MOMENT FROM IGRF MODELS
 !
@@ -867,18 +589,28 @@ SUBROUTINE feldcof(Year,Dimo)
 !  ### updated to IGRF-2000 version -dkb- 5/31/2000
 !  ### updated to IGRF-2005 version -dkb- 3/24/2000
 !-----------------------------------------------------------------------
-   CHARACTER*14 filmod , Fil1 , fil2
+
+   CHARACTER(len=14) Fil1 , fil2
 ! ### FILMOD, DTEMOD arrays +1
-   DIMENSION Gh1(144) , gh2(120) , gha(144) , filmod(17) , dtemod(17)
-   DOUBLE PRECISION x , f0 , f
+   DIMENSION Gh1(144) , gh2(120) , gha(144) 
+   real(wp) :: x , f0 , f !! JW: these were double precision in original code while everything else was single precision
+
    COMMON /model/ Fil1 , Nmax , Time , Gh1
-   COMMON /gener/ Umr , Erad , Aquad , Bquad
-! ### changed to conform with IGRF 45-95, also FILMOD, DTEMOD arrays +1
-   DATA filmod/'dgrf1945.dat' , 'dgrf1950.dat' , 'dgrf1955.dat' , 'dgrf1960.dat' , 'dgrf1965.dat' , 'dgrf1970.dat' ,               &
-      & 'dgrf1975.dat' , 'dgrf1980.dat' , 'dgrf1985.dat' , 'dgrf1990.dat' , 'dgrf1995.dat' , 'dgrf2000.dat' , 'dgrf2005.dat' ,     &
-       &'dgrf2010.dat' , 'dgrf2015.dat' , 'igrf2020.dat' , 'igrf2020s.dat'/
-   DATA dtemod/1945. , 1950. , 1955. , 1960. , 1965. , 1970. , 1975. , 1980. , 1985. , 1990. , 1995. , 2000. , 2005. , 2010. ,     &
-      & 2015. , 2020. , 2025./
+   !COMMON /gener/ Umr , Erad , Aquad , Bquad
+
+   ! ### changed to conform with IGRF 45-95, also FILMOD, DTEMOD arrays +1
+   character(len=14),dimension(17),parameter :: filmod = [&
+         'dgrf1945.dat ' , 'dgrf1950.dat ' , 'dgrf1955.dat ' , 'dgrf1960.dat ' , &
+         'dgrf1965.dat ' , 'dgrf1970.dat ' , 'dgrf1975.dat ' , 'dgrf1980.dat ' , &
+         'dgrf1985.dat ' , 'dgrf1990.dat ' , 'dgrf1995.dat ' , 'dgrf2000.dat ' , &
+         'dgrf2005.dat ' , 'dgrf2010.dat ' , 'dgrf2015.dat ' , 'igrf2020.dat ' , &
+         'igrf2020s.dat']
+   real(wp),dimension(17),parameter :: dtemod = [1945.0_wp , 1950.0_wp , 1955.0_wp , &
+                                                 1960.0_wp , 1965.0_wp , 1970.0_wp , &
+                                                 1975.0_wp , 1980.0_wp , 1985.0_wp , &
+                                                 1990.0_wp , 1995.0_wp , 2000.0_wp , &
+                                                 2005.0_wp , 2010.0_wp , 2015.0_wp , &
+                                                 2020.0_wp , 2025.0_wp]
 !
 ! ### numye is number of 5-year priods represented by IGRF
 !
@@ -891,7 +623,7 @@ SUBROUTINE feldcof(Year,Dimo)
    is = 0
 !-- DETERMINE IGRF-YEARS FOR INPUT-YEAR
    Time = Year
-   iyea = int(Year/5.)*5
+   iyea = int(Year/5.0_wp)*5
    l = (iyea-1945)/5 + 1
    IF ( l<1 ) l = 1
    IF ( l>numye ) l = numye
@@ -911,30 +643,30 @@ SUBROUTINE feldcof(Year,Dimo)
       CALL extrashc(Year,dte1,nmax1,Gh1,nmax2,gh2,Nmax,gha)
    ENDIF
 !-- DETERMINE MAGNETIC DIPOL MOMENT AND COEFFIECIENTS G
-   f0 = 0.D0
+   f0 = 0.0_wp
    DO j = 1 , 3
-      f = gha(j)*1.D-5
+      f = gha(j)*1.0e-5_wp
       f0 = f0 + f*f
    ENDDO
    Dimo = sqrt(f0)
  
-   Gh1(1) = 0.0
+   Gh1(1) = 0.0_wp
    i = 2
-   f0 = 1.D-5
+   f0 = 1.0e-5_wp
    IF ( is==0 ) f0 = -f0
-   sqrt2 = sqrt(2.)
+   sqrt2 = sqrt(2.0_wp)
  
    DO n = 1 , Nmax
       x = n
-      f0 = f0*x*x/(4.D0*x-2.D0)
-      IF ( is==0 ) f0 = f0*(2.D0*x-1.D0)/x
-      f = f0*0.5D0
+      f0 = f0*x*x/(4.0_wp*x-2.0_wp)
+      IF ( is==0 ) f0 = f0*(2.0_wp*x-1.0_wp)/x
+      f = f0*0.5_wp
       IF ( is==0 ) f = f*sqrt2
       Gh1(i) = gha(i-1)*f0
       i = i + 1
       DO m = 1 , n
-         f = f*(x+m)/(x-m+1.D0)
-         IF ( is==0 ) f = f*sqrt((x-m+1.D0)/(x+m))
+         f = f*(x+m)/(x-m+1.0_wp)
+         IF ( is==0 ) f = f*sqrt((x-m+1.0_wp)/(x+m))
          Gh1(i) = gha(i-1)*f
          Gh1(i+1) = gha(i)*f
          i = i + 2
@@ -942,16 +674,10 @@ SUBROUTINE feldcof(Year,Dimo)
    ENDDO
 END SUBROUTINE feldcof
 
-!*==getshc.f90 processed by SPAG 8.01MH 09:18  3 Feb 2024
-!!SPAG Open source Personal, Educational or Academic User  NON-COMMERCIAL USE - Not for use on proprietary or closed source code
-!
-!
 SUBROUTINE getshc(Iu,Fspec,Nmax,Erad,Gh,Ier)
    IMPLICIT NONE
-!*** Start of declarations inserted by SPAG
-   REAL Erad , g , Gh , h
+   REAL(wp) Erad , g , Gh , h
    INTEGER i , Ier , Iu , m , mm , n , Nmax , nn
-!*** End of declarations inserted by SPAG
  
 ! ===============================================================
 !
@@ -1031,16 +757,10 @@ SUBROUTINE getshc(Iu,Fspec,Nmax,Erad,Gh,Ier)
  
 END SUBROUTINE getshc
 
-!*==intershc.f90 processed by SPAG 8.01MH 09:18  3 Feb 2024
-!!SPAG Open source Personal, Educational or Academic User  NON-COMMERCIAL USE - Not for use on proprietary or closed source code
-!
-!
 SUBROUTINE intershc(Date,Dte1,Nmax1,Gh1,Dte2,Nmax2,Gh2,Nmax,Gh)
    IMPLICIT NONE
-!*** Start of declarations inserted by SPAG
-   REAL Date , Dte1 , Dte2 , factor , Gh , Gh1 , Gh2
+   REAL(wp) Date , Dte1 , Dte2 , factor , Gh , Gh1 , Gh2
    INTEGER i , k , l , Nmax , Nmax1 , Nmax2
-!*** End of declarations inserted by SPAG
  
 ! ===============================================================
 !
@@ -1107,16 +827,10 @@ SUBROUTINE intershc(Date,Dte1,Nmax1,Gh1,Dte2,Nmax2,Gh2,Nmax,Gh)
  
 END SUBROUTINE intershc
 
-!*==extrashc.f90 processed by SPAG 8.01MH 09:18  3 Feb 2024
-!!SPAG Open source Personal, Educational or Academic User  NON-COMMERCIAL USE - Not for use on proprietary or closed source code
-!
-!
 SUBROUTINE extrashc(Date,Dte1,Nmax1,Gh1,Nmax2,Gh2,Nmax,Gh)
    IMPLICIT NONE
-!*** Start of declarations inserted by SPAG
-   REAL Date , Dte1 , factor , Gh , Gh1 , Gh2
+   REAL(wp) Date , Dte1 , factor , Gh , Gh1 , Gh2
    INTEGER i , k , l , Nmax , Nmax1 , Nmax2
-!*** End of declarations inserted by SPAG
  
 ! ===============================================================
 !
@@ -1183,36 +897,5 @@ SUBROUTINE extrashc(Date,Dte1,Nmax1,Gh1,Nmax2,Gh2,Nmax,Gh)
  
 END SUBROUTINE extrashc
 
-!*==initize.f90 processed by SPAG 8.01MH 09:18  3 Feb 2024
-!!SPAG Open source Personal, Educational or Academic User  NON-COMMERCIAL USE - Not for use on proprietary or closed source code
-!
-!
-SUBROUTINE initize()
-   IMPLICIT NONE
-!*** Start of declarations inserted by SPAG
-   REAL Aquad , Bquad , Era , erequ , erpol , Umr
-!*** End of declarations inserted by SPAG
-!----------------------------------------------------------------
-! Initializes the parameters in COMMON/GENER/
-!
-!	UMR     = ATAN(1.0)*4./180.   <DEGREE>*UMR=<RADIANT>
-!	ERA	EARTH RADIUS FOR NORMALIZATION OF CARTESIAN
-!			COORDINATES (6371.2 KM)
-!	EREQU	MAJOR HALF AXIS FOR EARTH ELLIPSOID (6378.160 KM)
-!	ERPOL	MINOR HALF AXIS FOR EARTH ELLIPSOID (6356.775 KM)
-!	AQUAD	SQUARE OF MAJOR HALF AXIS FOR EARTH ELLIPSOID
-!	BQUAD   SQUARE OF MINOR HALF AXIS FOR EARTH ELLIPSOID
-!
-! ERA, EREQU and ERPOL as recommended by the INTERNATIONAL
-! ASTRONOMICAL UNION .
-!-----------------------------------------------------------------
-   COMMON /gener / Umr , Era , Aquad , Bquad
-   Era = 6371.2
-   erequ = 6378.16
-   erpol = 6356.775
-   Aquad = erequ*erequ
-   Bquad = erpol*erpol
-   Umr = atan(1.0)*4./180.
-END SUBROUTINE initize
 
 end module SHELLIG_module

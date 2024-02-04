@@ -1,19 +1,18 @@
-!*==spag_program_1.f90 processed by SPAG 8.01MH 17:13 30 Jan 2024
-!!SPAG Open source Personal, Educational or Academic User  NON-COMMERCIAL USE - Not for use on proprietary or closed source code
 PROGRAM spag_program_1
 
    use radbelt_module
-   
+   use radbelt_kinds_module
+
    IMPLICIT NONE
-!*** Start of declarations inserted by SPAG
-   REAL af , bb0 , bbeg , bend , blv , bstep , df , e , ebeg , eda , ediff , eend , ei , estep , fl , flux , vbeg , vend , vstep , &
-      & xl
-   REAL xmax , xmin , xx
-   INTEGER i , ib , ibl , ibltab , ie , iei , ihead , il , inde , itest , itt , iuaeap , iuout , j , jagnr , jpara , jtab , k , l ,&
-         & map
+   REAL(wp) af , bb0 , bbeg , bend , blv , bstep , df , e , ebeg , eda , &
+            ediff , eend , ei , estep , fl , flux , vbeg , vend , vstep , &
+            xl
+   REAL(wp) xmax , xmin , xx
+   INTEGER i , ib , ibl , ibltab , ie , iei , ihead , il , inde , itest , &
+           itt , iuaeap , iuout , j , jagnr , jpara , jtab , k , l ,&
+           map
    INTEGER maxi , mini , monito , mtype , n , nb , ne , nl , nmap , nn
-!*** End of declarations inserted by SPAG
-! RADBELT.FOR	SEPTEMBER 88
+! RADBELT.FOR   SEPTEMBER 88
 !
 !***********************************************************************
 !*                                                                     *
@@ -32,7 +31,7 @@ PROGRAM spag_program_1
 !***   differential electron or proton fluxes for given energies,    ***
 !***   L-values, magnetic field strengths and map-type.              ***
 !***   The program will ask you for:                                 ***
-!***      NE 	 number of energies you want displayed               ***
+!***      NE     number of energies you want displayed               ***
 !***      E(1),... E(NE)   energies   or   EBEGIN,EEND,ESTEP  begin, ***
 !***             end and stepsize of energy range                    ***
 !***      NL     number of L-values                                  ***
@@ -41,7 +40,7 @@ PROGRAM spag_program_1
 !***      B/B0(1),... B/B0(NL)   B/B0-values   or  BBEGIN,BEND,BSTEP ***
 !***      MTYPE  map type:  1 AP8MAX   2 AP8MIN  3 AE4MAX  4 AE4MIN  ***
 !***                        5 AEI7HI   6 AEI7LO  7 AE8MAX  8 AE8MIN  ***
-!***      JTAB 	 output options: integral or differential fluxes     ***
+!***      JTAB     output options: integral or differential fluxes     ***
 !***             versus L or B/B0                                    ***
 !***   The program interpolates the NSSDC model map in B/B0, L       ***
 !***   (function TRARA2), and energy (subroutine TRARA1).            ***
@@ -78,12 +77,12 @@ PROGRAM spag_program_1
 !***       (2)   INCREMENTS PER DECADE OF LOGARITHMIC FLUX           ***
 !***       (3)   EPOCH OF MODEL                                      ***
 !***       (4)   SCALE FACTOR FOR ENERGY; E/MEV=E(MAP)/IHEAD(4)      ***
-!***		   			  =6400 (AE-8),  =100 (AP-8) ***
+!***                    =6400 (AE-8),  =100 (AP-8) ***
 !***       (5)   SCALE FACTOR FOR L-VALUE =2100 (AE-8), =2048 (AP-8) ***
 !***       (6)   SCALE FACTOR FOR B/B0    =1024 (AE-8), =2048 (AP-8) ***
 !***       (7)   SCALE FACTOR FOR LOGARITHM OF FLUXES =1024 (AE,AP-8)***
-!***       (8)   NUMBER OF ELEMENTS IN MAP =13548 (AE8MAX),	     ***
-!***		  =13168 (AE8MIN), =6509 (AP8MAX), =6688 (AP8MIN)    ***
+!***       (8)   NUMBER OF ELEMENTS IN MAP =13548 (AE8MAX),        ***
+!***        =13168 (AE8MIN), =6509 (AP8MAX), =6688 (AP8MIN)    ***
 !***                                                                 ***
 !***  LAYOUT OF MAP:                                                 ***
 !***      MAP CONSISTS OF SEVERAL VARIABLE-LENGTH SUB-MAPS, EACH     ***
@@ -178,14 +177,14 @@ PROGRAM spag_program_1
             ENDDO
          ENDDO
 !
-!		I/O UNIT NUMBERS
+!      I/O UNIT NUMBERS
 !
          egnr = 5               ! INPUT
          monito = 6             ! MONITOR
          iuaeap = 15            ! MODEL COEFFICIENTS INPUT
          iuout = 16             ! OUTPUT (OUTPUT.AEP)
 !
-!		INPUT OF PARAMETERS
+!      INPUT OF PARAMETERS
 !
          notbeg = .FALSE.
 !-----------1. window: introduction--------------------------------
@@ -294,12 +293,12 @@ PROGRAM spag_program_1
 ! coefficient files, one should replace the preceding 5 statements
 ! with the following 6 statements
 !
-99005	FORMAT(A6,'.ASC')
-	   OPEN(IUAEAP,FILE=FNAME,STATUS='OLD',ERR=80,FORM='FORMATTED')
-	   READ(IUAEAP,1301) IHEAD
-	   NMAP=IHEAD(8)
-	   READ(IUAEAP,1301) (MAP(I),I=1,NMAP)
-1301	FORMAT(1X,12I6)
+99005   FORMAT(A6,'.ASC')
+      OPEN(IUAEAP,FILE=FNAME,STATUS='OLD',ERR=80,FORM='FORMATTED')
+      READ(IUAEAP,1301) IHEAD
+      NMAP=IHEAD(8)
+      READ(IUAEAP,1301) (MAP(I),I=1,NMAP)
+1301   FORMAT(1X,12I6)
  
             CLOSE (iuaeap)
             IF ( mtype<3 ) THEN
@@ -552,10 +551,10 @@ PROGRAM spag_program_1
             itest = 0
             ediff = ei - e(k)
 !-----------------IS ENERGY INTERVALL LARGE ENOUGH ?-------------
-!      		IF ((EI.GT.0.25).AND.(EDIFF.LT.0.1999)) ITEST=1
-!      		IF ((EI.LE.0.10).AND.(EDIFF.LT.0.0499)) ITEST=1
-!      		IF(((EI.LE.0.25).AND.(EDIFF.LT.0.0999)
-!     &				.AND.(EI.GT.0.1))) ITEST=1
+!            IF ((EI.GT.0.25).AND.(EDIFF.LT.0.1999)) ITEST=1
+!            IF ((EI.LE.0.10).AND.(EDIFF.LT.0.0499)) ITEST=1
+!            IF(((EI.LE.0.25).AND.(EDIFF.LT.0.0999)
+!     &            .AND.(EI.GT.0.1))) ITEST=1
             iei = 1
             IF ( ei>0.10 ) iei = 2
             IF ( ei>0.25 ) iei = 3

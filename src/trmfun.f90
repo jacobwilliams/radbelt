@@ -1,5 +1,7 @@
 module radbelt_module 
 
+   use radbelt_kinds_module
+
    ! trmfun.for	1987
 
    implicit none 
@@ -28,21 +30,23 @@ module radbelt_module
 !***********************************************************************
 subroutine trara1(descr,map,fl,bb0,e,f,n)
  
-   real bb0 , e , e0 , e1 , e2 , escale , f , f0 , f1 , f2 , fistep , fl , fscale , xnl
+   real(wp) bb0 , e , e0 , e1 , e2 , escale , f , f0 , f1 , f2 , fistep , fl , fscale , xnl
    integer i0 , i1 , i2 , i3 , ie , l3 , map , n , nb , nl
    logical s0 , s1 , s2
    dimension e(n) , f(n) , map(*)
    integer descr(8)
-   common /tra2  / fistep
-   data f1 , f2/1.001 , 1.002/
-!
+
+   common /tra2/ fistep
+
+   data f1 , f2/1.001_wp , 1.002_wp/
+
    fistep = descr(7)/descr(2)
    escale = descr(4)
    fscale = descr(7)
-   xnl = amin1(15.6,abs(fl))
+   xnl = min(15.6_wp,abs(fl))
    nl = xnl*descr(5)
-   if ( bb0<1. ) bb0 = 1.
-   nb = (bb0-1.)*descr(6)
+   if ( bb0<1.0_wp ) bb0 = 1.0_wp
+   nb = (bb0-1.0_wp)*descr(6)
 !
 ! i2 is the number of elements in the flux map for the first energy.
 ! i3 is the index of the last element of the second energy map.
@@ -99,7 +103,7 @@ subroutine trara1(descr,map,fl,bb0,e,f,n)
 ! finally, interpolate in energy.
 !
       f(ie) = f1 + (f2-f1)*(e(ie)-e1)/(e2-e1)
-      if ( f2<=0.0 ) then
+      if ( f2<=0.0_wp ) then
          if ( i1/=0 ) then
 !
 ! --------- special interpolation ---------------------------------
@@ -111,13 +115,13 @@ subroutine trara1(descr,map,fl,bb0,e,f,n)
 !
             if ( s0 ) f0 = trara2(map(i0+3),nl,nb)/fscale
             s0 = .false.
-            f(ie) = amin1(f(ie),f0+(f1-f0)*(e(ie)-e0)/(e1-e0))
+            f(ie) = min(f(ie),f0+(f1-f0)*(e(ie)-e0)/(e1-e0))
          endif
       endif
 !
 ! the logarithmic flux is always kept greater or equal zero.
 !
-      f(ie) = amax1(f(ie),0.)
+      f(ie) = max(f(ie),0.0_wp)
    enddo
 end subroutine trara1
 
@@ -137,13 +141,13 @@ end subroutine trara1
 !*****************************************************************
 function trara2(map,il,ib)
 
-   real dfl , fincr1 , fincr2 , fistep , fkb , fkb1 , fkb2 , fkbj1 , fkbj2 , &
-        fkbm , fll1 , fll2 , flog , flog1 , flog2 , flogm ,   &
-        fnb , fnl , sl1 , sl2
-   real trara2
+   real(wp) dfl , fincr1 , fincr2 , fistep , fkb , fkb1 , fkb2 , fkbj1 , fkbj2 , &
+            fkbm , fll1 , fll2 , flog , flog1 , flog2 , flogm ,   &
+            fnb , fnl , sl1 , sl2
+   real(wp) trara2
    integer i1 , i2 , ib , il , itime , j1 , j2 , kt , l1 , l2 , map(*)
 
-   common /tra2  / fistep
+   common /tra2/ fistep
    integer :: spag_nextblock_1
 
    spag_nextblock_1 = 1
@@ -169,7 +173,7 @@ function trara2(map,il,ib)
                ! if sub-sub-maps are empty, i. e. length less 4, than trara2=0
                !
             elseif ( (l1<4) .and. (l2<4) ) then
-               trara2 = 0.
+               trara2 = 0.0_wp
                return
             else
                !
@@ -198,8 +202,8 @@ function trara2(map,il,ib)
          dfl = (fnl-fll1)/(fll2-fll1)
          flog1 = map(i1+3)
          flog2 = map(i2+3)
-         fkb1 = 0.
-         fkb2 = 0.
+         fkb1 = 0.0_wp
+         fkb2 = 0.0_wp
          if ( l1>=4 ) then
             !
             ! b/b0 loop
@@ -215,7 +219,7 @@ function trara2(map,il,ib)
                spag_nextblock_1 = 2
                cycle main
             endif
-            trara2 = 0.
+            trara2 = 0.0_wp
             return
  10         if ( itime/=1 ) then
                if ( j2==4 ) then
@@ -227,11 +231,11 @@ function trara2(map,il,ib)
                   fincr1 = map(i1+j1)
                   fkb1 = fkb1 + fincr1
                   flog1 = flog1 - fistep
-                  fkbj1 = ((flog1/fistep)*fincr1+fkb1)/((fincr1/fistep)*sl2+1.)
+                  fkbj1 = ((flog1/fistep)*fincr1+fkb1)/((fincr1/fistep)*sl2+1.0_wp)
                   if ( fkbj1<=fkb1 ) goto 15
                enddo
                if ( fkbj1<=fkb2 ) then
-                  trara2 = 0.
+                  trara2 = 0.0_wp
                   return
                endif
  15            if ( fkbj1<=fkb2 ) then
@@ -244,10 +248,10 @@ function trara2(map,il,ib)
                   spag_nextblock_1 = 5
                   cycle main
                else
-                  fkb1 = 0.
+                  fkb1 = 0.0_wp
                endif
             endif
-            fkb2 = 0.
+            fkb2 = 0.0_wp
          endif
          j2 = 4
          fincr2 = map(i2+j2)
@@ -256,13 +260,13 @@ function trara2(map,il,ib)
          spag_nextblock_1 = 4
       case (4)
          flogm = flog1 + (flog2-flog1)*dfl
-         fkbm = 0.
+         fkbm = 0.0_wp
          fkb2 = fkb2 + fincr2
          flog2 = flog2 - fistep
          sl2 = flog2/fkb2
          if ( l1<4 ) then
-            fincr1 = 0.
-            sl1 = -900000.
+            fincr1 = 0.0_wp
+            sl1 = -900000.0_wp
             spag_nextblock_1 = 6
             cycle main
          else
@@ -275,7 +279,7 @@ function trara2(map,il,ib)
          spag_nextblock_1 = 5
       case (5)
          do while ( sl1>=sl2 )
-            fkbj2 = ((flog2/fistep)*fincr2+fkb2)/((fincr2/fistep)*sl1+1.)
+            fkbj2 = ((flog2/fistep)*fincr2+fkb2)/((fincr2/fistep)*sl1+1.0_wp)
             fkb = fkb1 + (fkbj2-fkb1)*dfl
             flog = fkb*sl1
             if ( fkb>=fnb ) then
@@ -285,7 +289,7 @@ function trara2(map,il,ib)
             fkbm = fkb
             flogm = flog
             if ( j1>=l1 ) then
-               trara2 = 0.
+               trara2 = 0.0_wp
                return
             else
                j1 = j1 + 1
@@ -297,14 +301,14 @@ function trara2(map,il,ib)
          enddo
          spag_nextblock_1 = 6
       case (6)
-         fkbj1 = ((flog1/fistep)*fincr1+fkb1)/((fincr1/fistep)*sl2+1.)
+         fkbj1 = ((flog1/fistep)*fincr1+fkb1)/((fincr1/fistep)*sl2+1.0_wp)
          fkb = fkbj1 + (fkb2-fkbj1)*dfl
          flog = fkb*sl2
          if ( fkb<fnb ) then
             fkbm = fkb
             flogm = flog
             if ( j2>=l2 ) then
-               trara2 = 0.
+               trara2 = 0.0_wp
                return
             else
                j2 = j2 + 1
@@ -318,16 +322,17 @@ function trara2(map,il,ib)
          endif
          spag_nextblock_1 = 7
       case (7)
-         if ( fkb<fkbm+1.e-10 ) then
-            trara2 = 0.
+         if ( fkb<fkbm+1.0e-10_wp ) then
+            trara2 = 0.0_wp
          else
             trara2 = flogm + (flog-flogm)*((fnb-fkbm)/(fkb-fkbm))
-            trara2 = amax1(trara2,0.)
+            trara2 = max(trara2,0.0_wp)
             return
          endif
          exit main
       end select
    enddo main
+   
 end function trara2
 
 end module radbelt_module
