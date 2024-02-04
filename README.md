@@ -75,6 +75,7 @@ two lines had been exchanged.
 ### See also
 
 * [NASA ModelWebArchive](https://git.smce.nasa.gov/ccmc-share/modelwebarchive)
+* [An Astropy-friendly wrapper for the AE-8/AP-8 Van Allen belt model](https://github.com/nasa/radbelt)
 
 ### REFERENCES:
 
