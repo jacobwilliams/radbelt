@@ -1,9 +1,9 @@
 !>
-!  
+!  IGRF model
 !
 !  * SHELLIG.FOR, Version 2.0, January 1992
 !  * 11/01/91-DKB- SHELLG: lowest starting point for B0 search is 2
-!  * 1/27/92-DKB- Adopted to IGRF-91 coeffcients model
+!  * 1/27/92-DKB- Adopted to IGRF-91 coefficients model
 !  * 2/05/92-DKB- Reduce variable-names: INTER(P)SHC,EXTRA(P)SHC,INITI(ALI)ZE
 !  * 8/08/95-DKB- Updated to IGRF-45-95; new coeff. DGRF90, IGRF95, IGRF95S
 !  * 5/31/00-DKB- Updated to IGRF-45-00; new coeff.: IGRF00, IGRF00s

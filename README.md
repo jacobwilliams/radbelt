@@ -78,6 +78,7 @@ two lines had been exchanged.
 * [An Astropy-friendly wrapper for the AE-8/AP-8 Van Allen belt model](https://github.com/nasa/radbelt)
 * [pyIGRF](https://github.com/rilma/pyIGRF)
 * https://github.com/lanl/RAM-SCB/blob/master/srcExternal/igrf.f
+* https://github.com/space-physics/igrf/blob/main/src/igrf/fortran/igrf13.f
 
 ### REFERENCES:
 
