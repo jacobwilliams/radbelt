@@ -169,9 +169,9 @@
                                                        +0.9335804_wp , +0.3583680_wp , +0.0000000_wp , &
                                                        +0.0714471_wp , -0.1861260_wp , +0.9799247_wp], [3,3])
 
-!	   COMMON
-!		X(3)	NOT USED
-!		H(144)	FIELD MODEL COEFFICIENTS ADJUSTED FOR SHELLG
+!     COMMON
+!    X(3)  NOT USED
+!    H(144)  FIELD MODEL COEFFICIENTS ADJUSTED FOR SHELLG
    COMMON X(3) , H(144)
    COMMON /fidb0 / Sp
 
@@ -197,10 +197,10 @@
    RETURN
 
 !*****ENTRY POINT  SHELLC  TO BE USED WITH CARTESIAN CO-ORDINATES
-!		V(3)  CARTESIAN COORDINATES IN EARTH RADII (6371.2 KM)
-!			X-AXIS POINTING TO EQUATOR AT 0 LONGITUDE
-!			Y-AXIS POINTING TO EQUATOR AT 90 LONG.
-!			Z-AXIS POINTING TO NORTH POLE
+!    V(3)  CARTESIAN COORDINATES IN EARTH RADII (6371.2 KM)
+!      X-AXIS POINTING TO EQUATOR AT 0 LONGITUDE
+!      Y-AXIS POINTING TO EQUATOR AT 90 LONG.
+!      Z-AXIS POINTING TO NORTH POLE
    ENTRY shellc(V,Fl,B0)
    X(1) = V(1)
    X(2) = V(2)
@@ -209,7 +209,7 @@
 
 CONTAINS
 
-   SUBROUTINE spag_block_1
+   subroutine spag_block_1
 
       integer,parameter :: max_loop_index = 100  ! 3333   <--- original code had 3333 ... was this a bug ????
 
@@ -383,18 +383,18 @@ CONTAINS
       ENDIF
       Fl = exp(log((1.0_wp+exp(gg))*dimob0)/3.0_wp)
       RETURN
-   END SUBROUTINE spag_block_1
+   END subroutine spag_block_1
 
-END SUBROUTINE shellg
+END subroutine shellg
 
-SUBROUTINE stoer(P,Bq,R)
+subroutine stoer(P,Bq,R)
    IMPLICIT NONE
    REAL(wp) Bq , dr , dsq , dx , dxm , dy , dym , dz , dzm , fli , &
             H , P , q , R , rq , wr , Xi , xm , ym
    REAL(wp) zm
 !*******************************************************************
-!* SUBROUTINE USED FOR FIELD LINE TRACING IN SHELLG                *
-!* CALLS ENTRY POINT FELDI IN GEOMAGNETIC FIELD SUBROUTINE FELDG   *
+!* subroutine USED FOR FIELD LINE TRACING IN SHELLG                *
+!* CALLS ENTRY POINT FELDI IN GEOMAGNETIC FIELD subroutine FELDG   *
 !*******************************************************************
    DIMENSION P(7)  
    real(wp),dimension(3,3),parameter :: u = reshape([ +0.3511737_wp , -0.9148385_wp , -0.1993679_wp , &
@@ -433,7 +433,7 @@ SUBROUTINE stoer(P,Bq,R)
    Bq = dsq*rq*rq
    P(6) = sqrt(dsq/(rq+3.*zm*zm))
    P(7) = P(6)*(rq+zm*zm)/(rq*dzm)
-END SUBROUTINE stoer
+END subroutine stoer
 
 subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)           
    !-------------------------------------------------------------------
@@ -572,33 +572,36 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
 
    end subroutine feldg        
 
-SUBROUTINE feldcof(Year,Dimo)
-   IMPLICIT NONE
-   REAL(wp) Dimo , dte1 , dte2 , Erad , Gh1 , gh2 , gha , sqrt2 , Time , Year
-   INTEGER i , ier , is , iu , iyea , j , l , m , n , Nmax , nmax1 , nmax2 , numye
 !------------------------------------------------------------------------
-!  DETERMINES COEFFICIENTS AND DIPOL MOMENT FROM IGRF MODELS
+!>
+!  Determines coefficients and dipol moment from IGRF models
 !
-!	INPUT:  YEAR	DECIMAL YEAR FOR WHICH GEOMAGNETIC FIELD IS TO
-!			BE CALCULATED (e.g.:1995.5 for day 185 of 1995)
-!	OUTPUT:	DIMO	GEOMAGNETIC DIPOL MOMENT IN GAUSS (NORMALIZED
-!			TO EARTH'S RADIUS) AT THE TIME (YEAR)
-!  D. BILITZA, NSSDC, GSFC, CODE 633, GREENBELT, MD 20771,
-!	(301)286-9536   NOV 1987.
-!  -corrected for 2000 update - dkb- 5/31/2000
-!  ### updated to IGRF-2000 version -dkb- 5/31/2000
-!  ### updated to IGRF-2005 version -dkb- 3/24/2000
-!-----------------------------------------------------------------------
+!### Author
+!  * D. BILITZA, NSSDC, GSFC, CODE 633, GREENBELT, MD 20771,
+!    (301) 286-9536 NOV 1987.
+!
+!### History
+!  * corrected for 2000 update - dkb- 5/31/2000
+!  * updated to IGRF-2000 version -dkb- 5/31/2000
+!  * updated to IGRF-2005 version -dkb- 3/24/2000
 
-   CHARACTER(len=14) Fil1 , fil2
-! ### FILMOD, DTEMOD arrays +1
-   DIMENSION Gh1(144) , gh2(120) , gha(144) 
-   real(wp) :: x , f0 , f !! JW: these were double precision in original code while everything else was single precision
+   subroutine feldcof(year,dimo)
+
+   real(wp),intent(in) :: year !! decimal year for which geomagnetic field is to
+                               !! be calculated (e.g.:1995.5 for day 185 of 1995)
+   real(wp),intent(out) :: dimo !! geomagnetic dipol moment in gauss (normalized
+                                !! to earth's radius) at the time (year)
+
+   real(wp) :: dte1 , dte2 , erad , gh1(144) , gh2(120) , gha(144)  , sqrt2 , time
+   integer :: i , ier , is , iyea , j , l , m , n , nmax , nmax1 , nmax2 , numye
+
+   character(len=14) :: Fil1 , fil2
+   real(wp) :: x , f0 , f !! JW: these were double precision in original 
+                          !! code while everything else was single precision
 
    COMMON /model/ Fil1 , Nmax , Time , Gh1
-   !COMMON /gener/ Umr , Erad , Aquad , Bquad
 
-   ! ### changed to conform with IGRF 45-95, also FILMOD, DTEMOD arrays +1
+   ! changed to conform with IGRF 45-95, also FILMOD, DTEMOD arrays +1
    character(len=14),dimension(17),parameter :: filmod = [&
          'dgrf1945.dat ' , 'dgrf1950.dat ' , 'dgrf1955.dat ' , 'dgrf1960.dat ' , &
          'dgrf1965.dat ' , 'dgrf1970.dat ' , 'dgrf1975.dat ' , 'dgrf1980.dat ' , &
@@ -611,291 +614,264 @@ SUBROUTINE feldcof(Year,Dimo)
                                                  1990.0_wp , 1995.0_wp , 2000.0_wp , &
                                                  2005.0_wp , 2010.0_wp , 2015.0_wp , &
                                                  2020.0_wp , 2025.0_wp]
-!
-! ### numye is number of 5-year priods represented by IGRF
-!
-   numye = 16
-!
-!  IS=0 FOR SCHMIDT NORMALIZATION   IS=1 GAUSS NORMALIZATION
-!  IU  IS INPUT UNIT NUMBER FOR IGRF COEFFICIENT SETS
-!
-   iu = 10
-   is = 0
-!-- DETERMINE IGRF-YEARS FOR INPUT-YEAR
-   Time = Year
-   iyea = int(Year/5.0_wp)*5
+
+   numye = 16 ! number of 5-year priods represented by IGRF
+   is = 0 ! is=0 for schmidt normalization   
+          ! is=1 gauss normalization
+
+   !-- determine igrf-years for input-year
+   time = year
+   iyea = int(year/5.0_wp)*5
    l = (iyea-1945)/5 + 1
-   IF ( l<1 ) l = 1
-   IF ( l>numye ) l = numye
+   if ( l<1 ) l = 1
+   if ( l>numye ) l = numye
    dte1 = dtemod(l)
-   Fil1 = filmod(l)
+   fil1 = filmod(l)
    dte2 = dtemod(l+1)
    fil2 = filmod(l+1)
-!-- GET IGRF COEFFICIENTS FOR THE BOUNDARY YEARS
-   CALL getshc(iu,Fil1,nmax1,Erad,Gh1,ier)
-   IF ( ier/=0 ) STOP
-   CALL getshc(iu,fil2,nmax2,Erad,gh2,ier)
-   IF ( ier/=0 ) STOP
-!-- DETERMINE IGRF COEFFICIENTS FOR YEAR
-   IF ( l<=numye-1 ) THEN
-      CALL intershc(Year,dte1,nmax1,Gh1,dte2,nmax2,gh2,Nmax,gha)
-   ELSE
-      CALL extrashc(Year,dte1,nmax1,Gh1,nmax2,gh2,Nmax,gha)
-   ENDIF
-!-- DETERMINE MAGNETIC DIPOL MOMENT AND COEFFIECIENTS G
+   !-- get igrf coefficients for the boundary years
+   call getshc(fil1,nmax1,erad,gh1,ier)
+   if ( ier/=0 ) stop
+   call getshc(fil2,nmax2,erad,gh2,ier)
+   if ( ier/=0 ) stop
+   !-- determine igrf coefficients for year
+   if ( l<=numye-1 ) then
+      call intershc(year,dte1,nmax1,gh1,dte2,nmax2,gh2,nmax,gha)
+   else
+      call extrashc(year,dte1,nmax1,gh1,nmax2,gh2,nmax,gha)
+   endif
+   !-- determine magnetic dipol moment and coeffiecients g
    f0 = 0.0_wp
-   DO j = 1 , 3
+   do j = 1 , 3
       f = gha(j)*1.0e-5_wp
       f0 = f0 + f*f
-   ENDDO
-   Dimo = sqrt(f0)
+   enddo
+   dimo = sqrt(f0)
  
-   Gh1(1) = 0.0_wp
+   gh1(1) = 0.0_wp
    i = 2
    f0 = 1.0e-5_wp
-   IF ( is==0 ) f0 = -f0
+   if ( is==0 ) f0 = -f0
    sqrt2 = sqrt(2.0_wp)
  
-   DO n = 1 , Nmax
+   do n = 1 , nmax
       x = n
       f0 = f0*x*x/(4.0_wp*x-2.0_wp)
-      IF ( is==0 ) f0 = f0*(2.0_wp*x-1.0_wp)/x
+      if ( is==0 ) f0 = f0*(2.0_wp*x-1.0_wp)/x
       f = f0*0.5_wp
-      IF ( is==0 ) f = f*sqrt2
-      Gh1(i) = gha(i-1)*f0
+      if ( is==0 ) f = f*sqrt2
+      gh1(i) = gha(i-1)*f0
       i = i + 1
-      DO m = 1 , n
+      do m = 1 , n
          f = f*(x+m)/(x-m+1.0_wp)
-         IF ( is==0 ) f = f*sqrt((x-m+1.0_wp)/(x+m))
-         Gh1(i) = gha(i-1)*f
-         Gh1(i+1) = gha(i)*f
+         if ( is==0 ) f = f*sqrt((x-m+1.0_wp)/(x+m))
+         gh1(i) = gha(i-1)*f
+         gh1(i+1) = gha(i)*f
          i = i + 2
-      ENDDO
-   ENDDO
-END SUBROUTINE feldcof
+      enddo
+   enddo
+   
+end subroutine feldcof
+ 
+! ===============================================================
+!>
+!  Reads spherical harmonic coefficients from the specified
+!  file into an array.
+!
+!### Author
+!  * Version 1.01, A. Zunde, USGS, MS 964, 
+!    Box 25046 Federal Center, Denver, CO  80225
+ 
+subroutine getshc(Fspec,Nmax,Erad,Gh,Ier)
 
-SUBROUTINE getshc(Iu,Fspec,Nmax,Erad,Gh,Ier)
-   IMPLICIT NONE
-   REAL(wp) Erad , g , Gh , h
-   INTEGER i , Ier , Iu , m , mm , n , Nmax , nn
- 
-! ===============================================================
-!
-!	Version 1.01
-!
-!	Reads spherical harmonic coefficients from the specified
-!	file into an array.
-!
-!	Input:
-!	    IU    - Logical unit number
-!	    FSPEC - File specification
-!
-!	Output:
-!	    NMAX  - Maximum degree and order of model
-!	    ERAD  - Earth's radius associated with the spherical
-!		    harmonic coefficients, in the same units as
-!		    elevation
-!	    GH    - Schmidt quasi-normal internal spherical
-!		    harmonic coefficients
-!	    IER   - Error number: =  0, no error
-!				  = -2, records out of order
-!			     	  = FORTRAN run-time error number
-!
-!	A. Zunde
-!	USGS, MS 964, Box 25046 Federal Center, Denver, CO  80225
-!
-! ===============================================================
- 
-   CHARACTER Fspec*(*)
-   DIMENSION Gh(*)
- 
-! ---------------------------------------------------------------
-!	Open coefficient file. Read past first header record.
-!	Read degree and order of model and Earth's radius.
-! ---------------------------------------------------------------
-   OPEN (Iu,FILE=Fspec,STATUS='OLD',IOSTAT=Ier,ERR=100)
-   READ (Iu,*,IOSTAT=Ier,ERR=100)
-   READ (Iu,*,IOSTAT=Ier,ERR=100) Nmax , Erad
-! ---------------------------------------------------------------
-!	Read the coefficient file, arranged as follows:
-!
-!					N     M     G     H
-!					----------------------
-!				    /   1     0    GH(1)  -
-!				   /	1     1    GH(2) GH(3)
-!				  /	2     0    GH(4)  -
-!				 /	2     1    GH(5) GH(6)
-!	    NMAX*(NMAX+3)/2 	/	2     2    GH(7) GH(8)
-!	       records		\	3     0    GH(9)  -
-!				 \      .     .     .     .
-!				  \	.     .     .     .
-!	    NMAX*(NMAX+2)	   \	.     .     .     .
-!	    elements in GH	    \  NMAX  NMAX   .     .
-!
-!	N and M are, respectively, the degree and order of the
-!	coefficient.
-! ---------------------------------------------------------------
- 
-   i = 0
-   main: DO nn = 1 , Nmax
-      DO mm = 0 , nn
-         READ (Iu,*,IOSTAT=Ier,ERR=100) n , m , g , h
-         IF ( nn/=n .OR. mm/=m ) THEN
-            Ier = -2
-            EXIT main
-         ENDIF
-         i = i + 1
-         Gh(i) = g
-         IF ( m/=0 ) THEN
+   character(len=*),intent(in) :: Fspec !! File specification
+   integer,intent(out) :: Nmax !! Maximum degree and order of model
+   real(wp),intent(out) :: Erad !! Earth's radius associated with the spherical
+                                !! harmonic coefficients, in the same units as
+                                !! elevation
+   real(wp),dimension(*),intent(out) :: Gh !! Schmidt quasi-normal internal spherical
+                                           !! harmonic coefficients
+   integer,intent(out) :: Ier !! Error number: 
+                              !!
+                              !!  * 0, no error
+                              !!  * -2, records out of order
+                              !!  * FORTRAN run-time error number
+   
+   integer :: iu !! logical unit number
+   real(wp) :: g , h
+   integer :: i , m , mm , n , nn
+
+   read_file : block
+      ! ---------------------------------------------------------------
+      !  Open coefficient file. Read past first header record.
+      !  Read degree and order of model and Earth's radius.
+      ! ---------------------------------------------------------------
+      OPEN (newunit=Iu,FILE=Fspec,STATUS='OLD',IOSTAT=Ier)
+      if (Ier/=0) then
+         write(*,*) 'Error opening file: '//trim(fspec)
+         exit read_file
+      end if
+      READ (Iu,*,IOSTAT=Ier)
+      if (Ier/=0) exit read_file
+      READ (Iu,*,IOSTAT=Ier) Nmax , Erad
+      if (Ier/=0) exit read_file
+
+      ! ---------------------------------------------------------------
+      !  Read the coefficient file, arranged as follows:
+      !
+      !          N     M     G     H
+      !          ----------------------
+      !            /   1     0    GH(1)  -
+      !           /  1     1    GH(2) GH(3)
+      !          /  2     0    GH(4)  -
+      !         /  2     1    GH(5) GH(6)
+      !      NMAX*(NMAX+3)/2   /  2     2    GH(7) GH(8)
+      !         records    \  3     0    GH(9)  -
+      !         \      .     .     .     .
+      !          \  .     .     .     .
+      !      NMAX*(NMAX+2)     \  .     .     .     .
+      !      elements in GH      \  NMAX  NMAX   .     .
+      !
+      !  N and M are, respectively, the degree and order of the
+      !  coefficient.
+      ! ---------------------------------------------------------------
+      i = 0
+      main: DO nn = 1 , Nmax
+         DO mm = 0 , nn
+            READ (Iu,*,IOSTAT=Ier) n , m , g , h
+            if (Ier/=0) exit main
+            IF ( nn/=n .OR. mm/=m ) THEN
+               Ier = -2
+               EXIT main
+            ENDIF
             i = i + 1
-            Gh(i) = h
-         ENDIF
-      ENDDO
-   ENDDO main
- 
- 100  CLOSE (Iu)
- 
-END SUBROUTINE getshc
+            Gh(i) = g
+            IF ( m/=0 ) THEN
+               i = i + 1
+               Gh(i) = h
+            ENDIF
+         ENDDO
+      ENDDO main
 
-SUBROUTINE intershc(Date,Dte1,Nmax1,Gh1,Dte2,Nmax2,Gh2,Nmax,Gh)
-   IMPLICIT NONE
-   REAL(wp) Date , Dte1 , Dte2 , factor , Gh , Gh1 , Gh2
-   INTEGER i , k , l , Nmax , Nmax1 , Nmax2
- 
-! ===============================================================
-!
-!	Version 1.01
-!
-!	Interpolates linearly, in time, between two spherical
-!	harmonic models.
-!
-!	Input:
-!	    DATE  - Date of resulting model (in decimal year)
-!	    DTE1  - Date of earlier model
-!	    NMAX1 - Maximum degree and order of earlier model
-!	    GH1   - Schmidt quasi-normal internal spherical
-!		    harmonic coefficients of earlier model
-!	    DTE2  - Date of later model
-!	    NMAX2 - Maximum degree and order of later model
-!	    GH2   - Schmidt quasi-normal internal spherical
-!		    harmonic coefficients of later model
-!
-!	Output:
-!	    GH    - Coefficients of resulting model
-!	    NMAX  - Maximum degree and order of resulting model
-!
-!	A. Zunde
-!	USGS, MS 964, Box 25046 Federal Center, Denver, CO  80225
-!
-! ===============================================================
- 
-   DIMENSION Gh1(*) , Gh2(*) , Gh(*)
- 
-! ---------------------------------------------------------------
-!	The coefficients (GH) of the resulting model, at date
-!	DATE, are computed by linearly interpolating between the
-!	coefficients of the earlier model (GH1), at date DTE1,
-!	and those of the later model (GH2), at date DTE2. If one
-!	model is smaller than the other, the interpolation is
-!	performed with the missing coefficients assumed to be 0.
-! ---------------------------------------------------------------
- 
-   factor = (Date-Dte1)/(Dte2-Dte1)
- 
-   IF ( Nmax1==Nmax2 ) THEN
-      k = Nmax1*(Nmax1+2)
-      Nmax = Nmax1
-   ELSEIF ( Nmax1>Nmax2 ) THEN
-      k = Nmax2*(Nmax2+2)
-      l = Nmax1*(Nmax1+2)
-      DO i = k + 1 , l
-         Gh(i) = Gh1(i) + factor*(-Gh1(i))
-      ENDDO
-      Nmax = Nmax1
-   ELSE
-      k = Nmax1*(Nmax1+2)
-      l = Nmax2*(Nmax2+2)
-      DO i = k + 1 , l
-         Gh(i) = factor*Gh2(i)
-      ENDDO
-      Nmax = Nmax2
-   ENDIF
- 
-   DO i = 1 , k
-      Gh(i) = Gh1(i) + factor*(Gh2(i)-Gh1(i))
-   ENDDO
- 
-END SUBROUTINE intershc
+   end block read_file
 
-SUBROUTINE extrashc(Date,Dte1,Nmax1,Gh1,Nmax2,Gh2,Nmax,Gh)
-   IMPLICIT NONE
-   REAL(wp) Date , Dte1 , factor , Gh , Gh1 , Gh2
-   INTEGER i , k , l , Nmax , Nmax1 , Nmax2
+   CLOSE (Iu)
+ 
+END subroutine getshc
  
 ! ===============================================================
+!>
+!  Interpolates linearly, in time, between two spherical
+!  harmonic models.
 !
-!	Version 1.01
+!  The coefficients (GH) of the resulting model, at date
+!  DATE, are computed by linearly interpolating between the
+!  coefficients of the earlier model (GH1), at date DTE1,
+!  and those of the later model (GH2), at date DTE2. If one
+!  model is smaller than the other, the interpolation is
+!  performed with the missing coefficients assumed to be 0.
 !
-!	Extrapolates linearly a spherical harmonic model with a
-!	rate-of-change model.
-!
-!	Input:
-!	    DATE  - Date of resulting model (in decimal year)
-!	    DTE1  - Date of base model
-!	    NMAX1 - Maximum degree and order of base model
-!	    GH1   - Schmidt quasi-normal internal spherical
-!		    harmonic coefficients of base model
-!	    NMAX2 - Maximum degree and order of rate-of-change
-!		    model
-!	    GH2   - Schmidt quasi-normal internal spherical
-!		    harmonic coefficients of rate-of-change model
-!
-!	Output:
-!	    GH    - Coefficients of resulting model
-!	    NMAX  - Maximum degree and order of resulting model
-!
-!	A. Zunde
-!	USGS, MS 964, Box 25046 Federal Center, Denver, CO  80225
-!
-! ===============================================================
+!### Author
+!  * Version 1.01, A. Zunde
+!    USGS, MS 964, Box 25046 Federal Center, Denver, CO  80225
  
-   DIMENSION Gh1(*) , Gh2(*) , Gh(*)
- 
-! ---------------------------------------------------------------
-!	The coefficients (GH) of the resulting model, at date
-!	DATE, are computed by linearly extrapolating the coef-
-!	ficients of the base model (GH1), at date DTE1, using
-!	those of the rate-of-change model (GH2), at date DTE2. If
-!	one model is smaller than the other, the extrapolation is
-!	performed with the missing coefficients assumed to be 0.
-! ---------------------------------------------------------------
- 
-   factor = (Date-Dte1)
- 
-   IF ( Nmax1==Nmax2 ) THEN
-      k = Nmax1*(Nmax1+2)
-      Nmax = Nmax1
-   ELSEIF ( Nmax1>Nmax2 ) THEN
-      k = Nmax2*(Nmax2+2)
-      l = Nmax1*(Nmax1+2)
-      DO i = k + 1 , l
-         Gh(i) = Gh1(i)
-      ENDDO
-      Nmax = Nmax1
-   ELSE
-      k = Nmax1*(Nmax1+2)
-      l = Nmax2*(Nmax2+2)
-      DO i = k + 1 , l
-         Gh(i) = factor*Gh2(i)
-      ENDDO
-      Nmax = Nmax2
-   ENDIF
- 
-   DO i = 1 , k
-      Gh(i) = Gh1(i) + factor*Gh2(i)
-   ENDDO
- 
-END SUBROUTINE extrashc
+subroutine intershc(date,dte1,nmax1,gh1,dte2,nmax2,gh2,nmax,gh)
 
+   real(wp),intent(in) :: date !! Date of resulting model (in decimal year)
+   real(wp),intent(in) :: dte1 !! Date of earlier model
+   integer,intent(in) :: nmax1 !! Maximum degree and order of earlier model
+   real(wp),intent(in) :: gh1(*) !! Schmidt quasi-normal internal spherical harmonic coefficients of earlier model
+   real(wp),intent(in) :: dte2 !! Date of later model
+   integer,intent(in) :: nmax2 !! Maximum degree and order of later model
+   real(wp),intent(in) :: gh2(*) !! Schmidt quasi-normal internal spherical harmonic coefficients of later model
+   real(wp),intent(out) :: gh(*) !! Coefficients of resulting model
+   integer,intent(out) :: nmax !! Maximum degree and order of resulting model
+
+   real(wp) :: factor
+   integer :: i , k , l
+ 
+   factor = (date-dte1)/(dte2-dte1)
+ 
+   if ( nmax1==nmax2 ) then
+      k = nmax1*(nmax1+2)
+      nmax = nmax1
+   elseif ( nmax1>nmax2 ) then
+      k = nmax2*(nmax2+2)
+      l = nmax1*(nmax1+2)
+      do i = k + 1 , l
+         gh(i) = gh1(i) + factor*(-gh1(i))
+      enddo
+      nmax = nmax1
+   else
+      k = nmax1*(nmax1+2)
+      l = nmax2*(nmax2+2)
+      do i = k + 1 , l
+         gh(i) = factor*gh2(i)
+      enddo
+      nmax = nmax2
+   endif
+ 
+   do i = 1 , k
+      gh(i) = gh1(i) + factor*(gh2(i)-gh1(i))
+   enddo
+ 
+end subroutine intershc
+ 
+! ===============================================================
+!>
+!  Extrapolates linearly a spherical harmonic model with a
+!  rate-of-change model.
+!
+!  The coefficients (GH) of the resulting model, at date
+!  DATE, are computed by linearly extrapolating the coef-
+!  ficients of the base model (GH1), at date DTE1, using
+!  those of the rate-of-change model (GH2), at date DTE2. If
+!  one model is smaller than the other, the extrapolation is
+!  performed with the missing coefficients assumed to be 0.
+!
+!### Author
+!  * Version 1.01, A. Zunde
+!    USGS, MS 964, Box 25046 Federal Center, Denver, CO  80225
+ 
+subroutine extrashc(date,dte1,nmax1,gh1,nmax2,gh2,nmax,gh)
+
+   real(wp),intent(in) :: date   !! Date of resulting model (in decimal year)
+   real(wp),intent(in) :: dte1   !! Date of base model
+   integer,intent(in)  :: nmax1  !! Maximum degree and order of base model
+   real(wp),intent(in) :: gh1(*) !! Schmidt quasi-normal internal spherical harmonic coefficients of base model
+   integer,intent(in)  :: nmax2  !! Maximum degree and order of rate-of-change model
+   real(wp),intent(in) :: gh2(*) !! Schmidt quasi-normal internal spherical harmonic coefficients of rate-of-change model
+   real(wp),intent(out) :: gh(*) !! Coefficients of resulting model
+   integer,intent(out) :: nmax   !! Maximum degree and order of resulting model
+
+   real(wp) :: factor  
+   integer :: i , k , l 
+  
+   factor = (date-dte1)
+ 
+   if ( nmax1==nmax2 ) then
+      k = nmax1*(nmax1+2)
+      nmax = nmax1
+   elseif ( nmax1>nmax2 ) then
+      k = nmax2*(nmax2+2)
+      l = nmax1*(nmax1+2)
+      do i = k + 1 , l
+         gh(i) = gh1(i)
+      enddo
+      nmax = nmax1
+   else
+      k = nmax1*(nmax1+2)
+      l = nmax2*(nmax2+2)
+      do i = k + 1 , l
+         gh(i) = factor*gh2(i)
+      enddo
+      nmax = nmax2
+   endif
+ 
+   do i = 1 , k
+      gh(i) = gh1(i) + factor*gh2(i)
+   enddo
+ 
+end subroutine extrashc
 
 end module SHELLIG_module

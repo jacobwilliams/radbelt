@@ -77,6 +77,7 @@ two lines had been exchanged.
 * [NASA ModelWebArchive](https://git.smce.nasa.gov/ccmc-share/modelwebarchive)
 * [An Astropy-friendly wrapper for the AE-8/AP-8 Van Allen belt model](https://github.com/nasa/radbelt)
 * [pyIGRF](https://github.com/rilma/pyIGRF)
+* https://github.com/lanl/RAM-SCB/blob/master/srcExternal/igrf.f
 
 ### REFERENCES:
 
