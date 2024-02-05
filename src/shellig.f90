@@ -596,7 +596,7 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
    integer :: i , ier , is , iyea , j , l , m , n , nmax , nmax1 , nmax2 , numye
 
    character(len=14) :: Fil1 , fil2
-   real(wp) :: x , f0 , f !! JW: these were double precision in original 
+   real(wp) :: x , f0 , f !! these were double precision in original 
                           !! code while everything else was single precision
 
    COMMON /model/ Fil1 , Nmax , Time , Gh1
