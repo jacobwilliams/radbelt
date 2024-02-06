@@ -1,5 +1,5 @@
 !*****************************************************************************************
-!> 
+!>
 !  Numeric kind definitions for radbelt.
 
     module radbelt_kinds_module

@@ -1,9 +1,11 @@
 PROGRAM spag_program_1
 
-   use radbelt_module
+   use trmfun_module
    use radbelt_kinds_module
 
    IMPLICIT NONE
+
+   type(trm_type) :: trm
    REAL(wp) af , bb0 , bbeg , bend , blv , bstep , df , e , ebeg , eda , &
             ediff , eend , ei , estep , fl , flux , vbeg , vend , vstep , &
             xl
@@ -287,7 +289,7 @@ PROGRAM spag_program_1
 !             READ (iuaeap) ihead
 !             nmap = ihead(8)
 !             READ (iuaeap) (map(i),i=1,nmap)
- 
+
 ! ASCIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 ! When using the ASCII coefficient files instead of the binary
 ! coefficient files, one should replace the preceding 5 statements
@@ -299,7 +301,7 @@ PROGRAM spag_program_1
       NMAP=IHEAD(8)
       READ(IUAEAP,1301) (MAP(I),I=1,NMAP)
 1301   FORMAT(1X,12I6)
- 
+
             CLOSE (iuaeap)
             IF ( mtype<3 ) THEN
                particle = 'PROTONS'
@@ -533,7 +535,7 @@ PROGRAM spag_program_1
 !----------------THE B LOOP-------------------------------------
             DO i = 1 , nb
                bb0 = xl(2,i)
-               CALL trara1(ihead,map,fl,bb0,e,flux,ne)
+               CALL trm%trara1(ihead,map,fl,bb0,e,flux,ne)
 !----------------THE ENERGY LOOP--------------------------------
                DO k = 1 , ne
                   af(k,l,i) = 0.0
