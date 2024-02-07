@@ -49,6 +49,10 @@
          real(wp) :: Time = 0.0_wp !! year (decimal: 1973.5) for which magnetic field is to be calculated
          real(wp),dimension(144) :: g = 0.0_wp  !! `g(m)` -- normalized field coefficients (see [[feldcof]]) m=nmax*(nmax+2)
 
+         ! formerly saved vars in shellg:
+         real(wp) :: step = 0.20_wp !! step size for field line tracing
+         real(wp) :: steq = 0.03_wp !! step size for integration
+
          contains
          private
 
@@ -230,24 +234,20 @@
    real(wp) :: arg1 , arg2 , bequ , bq1 , bq2 , bq3 , c0 , c1 , c2 , c3 , &
                ct , d , d0 , d1 , d2, dimob0 , e0 , e1 , e2 , ff , fi , gg , &
                hli , oradik , oterm , p(8,100) , r , r1 , r2 , r3 , r3h , radik , &
-               rlat , rlon , rmax , rmin , rq , st , step , step12 , step2 , &
-               steq , stp , t , term , v(3) , xx , z , zq , zz
+               rlat , rlon , rq , st , step12 , step2 , &
+               stp , t , term , v(3) , xx , z , zq , zz
    integer :: i , iequ , n
 
    real(wp),dimension(3,3),parameter ::  u = reshape([ +0.3511737_wp , -0.9148385_wp , -0.1993679_wp , &
                                                        +0.9335804_wp , +0.3583680_wp , +0.0000000_wp , &
                                                        +0.0714471_wp , -0.1861260_wp , +0.9799247_wp], [3,3])
 
-   !-- RMIN, RMAX ARE BOUNDARIES FOR IDENTIFICATION OF ICODE=2 AND 3
-   !-- STEP IS STEP SIZE FOR FIELD LINE TRACING
-   !-- STEQ IS STEP SIZE FOR INTEGRATION
-
-   DATA rmin , rmax/0.05_wp , 1.01_wp/
-   DATA step , steq/0.20_wp , 0.03_wp/
+   real(wp),parameter :: rmin = 0.05_wp !! boundaries for identification of `icode=2 and 3`
+   real(wp),parameter :: rmax = 1.01_wp !! boundaries for identification of `icode=2 and 3`
 
    bequ = 1.0e10_wp
 
-   !*****ENTRY POINT  SHELLG  TO BE USED WITH GEODETIC CO-ORDINATES
+   !*****ENTRY POINT SHELLG TO BE USED WITH GEODETIC CO-ORDINATES
    rlat = Glat*Umr
    ct = sin(rlat)
    st = cos(rlat)
@@ -260,12 +260,12 @@
    CALL spag_block_1()
    RETURN
 
-!*****ENTRY POINT  SHELLC  TO BE USED WITH CARTESIAN CO-ORDINATES
+!*****ENTRY POINT SHELLC TO BE USED WITH CARTESIAN CO-ORDINATES   ! JW : does not appear to be used anywhere.
 !    V(3)  CARTESIAN COORDINATES IN EARTH RADII (6371.2 KM)
 !      X-AXIS POINTING TO EQUATOR AT 0 LONGITUDE
 !      Y-AXIS POINTING TO EQUATOR AT 90 LONG.
 !      Z-AXIS POINTING TO NORTH POLE
-   ENTRY shellc(V,Fl,B0)
+   ENTRY shellc(me,V,Fl,B0)
    me%Xi(1) = V(1)
    me%Xi(2) = V(2)
    me%Xi(3) = V(3)
@@ -275,7 +275,7 @@ CONTAINS
 
    subroutine spag_block_1
 
-      integer,parameter :: max_loop_index = 100  ! 3333   <--- original code had 3333 ... was this a bug ????
+      integer,parameter :: max_loop_index = 100  ! 3333   <--- JW : original code had 3333 ... was this a bug ????
 
       !*****CONVERT TO DIPOL-ORIENTED CO-ORDINATES
       rq = 1.0_wp/(me%Xi(1)*me%Xi(1)+me%Xi(2)*me%Xi(2)+me%Xi(3)*me%Xi(3))
@@ -284,24 +284,24 @@ CONTAINS
       p(2,2) = (me%Xi(1)*u(1,2)+me%Xi(2)*u(2,2))*r3h
       p(3,2) = (me%Xi(1)*u(1,3)+me%Xi(2)*u(2,3)+me%Xi(3)*u(3,3))*rq
       !     *****FIRST THREE POINTS OF FIELD LINE
-      step = -sign(step,p(3,2))
+      me%step = -sign(me%step,p(3,2))
       call me%stoer(p(1,2),bq2,r2)
       B0 = sqrt(bq2)
-      p(1,3) = p(1,2) + 0.5_wp*step*p(4,2)
-      p(2,3) = p(2,2) + 0.5_wp*step*p(5,2)
-      p(3,3) = p(3,2) + 0.5_wp*step
+      p(1,3) = p(1,2) + 0.5_wp*me%step*p(4,2)
+      p(2,3) = p(2,2) + 0.5_wp*me%step*p(5,2)
+      p(3,3) = p(3,2) + 0.5_wp*me%step
       call me%stoer(p(1,3),bq3,r3)
-      p(1,1) = p(1,2) - step*(2.0_wp*p(4,2)-p(4,3))
-      p(2,1) = p(2,2) - step*(2.0_wp*p(5,2)-p(5,3))
-      p(3,1) = p(3,2) - step
+      p(1,1) = p(1,2) - me%step*(2.0_wp*p(4,2)-p(4,3))
+      p(2,1) = p(2,2) - me%step*(2.0_wp*p(5,2)-p(5,3))
+      p(3,1) = p(3,2) - me%step
       call me%stoer(p(1,1),bq1,r1)
-      p(1,3) = p(1,2) + step*(20.0_wp*p(4,3)-3.*p(4,2)+p(4,1))/18.0_wp
-      p(2,3) = p(2,2) + step*(20.0_wp*p(5,3)-3.*p(5,2)+p(5,1))/18.0_wp
-      p(3,3) = p(3,2) + step
+      p(1,3) = p(1,2) + me%step*(20.0_wp*p(4,3)-3.*p(4,2)+p(4,1))/18.0_wp
+      p(2,3) = p(2,2) + me%step*(20.0_wp*p(5,3)-3.*p(5,2)+p(5,1))/18.0_wp
+      p(3,3) = p(3,2) + me%step
       call me%stoer(p(1,3),bq3,r3)
       !*****INVERT SENSE IF REQUIRED
       IF ( bq3>bq1 ) THEN
-         step = -step
+         me%step = -me%step
          r3 = r1
          bq3 = bq1
          DO i = 1 , 7
@@ -324,14 +324,14 @@ CONTAINS
          iequ = 3
       ENDIF
       !*****INITIALIZATION OF INTEGRATION LOOPS
-      step12 = step/12.0_wp
-      step2 = step + step
-      steq = sign(steq,step)
+      step12 = me%step/12.0_wp
+      step2 = me%step + me%step
+      me%steq = sign(me%steq,me%step)
       fi = 0.0_wp
       Icode = 1
       oradik = 0.0_wp
       oterm = 0.0_wp
-      stp = r2*steq
+      stp = r2*me%steq
       z = p(3,2) + stp
       stp = stp/0.75_wp
       p(8,1) = step2*(p(1,1)*p(4,1)+p(2,1)*p(5,1))
@@ -356,12 +356,12 @@ CONTAINS
          e2 = (p(7,n)+p(7,n-2)-e0-e0)*0.5_wp
          inner: DO
             !*****INNER LOOP (FOR QUADRATURE)
-            t = (z-p(3,n-1))/step
+            t = (z-p(3,n-1))/me%step
             IF ( t>1.0_wp ) THEN
                !*****PREDICTOR (FIELD LINE TRACING)
                p(1,n+1) = p(1,n) + step12*(23.0_wp*p(4,n)-16.0_wp*p(4,n-1)+5.0_wp*p(4,n-2))
                p(2,n+1) = p(2,n) + step12*(23.0_wp*p(5,n)-16.0_wp*p(5,n-1)+5.0_wp*p(5,n-2))
-               p(3,n+1) = p(3,n) + step
+               p(3,n+1) = p(3,n) + me%step
                call me%stoer(p(1,n+1),bq3,r3)
                !*****SEARCH FOR LOWEST MAGNETIC FIELD STRENGTH
                IF ( bq3<bequ ) THEN
@@ -376,7 +376,7 @@ CONTAINS
                IF ( r<=rmin ) THEN
                   !*****APPROXIMATION FOR HIGH VALUES OF L.
                   Icode = 3
-                  t = -p(3,n-1)/step
+                  t = -p(3,n-1)/me%step
                   Fl = 1.0_wp/(abs(((c3*t+c2)*t+c1)*t+c0)+1.0e-15_wp)
                   RETURN
                ENDIF
@@ -392,7 +392,7 @@ CONTAINS
                fi = fi + stp*(oterm+term)
                oradik = radik
                oterm = term
-               stp = r*steq
+               stp = r*me%steq
                z = z + stp
             ENDIF
          ENDDO inner
@@ -420,23 +420,23 @@ CONTAINS
       xx = 3*arg1 - arg2
       IF ( xx>23.0_wp ) THEN
          gg = xx - 3.0460681_wp
-      ELSEIF ( xx>11.7 ) THEN
+      ELSEIF ( xx>11.7_wp ) THEN
          gg = (((((2.8212095E-8_wp*xx-3.8049276E-6_wp)*xx+&
                    2.170224E-4_wp)*xx-6.7310339E-3_wp)*xx+&
                    1.2038224E-1_wp)*xx-1.8461796E-1_wp)*xx + 2.0007187_wp
-      ELSEIF ( xx>+3.0 ) THEN
+      ELSEIF ( xx>+3.0_wp ) THEN
          gg = ((((((((6.3271665E-10_wp*xx-3.958306E-8_wp)*xx+&
                       9.9766148E-07_wp)*xx-1.2531932E-5_wp)*xx+&
                       7.9451313E-5_wp)*xx-3.2077032E-4_wp)*xx+&
                       2.1680398E-3_wp)*xx+1.2817956E-2_wp)*xx+&
                       4.3510529E-1_wp)*xx + 6.222355E-1_wp
-      ELSEIF ( xx>-3.0 ) THEN
+      ELSEIF ( xx>-3.0_wp ) THEN
          gg = ((((((((2.6047023E-10_wp*xx+2.3028767E-9_wp)*xx-&
                       2.1997983E-8_wp)*xx-5.3977642E-7_wp)*xx-&
                       3.3408822E-6_wp)*xx+3.8379917E-5_wp)*xx+&
                       1.1784234E-3_wp)*xx+1.4492441E-2_wp)*xx+&
                       4.3352788E-1_wp)*xx + 6.228644E-1_wp
-      ELSEIF ( xx>-22. ) THEN
+      ELSEIF ( xx>-22.0_wp ) THEN
          gg = ((((((((-8.1537735E-14_wp*xx+8.3232531E-13_wp)*xx+&
                        1.0066362E-9_wp)*xx+8.1048663E-8_wp)*xx+&
                        3.2916354E-6_wp)*xx+8.2711096E-5_wp)*xx+&
