@@ -1,4 +1,45 @@
-National Space Science Data Center      Data set  PT-11B         Mar 1996 
+Radbelt: Work in progress to refactor the AE-8/AP-8 Van Allen belt model.
+
+### Status
+
+[![Language](https://img.shields.io/badge/-Fortran-734f96?logo=fortran&logoColor=white)](https://github.com/topics/fortran)
+[![GitHub release](https://img.shields.io/github/release/jacobwilliams/radbelt.svg)](https://github.com/jacobwilliams/radbelt/releases/latest)
+[![CI Status](https://github.com/jacobwilliams/radbelt/actions/workflows/CI.yml/badge.svg)](https://github.com/jacobwilliams/radbelt/actions)
+[![codecov](https://codecov.io/gh/jacobwilliams/radbelt/branch/master/graph/badge.svg)](https://codecov.io/gh/jacobwilliams/radbelt)
+[![last-commit](https://img.shields.io/github/last-commit/jacobwilliams/radbelt)](https://github.com/jacobwilliams/radbelt/commits/master)
+
+### Compiling
+
+A [Fortran Package Manager](https://github.com/fortran-lang/fpm) manifest file is included, so that the library and test cases can be compiled with FPM. For example:
+
+```
+fpm build --profile release
+fpm test --profile release
+```
+
+To use `radbelt` within your fpm project, add the following to your `fpm.toml` file:
+```toml
+[dependencies]
+radbelt = { git="https://github.com/jacobwilliams/radbelt.git" }
+```
+
+### Documentation
+
+The latest API documentation can be found [here](https://jacobwilliams.github.io/radbelt/). This was generated from the source code using [FORD](https://github.com/Fortran-FOSS-Programmers/ford).
+
+### See also
+
+* [NASA ModelWebArchive](https://git.smce.nasa.gov/ccmc-share/modelwebarchive)
+* [An Astropy-friendly wrapper for the AE-8/AP-8 Van Allen belt model](https://github.com/nasa/radbelt)
+* [pyIGRF](https://github.com/rilma/pyIGRF)
+* https://github.com/lanl/RAM-SCB/blob/master/srcExternal/igrf.f
+* https://github.com/space-physics/igrf/blob/main/src/igrf/fortran/igrf13.f
+
+
+
+# Original Readme
+
+National Space Science Data Center      Data set  PT-11B         Mar 1996
 =========================================================================
 
 ```
@@ -12,7 +53,7 @@ SOURCE:      Dieter Bilitza, GSFC/NSSDC code 633, Greenbelt,
              dbilitza@pop600.gsfc.nasa.gov
 
 CONTENT:     12 files					      *.*   blocks
-	     	FORTRAN source code:  
+	     	FORTRAN source code:
 	     driver program with interface          	RADBELT.FOR   48
              subroutines, functions 		 	 TRMFUN.FOR   30
 
@@ -34,51 +75,42 @@ CONTENT:     12 files					      *.*   blocks
 
 These empirical models describe the differential or
 integral, omnidirectional fluxes of electrons (AE-8) and protons
-(AP-8) in the inner and outer radiation belts (electrons: L=1.1 
-to 11, protons: L=1.1 to 7) for two epochs representing solar 
-maximum (1970) and minimum (1964) conditions. The energy spectrum 
-ranges from 0.1 to 400 MeV for the protons and from 0.04 to 7 MeV 
-for the electrons. AE-8 and AP-8 are the most recent ones in a 
-series of models established by J. Vette and his colleges at NSSDC 
-starting in the early sixties. The models are based on almost all 
+(AP-8) in the inner and outer radiation belts (electrons: L=1.1
+to 11, protons: L=1.1 to 7) for two epochs representing solar
+maximum (1970) and minimum (1964) conditions. The energy spectrum
+ranges from 0.1 to 400 MeV for the protons and from 0.04 to 7 MeV
+for the electrons. AE-8 and AP-8 are the most recent ones in a
+series of models established by J. Vette and his colleges at NSSDC
+starting in the early sixties. The models are based on almost all
 available satellite data. It is IMPORTANT that the models maps for
 solar maximum are used with a magnetic field model for epoch=1970
 and for solar minimum for epoch=1964.
 
 For each epoch and particle the model consists of a three-
-dimensional table of (logarithm of) particle fluxes in energy, L-value, 
-and B/B0 (magnetic field strength normalized to the equator). The program 
-MODEL finds the particle fluxes for given energy, L-value and B/B0 by 
-interpolating in energy (subroutine TRARA1) and in L * B/B0 space (TRARA2). 
+dimensional table of (logarithm of) particle fluxes in energy, L-value,
+and B/B0 (magnetic field strength normalized to the equator). The program
+MODEL finds the particle fluxes for given energy, L-value and B/B0 by
+interpolating in energy (subroutine TRARA1) and in L * B/B0 space (TRARA2).
 The program RADBELT produces tables of integral or differential fluxes
 for different energies varying with L or B/B0.
 
 The coefficient files are provided in VAX/VMS binary (*.bin) and
 ASCII (*.asc) format. For all systems other than VMS the use of the ASCII
-files is recommended. If using the ASCII coefficient one needs to slightly 
+files is recommended. If using the ASCII coefficient one needs to slightly
 modify the RADBELT.FOR program as described in a comment statement in
-RADBELT (this comments are found after the OPEN statement for the coefficient 
+RADBELT (this comments are found after the OPEN statement for the coefficient
 file).
 
 In March 1995 the earlier used compressed model maps AP8MIC and AP8MAC
-were replaced with the full maps AP8MIN/MAX with the help of D. Heynderickx 
-(BIRA, Brussel, Belgium) and A. Beliaev (INP/MSU, Moscow, Russia). Heynderickx 
-and Beliaev (1995) had found and corrected a small error in the AP8MIN map; 
+were replaced with the full maps AP8MIN/MAX with the help of D. Heynderickx
+(BIRA, Brussel, Belgium) and A. Beliaev (INP/MSU, Moscow, Russia). Heynderickx
+and Beliaev (1995) had found and corrected a small error in the AP8MIN map;
 two lines had been exchanged.
 
 ### AVAILABILITY:
 
 (1) FORTRAN source code from this directory.
 (2) Model parameters can be computed and plotted online at http://nssdc.gsfc.nasa.gov/space/model/ .
-
-
-### See also
-
-* [NASA ModelWebArchive](https://git.smce.nasa.gov/ccmc-share/modelwebarchive)
-* [An Astropy-friendly wrapper for the AE-8/AP-8 Van Allen belt model](https://github.com/nasa/radbelt)
-* [pyIGRF](https://github.com/rilma/pyIGRF)
-* https://github.com/lanl/RAM-SCB/blob/master/srcExternal/igrf.f
-* https://github.com/space-physics/igrf/blob/main/src/igrf/fortran/igrf13.f
 
 ### REFERENCES:
 
@@ -106,16 +138,16 @@ M.T. Teague, N.J. Schofield, K.W. Chan, and J.I. Vette, A Study of
   Inner Zone Electron Data and their Comparison with Trapped
   Radiation Models, NSSDC/WDC-A-R&S 79-06, 1979.
 
-J.I. Vette, The AE-8 Trapped Electron Model Environment, 
+J.I. Vette, The AE-8 Trapped Electron Model Environment,
   NSSDC/WDC-A-R&S 91-24, 1991.
 
-J.I. Vette, The NASA/National Space Science Data Center Trapped 
-  Radiation Environment Model Program (1964-1991), NSSDC/WDC-A-R&S 
+J.I. Vette, The NASA/National Space Science Data Center Trapped
+  Radiation Environment Model Program (1964-1991), NSSDC/WDC-A-R&S
   91-29, 1991.
 
 (most of these references are available from NSSDC)
 
 D. Heynderickx and A. Beliaev, J. Spacecraft and Rockets 32, 190-192, 1995.
 
-National Space Science Data Center      Data set  PT-11B         Mar 1996 
+National Space Science Data Center      Data set  PT-11B         Mar 1996
 =========================================================================
