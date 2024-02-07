@@ -19,6 +19,8 @@
 
       private
 
+      integer,parameter :: filename_len = 14 !! length of the model data file names
+
       ! parameters formerly in `gener` common block
       real(wp),parameter :: Era = 6371.2_wp !! earth radius for normalization of cartesian coordinates (6371.2 km)
       real(wp),parameter :: erequ = 6378.16_wp
@@ -31,25 +33,87 @@
                                                 !! astronomical union
       real(wp),parameter :: Umr = atan(1.0_wp)*4.0_wp/180.0_wp !! atan(1.0)*4./180.   <degree>*umr=<radiant>
 
-      public :: feldcof
-      public :: feldg
-      public :: shellg
-      public :: findb0
+      type,public :: shellig_type
+         private
 
-      contains
+         ! formerly in the `fidb0` common block
+         real(wp),dimension(3) :: sp = 0.0_wp
+
+         ! formerly in blank common
+         real(wp),dimension(3) :: xi = 0.0_wp
+         real(wp),dimension(144) :: h = 0.0_wp !! Field model coefficients adjusted for [[shellg]]
+
+         ! formerly in `model` common block
+         character(len=filename_len) :: name = '' !! file name
+         integer :: nmax = 0 !! maximum order of spherical harmonics
+         real(wp) :: Time = 0.0_wp !! year (decimal: 1973.5) for which magnetic field is to be calculated
+         real(wp),dimension(144) :: g = 0.0_wp  !! `g(m)` -- normalized field coefficients (see [[feldcof]]) m=nmax*(nmax+2)
+
+         contains
+         private
+
+         procedure,public :: igrf
+
+         procedure, public :: feldcof
+         procedure, public :: feldg
+         procedure, public :: shellg
+         procedure, public :: findb0
+         procedure :: stoer, getshc, intershc, extrashc
+
+      end type shellig_type
+
+   contains
+!*****************************************************************************************
 
 !*****************************************************************************************
 !>
-    subroutine findb0(stps,bdel,value,bequ,rr0)
+!  Wrapper for IGRF functions.
 
-      real(wp) :: b , bdel , bdelta , bequ , bmin , bold , bq1 , &
-                  bq2 , bq3 , p , r1 , r2 , r3 , &
-                  rold , rr0 , sp , step , step12 , stps , zz
+   subroutine igrf(me,lon,lat,height,year,xl,bbx)
+
+      class(shellig_type),intent(inout) :: me
+      real(wp),intent(in) :: lon
+      real(wp),intent(in) :: lat
+      real(wp),intent(in) :: height
+      real(wp),intent(in) :: year
+      real(wp),intent(out) :: xl
+      real(wp),intent(out) :: bbx
+
+      real(wp) :: bab1 , babs , bdel , bdown , beast , &
+                  beq , bequ , bnorth , dimo , rr0
+      integer :: icode
+      logical :: val
+
+      call me%feldcof(year,dimo)
+      call me%feldg(lat,lon,height,bnorth,beast,bdown,babs)
+      call me%shellg(lat,lon,height,dimo,xl,icode,bab1)
+
+      bequ = dimo/(xl*xl*xl)
+      if ( icode==1 ) then
+         bdel = 1.0e-3_wp
+         call me%findb0(0.05_wp,bdel,val,beq,rr0)
+         if ( val ) bequ = beq
+      endif
+      bbx = babs/bequ
+
+   end subroutine igrf
+!*****************************************************************************************
+
+!*****************************************************************************************
+!>
+    subroutine findb0(me,stps,bdel,value,bequ,rr0)
+
+      class(shellig_type),intent(inout) :: me
+      real(wp),intent(in) :: stps
+      real(wp),intent(inout) :: bdel
+      real(wp),intent(out) :: bequ
+      logical,intent(out) :: value
+      real(wp),intent(out) :: rr0
+
+      real(wp) :: b , bdelta , bmin , bold , bq1 , &
+                  bq2 , bq3 , p(8,4) , r1 , r2 , r3 , &
+                  rold  , step , step12 , zz
       integer :: i , irun , j , n
-      dimension p(8,4),sp(3)
-      logical :: value
-
-      common/fidb0/ sp
 
       step=stps
       irun=0
@@ -61,23 +125,23 @@
             exit main
         endif
         !*********************first three points
-        p(1,2)=sp(1)
-        p(2,2)=sp(2)
-        p(3,2)=sp(3)
+        p(1,2)=me%sp(1)
+        p(2,2)=me%sp(2)
+        p(3,2)=me%sp(3)
         step=-sign(step,p(3,2))
-        call stoer(p(1,2),bq2,r2)
+        call me%stoer(p(1,2),bq2,r2)
         p(1,3)=p(1,2)+0.5_wp*step*p(4,2)
         p(2,3)=p(2,2)+0.5_wp*step*p(5,2)
         p(3,3)=p(3,2)+0.5_wp*step
-        call stoer(p(1,3),bq3,r3)
+        call me%stoer(p(1,3),bq3,r3)
         p(1,1)=p(1,2)-step*(2.0_wp*p(4,2)-p(4,3))
         p(2,1)=p(2,2)-step*(2.0_wp*p(5,2)-p(5,3))
         p(3,1)=p(3,2)-step
-        call stoer(p(1,1),bq1,r1)
+        call me%stoer(p(1,1),bq1,r1)
         p(1,3)=p(1,2)+step*(20.0_wp*p(4,3)-3.*p(4,2)+p(4,1))/18.0_wp
         p(2,3)=p(2,2)+step*(20.0_wp*p(5,3)-3.*p(5,2)+p(5,1))/18.0_wp
         p(3,3)=p(3,2)+step
-        call stoer(p(1,3),bq3,r3)
+        call me%stoer(p(1,3),bq3,r3)
         !******************invert sense if required
         if (bq3>bq1) then
             step=-step
@@ -104,7 +168,7 @@
             p(1,4)=p(1,3)+step12*(23.0_wp*p(4,3)-16.0_wp*p(4,2)+5.0_wp*p(4,1))
             p(2,4)=p(2,3)+step12*(23.0_wp*p(5,3)-16.0_wp*p(5,2)+5.0_wp*p(5,1))
             p(3,4)=p(3,3)+step
-            call stoer(p(1,4),bq3,r3)
+            call me%stoer(p(1,4),bq3,r3)
             do j=1,3
                 do i=1,8
                     p(i,j)=p(i,j+1)
@@ -115,9 +179,9 @@
             if (b>bold) exit corrector
             bold=b
             rold=1.0_wp/r3
-            sp(1)=p(1,4)
-            sp(2)=p(2,4)
-            sp(3)=p(3,4)
+            me%sp(1)=p(1,4)
+            me%sp(2)=p(2,4)
+            me%sp(3)=p(3,4)
         end do corrector
         if (bold/=bmin) then
             value=.false.
@@ -148,8 +212,9 @@
 !   - USING CORRECT DIPOL MOMENT I.E.,DIFFERENT COMMON/MODEL/
 !   - USING IGRF EARTH MAGNETIC FIELD MODELS FROM 1945 TO 1990
 
-  subroutine shellg(glat,glon,alt,dimo,fl,icode,b0)
+  subroutine shellg(me,glat,glon,alt,dimo,fl,icode,b0)
 
+   class(shellig_type),intent(inout) :: me
    real(wp),intent(in) :: glat !! GEODETIC LATITUDE IN DEGREES (NORTH)
    real(wp),intent(in) :: glon !! GEODETIC LONGITUDE IN DEGREES (EAST)
    real(wp),intent(in) :: alt  !! ALTITUDE IN KM ABOVE SEA LEVEL
@@ -162,23 +227,16 @@
                                  !!   approximation is used.
    real(wp),intent(out) :: b0 !! magnetic field strength in gauss
 
-   real(wp) :: arg1 , arg2 , bequ , bq1 , bq2 , bq3 , c0 , c1 , c2 , c3 , ct , d , d0 , d1 , d2
-   real(wp) :: dimob0 , e0 , e1 , e2 , ff , fi , gg , h , hli , oradik , oterm , p , r , r1 , r2 , r3
-   real(wp) :: r3h , radik , rlat , rlon , rmax , rmin , rq , sp , st , step , step12 , step2 , steq , stp , t , term , v , x
-   real(wp) :: xx , z , zq , zz
+   real(wp) :: arg1 , arg2 , bequ , bq1 , bq2 , bq3 , c0 , c1 , c2 , c3 , &
+               ct , d , d0 , d1 , d2, dimob0 , e0 , e1 , e2 , ff , fi , gg , &
+               hli , oradik , oterm , p(8,100) , r , r1 , r2 , r3 , r3h , radik , &
+               rlat , rlon , rmax , rmin , rq , st , step , step12 , step2 , &
+               steq , stp , t , term , v(3) , xx , z , zq , zz
    integer :: i , iequ , n
-
-   dimension v(3) , p(8,100) , sp(3)
 
    real(wp),dimension(3,3),parameter ::  u = reshape([ +0.3511737_wp , -0.9148385_wp , -0.1993679_wp , &
                                                        +0.9335804_wp , +0.3583680_wp , +0.0000000_wp , &
                                                        +0.0714471_wp , -0.1861260_wp , +0.9799247_wp], [3,3])
-
-!     COMMON
-!    X(3)  NOT USED
-!    H(144)  FIELD MODEL COEFFICIENTS ADJUSTED FOR SHELLG
-   COMMON X(3) , H(144)
-   COMMON /fidb0 / Sp
 
    !-- RMIN, RMAX ARE BOUNDARIES FOR IDENTIFICATION OF ICODE=2 AND 3
    !-- STEP IS STEP SIZE FOR FIELD LINE TRACING
@@ -186,6 +244,7 @@
 
    DATA rmin , rmax/0.05_wp , 1.01_wp/
    DATA step , steq/0.20_wp , 0.03_wp/
+
    bequ = 1.0e10_wp
 
    !*****ENTRY POINT  SHELLG  TO BE USED WITH GEODETIC CO-ORDINATES
@@ -193,11 +252,11 @@
    ct = sin(rlat)
    st = cos(rlat)
    d = sqrt(Aquad-(Aquad-Bquad)*ct*ct)
-   X(1) = (Alt+Aquad/d)*st/Era
-   X(3) = (Alt+Bquad/d)*ct/Era
+   me%Xi(1) = (Alt+Aquad/d)*st/Era
+   me%Xi(3) = (Alt+Bquad/d)*ct/Era
    rlon = Glon*Umr
-   X(2) = X(1)*sin(rlon)
-   X(1) = X(1)*cos(rlon)
+   me%Xi(2) = me%Xi(1)*sin(rlon)
+   me%Xi(1) = me%Xi(1)*cos(rlon)
    CALL spag_block_1()
    RETURN
 
@@ -207,9 +266,9 @@
 !      Y-AXIS POINTING TO EQUATOR AT 90 LONG.
 !      Z-AXIS POINTING TO NORTH POLE
    ENTRY shellc(V,Fl,B0)
-   X(1) = V(1)
-   X(2) = V(2)
-   X(3) = V(3)
+   me%Xi(1) = V(1)
+   me%Xi(2) = V(2)
+   me%Xi(3) = V(3)
    CALL spag_block_1()
 
 CONTAINS
@@ -219,27 +278,27 @@ CONTAINS
       integer,parameter :: max_loop_index = 100  ! 3333   <--- original code had 3333 ... was this a bug ????
 
       !*****CONVERT TO DIPOL-ORIENTED CO-ORDINATES
-      rq = 1./(X(1)*X(1)+X(2)*X(2)+X(3)*X(3))
+      rq = 1.0_wp/(me%Xi(1)*me%Xi(1)+me%Xi(2)*me%Xi(2)+me%Xi(3)*me%Xi(3))
       r3h = sqrt(rq*sqrt(rq))
-      p(1,2) = (X(1)*u(1,1)+X(2)*u(2,1)+X(3)*u(3,1))*r3h
-      p(2,2) = (X(1)*u(1,2)+X(2)*u(2,2))*r3h
-      p(3,2) = (X(1)*u(1,3)+X(2)*u(2,3)+X(3)*u(3,3))*rq
+      p(1,2) = (me%Xi(1)*u(1,1)+me%Xi(2)*u(2,1)+me%Xi(3)*u(3,1))*r3h
+      p(2,2) = (me%Xi(1)*u(1,2)+me%Xi(2)*u(2,2))*r3h
+      p(3,2) = (me%Xi(1)*u(1,3)+me%Xi(2)*u(2,3)+me%Xi(3)*u(3,3))*rq
       !     *****FIRST THREE POINTS OF FIELD LINE
       step = -sign(step,p(3,2))
-      CALL stoer(p(1,2),bq2,r2)
+      call me%stoer(p(1,2),bq2,r2)
       B0 = sqrt(bq2)
       p(1,3) = p(1,2) + 0.5_wp*step*p(4,2)
       p(2,3) = p(2,2) + 0.5_wp*step*p(5,2)
       p(3,3) = p(3,2) + 0.5_wp*step
-      CALL stoer(p(1,3),bq3,r3)
+      call me%stoer(p(1,3),bq3,r3)
       p(1,1) = p(1,2) - step*(2.0_wp*p(4,2)-p(4,3))
       p(2,1) = p(2,2) - step*(2.0_wp*p(5,2)-p(5,3))
       p(3,1) = p(3,2) - step
-      CALL stoer(p(1,1),bq1,r1)
+      call me%stoer(p(1,1),bq1,r1)
       p(1,3) = p(1,2) + step*(20.0_wp*p(4,3)-3.*p(4,2)+p(4,1))/18.0_wp
       p(2,3) = p(2,2) + step*(20.0_wp*p(5,3)-3.*p(5,2)+p(5,1))/18.0_wp
       p(3,3) = p(3,2) + step
-      CALL stoer(p(1,3),bq3,r3)
+      call me%stoer(p(1,3),bq3,r3)
       !*****INVERT SENSE IF REQUIRED
       IF ( bq3>bq1 ) THEN
          step = -step
@@ -303,7 +362,7 @@ CONTAINS
                p(1,n+1) = p(1,n) + step12*(23.0_wp*p(4,n)-16.0_wp*p(4,n-1)+5.0_wp*p(4,n-2))
                p(2,n+1) = p(2,n) + step12*(23.0_wp*p(5,n)-16.0_wp*p(5,n-1)+5.0_wp*p(5,n-2))
                p(3,n+1) = p(3,n) + step
-               CALL stoer(p(1,n+1),bq3,r3)
+               call me%stoer(p(1,n+1),bq3,r3)
                !*****SEARCH FOR LOWEST MAGNETIC FIELD STRENGTH
                IF ( bq3<bequ ) THEN
                   iequ = n + 1
@@ -339,9 +398,9 @@ CONTAINS
          ENDDO inner
       ENDDO main
       IF ( iequ<2 ) iequ = 2
-      Sp(1) = p(1,iequ-1)
-      Sp(2) = p(2,iequ-1)
-      Sp(3) = p(3,iequ-1)
+      me%Sp(1) = p(1,iequ-1)
+      me%Sp(2) = p(2,iequ-1)
+      me%Sp(3) = p(3,iequ-1)
       IF ( oradik>=1.0e-15_wp ) fi = fi + stp/0.75_wp*oterm*oradik/(oradik-radik)
       !
       !-- The minimal allowable value of FI was changed from 1E-15 to 1E-12,
@@ -392,20 +451,22 @@ CONTAINS
 
 END subroutine shellg
 
-subroutine stoer(P,Bq,R)
-   IMPLICIT NONE
-   REAL(wp) Bq , dr , dsq , dx , dxm , dy , dym , dz , dzm , fli , &
-            H , P , q , R , rq , wr , Xi , xm , ym
-   REAL(wp) zm
-!*******************************************************************
-!* subroutine USED FOR FIELD LINE TRACING IN SHELLG                *
-!* CALLS ENTRY POINT FELDI IN GEOMAGNETIC FIELD subroutine FELDG   *
-!*******************************************************************
-   DIMENSION P(7)
+!*****************************************************************************************
+!>
+!  subroutine USED FOR FIELD LINE TRACING IN [[SHELLG]]
+!  CALLS ENTRY POINT [[FELDI]] IN GEOMAGNETIC FIELD subroutine [[FELDG]]
+
+subroutine stoer(me,P,Bq,R)
+
+   class(shellig_type),intent(inout) :: me
+   REAL(wp) :: Bq , dr , dsq , dx , dxm , dy , dym , dz , dzm , fli , &
+               P(7) , q , R , rq , wr , xm , ym
+   REAL(wp) :: zm
+
    real(wp),dimension(3,3),parameter :: u = reshape([ +0.3511737_wp , -0.9148385_wp , -0.1993679_wp , &
                                                       +0.9335804_wp , +0.3583680_wp , +0.0000000_wp , &
                                                       +0.0714471_wp , -0.1861260_wp , +0.9799247_wp],[3,3])
-   COMMON Xi(3) , H(144)
+
 !*****XM,YM,ZM ARE GEOMAGNETIC CARTESIAN INVERSE CO-ORDINATES
    zm = P(3)
    fli = P(1)*P(1) + P(2)*P(2) + 1.0e-15_wp
@@ -415,17 +476,18 @@ subroutine stoer(P,Bq,R)
    xm = P(1)*wr
    ym = P(2)*wr
 !*****TRANSFORM TO GEOGRAPHIC CO-ORDINATE SYSTEM
-   Xi(1) = xm*u(1,1) + ym*u(1,2) + zm*u(1,3)
-   Xi(2) = xm*u(2,1) + ym*u(2,2) + zm*u(2,3)
-   Xi(3) = xm*u(3,1) + zm*u(3,3)
+   me%Xi(1) = xm*u(1,1) + ym*u(1,2) + zm*u(1,3)
+   me%Xi(2) = xm*u(2,1) + ym*u(2,2) + zm*u(2,3)
+   me%Xi(3) = xm*u(3,1) + zm*u(3,3)
 !*****COMPUTE DERIVATIVES
 ! Changed from CALL FELDI(XI,H); XI, H are in COMMON block; results
-! are the same; dkb Feb 1998
-   CALL feldi()
-   q = H(1)/rq
-   dx = H(3) + H(3) + q*Xi(1)
-   dy = H(4) + H(4) + q*Xi(2)
-   dz = H(2) + H(2) + q*Xi(3)
+! are the same; dkb Feb 1998.
+! JW : feb 2024 : xi, h now class variables.
+   CALL feldi(me)
+   q = me%H(1)/rq
+   dx = me%H(3) + me%H(3) + q*me%Xi(1)
+   dy = me%H(4) + me%H(4) + q*me%Xi(2)
+   dz = me%H(2) + me%H(2) + q*me%Xi(3)
 !*****TRANSFORM BACK TO GEOMAGNETIC CO-ORDINATE SYSTEM
    dxm = u(1,1)*dx + u(2,1)*dy + u(3,1)*dz
    dym = u(1,2)*dx + u(2,2)*dy
@@ -453,53 +515,23 @@ END subroutine stoer
 !   - field coefficients in binary data files instead of block data
 !   - calculates dipol moment
 
-subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
+subroutine feldg(me,glat,glon,alt,bnorth,beast,bdown,babs)
 
-   !--------------------------------------------------------------------
-   !  input:  entry point feldg
-   !         glat  geodetic latitude in degrees (north)
-   !             glon  geodetic longitude in degrees (east)
-   !             alt   altitude in km above sea level
-   !
-   !       entry point feldc
-   !        v(3)  cartesian coordinates in earth radii (6371.2 km)
-   !            x-axis pointing to equator at 0 longitude
-   !            y-axis pointing to equator at 90 long.
-   !            z-axis pointing to north pole
-   !
-   !       common blank and entry point feldi are needed when used
-   !         in connection with l-calculation program shellg.
-   !
-   !       common /model/ and /gener/
-   !        umr     = atan(1.0)*4./180.   <degree>*umr=<radiant>
-   !        era    earth radius for normalization of cartesian
-   !            coordinates (6371.2 km)
-   !        aquad, bquad   square of major and minor half axis for
-   !            earth ellipsoid as recommended by international
-   !            astronomical union (6378.160, 6356.775 km).
-   !        nmax    maximum order of spherical harmonics
-   !        time    year (decimal: 1973.5) for which magnetic
-   !            field is to be calculated
-   !        g(m)    normalized field coefficients (see feldcof)
-   !            m=nmax*(nmax+2)
-   !------------------------------------------------------------------------
-   !  output: babs   magnetic field strength in gauss
-   !       bnorth, beast, bdown   components of the field with respect
-   !          to the local geodetic coordinate system, with axis
-   !          pointing in the tangential plane to the north, east
-   !          and downward.
-   !-----------------------------------------------------------------------
+   class(shellig_type),intent(inout) :: me
+   real(wp),intent(in) :: glat  !! geodetic latitude in degrees (north)
+   real(wp),intent(in) :: glon  !! geodetic longitude in degrees (east)
+   real(wp),intent(in) :: alt   !! altitude in km above sea level
+   real(wp),intent(out) :: bnorth, beast, bdown !! components of the field with respect
+                                                !! to the local geodetic coordinate system, with axis
+                                                !! pointing in the tangential plane to the north, east
+                                                !! and downward.
+   real(wp),intent(out) :: Babs !! magnetic field strength in gauss
 
-   REAL(wp) Alt , B , Babs , Bdown , Beast , Bnorth , brho , bxxx , &
-            byyy , bzzz , cp , ct , d , f , G , Glat , Glon
-   REAL(wp) H , rho , rlat , rlon , rq , s , sp , st , t , Time , V , x , Xi , xxx , y , yyy , z , zzz
-   INTEGER i , ih , ihmax , il , imax , is , k , last , m , Nmax
-
-   dimension     v(3),b(3)
-   character*14     name
-
-   common           xi(3),h(144)
-   common/model/    name,nmax,time,g(144)
+   real(wp) :: b(3) , brho , bxxx , &
+               byyy , bzzz , cp , ct , d , f , rho , &
+               rlat , rlon , rq , s , sp , st , t , v(3) , x , xxx , &
+               y , yyy , z , zzz
+   integer :: i , ih , ihmax , il , imax , is , k , last , m
 
    !-- is records entry point
    !
@@ -517,58 +549,68 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
          xxx=rho*cp
          yyy=rho*sp
          goto 10
-   !
+
    !*****entry point  feldc  to be used with cartesian co-ordinates
-         entry feldc(v,b)
+   !        v(3)  cartesian coordinates in earth radii (6371.2 km)
+   !            x-axis pointing to equator at 0 longitude
+   !            y-axis pointing to equator at 90 long.
+   !            z-axis pointing to north pole
+         entry feldc(me,v,b)
          is=2
          xxx=v(1)
          yyy=v(2)
          zzz=v(3)
-   10    rq=1./(xxx*xxx+yyy*yyy+zzz*zzz)
-         xi(1)=xxx*rq
-         xi(2)=yyy*rq
-         xi(3)=zzz*rq
-          goto 20
-   !
+
+   10    rq=1.0_wp/(xxx*xxx+yyy*yyy+zzz*zzz)
+         me%xi(1)=xxx*rq
+         me%xi(2)=yyy*rq
+         me%xi(3)=zzz*rq
+         goto 20
+
    !*****entry point  feldi  used for l computation
-         entry feldi()
+         entry feldi(me)
          is=3
-   20    ihmax=nmax*nmax+1
-         last=ihmax+nmax+nmax
-         imax=nmax+nmax-1
+   20    ihmax=me%nmax*me%nmax+1
+         last=ihmax+me%nmax+me%nmax
+         imax=me%nmax+me%nmax-1
          do i=ihmax,last
-             h(i)=g(i)
+             me%h(i)=me%g(i)
          end do
          do k=1,3,2
             i=imax
             ih=ihmax
-      1     il=ih-i
-            f=2.0_wp/real(i-k+2, wp)
-            x=xi(1)*f
-            y=xi(2)*f
-            z=xi(3)*(f+f)
-            i=i-2
-            if ((i-1)>=0) then
-               if ((i-1)>0) then
-                  do m=3,i,2
-                     h(il+m+1)=g(il+m+1)+z*h(ih+m+1)+x*(h(ih+m+3)-h(ih+m-1))-y*(h(ih+m+2)+h(ih+m-2))
-                     h(il+m)=g(il+m)+z*h(ih+m)+x*(h(ih+m+2)-h(ih+m-2))+y*(h(ih+m+3)+h(ih+m-1))
-                  end do
+            do
+               il=ih-i
+               f=2.0_wp/real(i-k+2, wp)
+               x=me%xi(1)*f
+               y=me%xi(2)*f
+               z=me%xi(3)*(f+f)
+               i=i-2
+               if ((i-1)>=0) then
+                  if ((i-1)>0) then
+                     do m=3,i,2
+                        me%h(il+m+1)=me%g(il+m+1)+z*me%h(ih+m+1)+x*(me%h(ih+m+3)-&
+                                     me%h(ih+m-1))-y*(me%h(ih+m+2)+me%h(ih+m-2))
+                        me%h(il+m)=me%g(il+m)+z*me%h(ih+m)+x*(me%h(ih+m+2)-&
+                                   me%h(ih+m-2))+y*(me%h(ih+m+3)+me%h(ih+m-1))
+                     end do
+                  end if
+                  me%h(il+2)=me%g(il+2)+z*me%h(ih+2)+x*me%h(ih+4)-y*(me%h(ih+3)+me%h(ih))
+                  me%h(il+1)=me%g(il+1)+z*me%h(ih+1)+y*me%h(ih+4)+x*(me%h(ih+3)-me%h(ih))
                end if
-               h(il+2)=g(il+2)+z*h(ih+2)+x*h(ih+4)-y*(h(ih+3)+h(ih))
-               h(il+1)=g(il+1)+z*h(ih+1)+y*h(ih+4)+x*(h(ih+3)-h(ih))
-            end if
-            h(il)=g(il)+z*h(ih)+2.0_wp*(x*h(ih+1)+y*h(ih+2))
-            ih=il
-            if (i>=k) goto 1
+               me%h(il)=me%g(il)+z*me%h(ih)+2.0_wp*(x*me%h(ih+1)+y*me%h(ih+2))
+               ih=il
+               if (i<k) exit
+            end do
          end do
 
          if (is==3) return
-         s=0.5_wp*h(1)+2.0_wp*(h(2)*xi(3)+h(3)*xi(1)+h(4)*xi(2))
+
+         s=0.5_wp*me%h(1)+2.0_wp*(me%h(2)*me%xi(3)+me%h(3)*me%xi(1)+me%h(4)*me%xi(2))
          t=(rq+rq)*sqrt(rq)
-         bxxx=t*(h(3)-s*xxx)
-         byyy=t*(h(4)-s*yyy)
-         bzzz=t*(h(2)-s*zzz)
+         bxxx=t*(me%h(3)-s*xxx)
+         byyy=t*(me%h(4)-s*yyy)
+         bzzz=t*(me%h(2)-s*zzz)
          if (is==2) then
             b(1)=bxxx
             b(2)=byyy
@@ -596,24 +638,22 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
 !  * updated to IGRF-2000 version -dkb- 5/31/2000
 !  * updated to IGRF-2005 version -dkb- 3/24/2000
 
-   subroutine feldcof(year,dimo)
+   subroutine feldcof(me,year,dimo)
 
+   class(shellig_type),intent(inout) :: me
    real(wp),intent(in) :: year !! decimal year for which geomagnetic field is to
                                !! be calculated (e.g.:1995.5 for day 185 of 1995)
    real(wp),intent(out) :: dimo !! geomagnetic dipol moment in gauss (normalized
                                 !! to earth's radius) at the time (year)
 
-   real(wp) :: dte1 , dte2 , erad , gh1(144) , gh2(120) , gha(144)  , sqrt2 , time
-   integer :: i , ier , is , iyea , j , l , m , n , nmax , nmax1 , nmax2 , numye
-
-   character(len=14) :: Fil1 , fil2
+   real(wp) :: dte1 , dte2 , erad , gh2(120) , gha(144)  , sqrt2
+   integer :: i , ier , iyea , j , l , m , n , nmax1 , nmax2
+   character(len=filename_len) :: fil2
    real(wp) :: x , f0 , f !! these were double precision in original
                           !! code while everything else was single precision
 
-   COMMON /model/ Fil1 , Nmax , Time , Gh1
-
    ! changed to conform with IGRF 45-95, also FILMOD, DTEMOD arrays +1
-   character(len=14),dimension(17),parameter :: filmod = [&
+   character(len=filename_len),dimension(17),parameter :: filmod = [&
          'dgrf1945.dat ' , 'dgrf1950.dat ' , 'dgrf1955.dat ' , 'dgrf1960.dat ' , &
          'dgrf1965.dat ' , 'dgrf1970.dat ' , 'dgrf1975.dat ' , 'dgrf1980.dat ' , &
          'dgrf1985.dat ' , 'dgrf1990.dat ' , 'dgrf1995.dat ' , 'dgrf2000.dat ' , &
@@ -625,31 +665,30 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
                                                  1990.0_wp , 1995.0_wp , 2000.0_wp , &
                                                  2005.0_wp , 2010.0_wp , 2015.0_wp , &
                                                  2020.0_wp , 2025.0_wp]
-
-   numye = 16 ! number of 5-year priods represented by IGRF
-   is = 0 ! is=0 for schmidt normalization
-          ! is=1 gauss normalization
+   integer,parameter :: numye = 16 ! number of 5-year priods represented by IGRF
+   integer,parameter :: is = 0 !! * is=0 for schmidt normalization
+                               !! * is=1 gauss normalization
 
    !-- determine igrf-years for input-year
-   time = year
+   me%time = year
    iyea = int(year/5.0_wp)*5
    l = (iyea-1945)/5 + 1
    if ( l<1 ) l = 1
    if ( l>numye ) l = numye
    dte1 = dtemod(l)
-   fil1 = filmod(l)
+   me%name = filmod(l)
    dte2 = dtemod(l+1)
    fil2 = filmod(l+1)
    !-- get igrf coefficients for the boundary years
-   call getshc(fil1,nmax1,erad,gh1,ier)
+   call me%getshc(me%name,nmax1,erad,me%g,ier)
    if ( ier/=0 ) stop
-   call getshc(fil2,nmax2,erad,gh2,ier)
+   call me%getshc(fil2,nmax2,erad,gh2,ier)
    if ( ier/=0 ) stop
    !-- determine igrf coefficients for year
    if ( l<=numye-1 ) then
-      call intershc(year,dte1,nmax1,gh1,dte2,nmax2,gh2,nmax,gha)
+      call me%intershc(year,dte1,nmax1,me%g,dte2,nmax2,gh2,me%nmax,gha)
    else
-      call extrashc(year,dte1,nmax1,gh1,nmax2,gh2,nmax,gha)
+      call me%extrashc(year,dte1,nmax1,me%g,nmax2,gh2,me%nmax,gha)
    endif
    !-- determine magnetic dipol moment and coeffiecients g
    f0 = 0.0_wp
@@ -659,25 +698,25 @@ subroutine feldg(glat,glon,alt,bnorth,beast,bdown,babs)
    enddo
    dimo = sqrt(f0)
 
-   gh1(1) = 0.0_wp
+   me%g(1) = 0.0_wp
    i = 2
    f0 = 1.0e-5_wp
    if ( is==0 ) f0 = -f0
    sqrt2 = sqrt(2.0_wp)
 
-   do n = 1 , nmax
+   do n = 1 , me%nmax
       x = n
       f0 = f0*x*x/(4.0_wp*x-2.0_wp)
       if ( is==0 ) f0 = f0*(2.0_wp*x-1.0_wp)/x
       f = f0*0.5_wp
       if ( is==0 ) f = f*sqrt2
-      gh1(i) = gha(i-1)*f0
+      me%g(i) = gha(i-1)*f0
       i = i + 1
       do m = 1 , n
          f = f*(x+m)/(x-m+1.0_wp)
          if ( is==0 ) f = f*sqrt((x-m+1.0_wp)/(x+m))
-         gh1(i) = gha(i-1)*f
-         gh1(i+1) = gha(i)*f
+         me%g(i) = gha(i-1)*f
+         me%g(i+1) = gha(i)*f
          i = i + 2
       enddo
    enddo
@@ -693,8 +732,9 @@ end subroutine feldcof
 !  * Version 1.01, A. Zunde, USGS, MS 964,
 !    Box 25046 Federal Center, Denver, CO  80225
 
-subroutine getshc(Fspec,Nmax,Erad,Gh,Ier)
+subroutine getshc(me,Fspec,Nmax,Erad,Gh,Ier)
 
+   class(shellig_type),intent(inout) :: me
    character(len=*),intent(in) :: Fspec !! File specification
    integer,intent(out) :: Nmax !! Maximum degree and order of model
    real(wp),intent(out) :: Erad !! Earth's radius associated with the spherical
@@ -786,8 +826,9 @@ END subroutine getshc
 !  * Version 1.01, A. Zunde
 !    USGS, MS 964, Box 25046 Federal Center, Denver, CO  80225
 
-subroutine intershc(date,dte1,nmax1,gh1,dte2,nmax2,gh2,nmax,gh)
+subroutine intershc(me,date,dte1,nmax1,gh1,dte2,nmax2,gh2,nmax,gh)
 
+   class(shellig_type),intent(inout) :: me
    real(wp),intent(in) :: date !! Date of resulting model (in decimal year)
    real(wp),intent(in) :: dte1 !! Date of earlier model
    integer,intent(in) :: nmax1 !! Maximum degree and order of earlier model
@@ -844,8 +885,9 @@ end subroutine intershc
 !  * Version 1.01, A. Zunde
 !    USGS, MS 964, Box 25046 Federal Center, Denver, CO  80225
 
-subroutine extrashc(date,dte1,nmax1,gh1,nmax2,gh2,nmax,gh)
+subroutine extrashc(me,date,dte1,nmax1,gh1,nmax2,gh2,nmax,gh)
 
+   class(shellig_type),intent(inout) :: me
    real(wp),intent(in) :: date   !! Date of resulting model (in decimal year)
    real(wp),intent(in) :: dte1   !! Date of base model
    integer,intent(in)  :: nmax1  !! Maximum degree and order of base model
