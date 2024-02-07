@@ -33,7 +33,11 @@
                                                 !! astronomical union
       real(wp),parameter :: Umr = atan(1.0_wp)*4.0_wp/180.0_wp !! atan(1.0)*4./180.   <degree>*umr=<radiant>
 
-      type,public :: shellig_type
+      real(wp),dimension(3,3),parameter ::  u = reshape([ +0.3511737_wp , -0.9148385_wp , -0.1993679_wp , &
+                                                          +0.9335804_wp , +0.3583680_wp , +0.0000000_wp , &
+                                                          +0.0714471_wp , -0.1861260_wp , +0.9799247_wp], [3,3])
+
+       type,public :: shellig_type
          private
 
          ! formerly in the `fidb0` common block
@@ -44,6 +48,7 @@
          real(wp),dimension(144) :: h = 0.0_wp !! Field model coefficients adjusted for [[shellg]]
 
          ! formerly in `model` common block
+         integer :: iyea = 0 !! the int year corresponding to the file `name` that has been read
          character(len=filename_len) :: name = '' !! file name
          integer :: nmax = 0 !! maximum order of spherical harmonics
          real(wp) :: Time = 0.0_wp !! year (decimal: 1973.5) for which magnetic field is to be calculated
@@ -52,6 +57,9 @@
          ! formerly saved vars in shellg:
          real(wp) :: step = 0.20_wp !! step size for field line tracing
          real(wp) :: steq = 0.03_wp !! step size for integration
+
+         ! from feldcof, so we can cache the coefficients
+         real(wp),dimension(120) :: gh2 = 0.0_wp   ! JW : why is this 120 and g is 144 ???
 
          contains
          private
@@ -76,17 +84,20 @@
    subroutine igrf(me,lon,lat,height,year,xl,bbx)
 
       class(shellig_type),intent(inout) :: me
-      real(wp),intent(in) :: lon
-      real(wp),intent(in) :: lat
-      real(wp),intent(in) :: height
-      real(wp),intent(in) :: year
-      real(wp),intent(out) :: xl
+      real(wp),intent(in) :: lon !! geodetic longitude in degrees (east)
+      real(wp),intent(in) :: lat !! geodetic latitude in degrees (north)
+      real(wp),intent(in) :: height !! altitude in km above sea level
+      real(wp),intent(in) :: year !! decimal year for which geomagnetic field is to
+                                  !! be calculated (e.g.:1995.5 for day 185 of 1995)
+      real(wp),intent(out) :: xl !! l-value
       real(wp),intent(out) :: bbx
 
       real(wp) :: bab1 , babs , bdel , bdown , beast , &
                   beq , bequ , bnorth , dimo , rr0
       integer :: icode
       logical :: val
+
+      real(wp),parameter :: stps = 0.05_wp
 
       call me%feldcof(year,dimo)
       call me%feldg(lat,lon,height,bnorth,beast,bdown,babs)
@@ -95,7 +106,7 @@
       bequ = dimo/(xl*xl*xl)
       if ( icode==1 ) then
          bdel = 1.0e-3_wp
-         call me%findb0(0.05_wp,bdel,val,beq,rr0)
+         call me%findb0(stps,bdel,val,beq,rr0)
          if ( val ) bequ = beq
       endif
       bbx = babs/bequ
@@ -116,7 +127,7 @@
 
       real(wp) :: b , bdelta , bmin , bold , bq1 , &
                   bq2 , bq3 , p(8,4) , r1 , r2 , r3 , &
-                  rold  , step , step12 , zz
+                  rold , step , step12 , zz
       integer :: i , irun , j , n
 
       step=stps
@@ -187,9 +198,7 @@
             me%sp(2)=p(2,4)
             me%sp(3)=p(3,4)
         end do corrector
-        if (bold/=bmin) then
-            value=.false.
-        endif
+        if (bold/=bmin) value=.false.
         bdelta=(b-bold)/bold
         if (bdelta<=bdel) exit main
         step=step/10.0_wp
@@ -237,10 +246,6 @@
                rlat , rlon , rq , st , step12 , step2 , &
                stp , t , term , v(3) , xx , z , zq , zz
    integer :: i , iequ , n
-
-   real(wp),dimension(3,3),parameter ::  u = reshape([ +0.3511737_wp , -0.9148385_wp , -0.1993679_wp , &
-                                                       +0.9335804_wp , +0.3583680_wp , +0.0000000_wp , &
-                                                       +0.0714471_wp , -0.1861260_wp , +0.9799247_wp], [3,3])
 
    real(wp),parameter :: rmin = 0.05_wp !! boundaries for identification of `icode=2 and 3`
    real(wp),parameter :: rmax = 1.01_wp !! boundaries for identification of `icode=2 and 3`
@@ -453,19 +458,18 @@ END subroutine shellg
 
 !*****************************************************************************************
 !>
-!  subroutine USED FOR FIELD LINE TRACING IN [[SHELLG]]
-!  CALLS ENTRY POINT [[FELDI]] IN GEOMAGNETIC FIELD subroutine [[FELDG]]
+!  subroutine used for field line tracing in [[shellg]]
+!  calls entry point [[feldi]] in geomagnetic field subroutine [[feldg]]
 
-subroutine stoer(me,P,Bq,R)
+subroutine stoer(me,p,bq,r)
 
    class(shellig_type),intent(inout) :: me
-   REAL(wp) :: Bq , dr , dsq , dx , dxm , dy , dym , dz , dzm , fli , &
-               P(7) , q , R , rq , wr , xm , ym
-   REAL(wp) :: zm
+   real(wp),dimension(7),intent(inout) :: p
+   real(wp),intent(out) :: bq
+   real(wp),intent(out) :: r
 
-   real(wp),dimension(3,3),parameter :: u = reshape([ +0.3511737_wp , -0.9148385_wp , -0.1993679_wp , &
-                                                      +0.9335804_wp , +0.3583680_wp , +0.0000000_wp , &
-                                                      +0.0714471_wp , -0.1861260_wp , +0.9799247_wp],[3,3])
+   real(wp) :: dr , dsq , dx , dxm , dy , dym , dz , &
+               dzm , fli , q , rq , wr , xm , ym , zm
 
 !*****XM,YM,ZM ARE GEOMAGNETIC CARTESIAN INVERSE CO-ORDINATES
    zm = P(3)
@@ -498,7 +502,7 @@ subroutine stoer(me,P,Bq,R)
    P(5) = (wr*dym-0.5_wp*P(2)*dr)/(R*dzm)
    dsq = rq*(dxm*dxm+dym*dym+dzm*dzm)
    Bq = dsq*rq*rq
-   P(6) = sqrt(dsq/(rq+3.*zm*zm))
+   P(6) = sqrt(dsq/(rq+3.0_wp*zm*zm))
    P(7) = P(6)*(rq+zm*zm)/(rq*dzm)
 END subroutine stoer
 
@@ -646,8 +650,8 @@ subroutine feldg(me,glat,glon,alt,bnorth,beast,bdown,babs)
    real(wp),intent(out) :: dimo !! geomagnetic dipol moment in gauss (normalized
                                 !! to earth's radius) at the time (year)
 
-   real(wp) :: dte1 , dte2 , erad , gh2(120) , gha(144)  , sqrt2
-   integer :: i , ier , iyea , j , l , m , n , nmax1 , nmax2
+   real(wp) :: dte1 , dte2 , erad , gha(144) , sqrt2
+   integer :: i , ier , j , l , m , n , nmax1 , nmax2, iyea
    character(len=filename_len) :: fil2
    real(wp) :: x , f0 , f !! these were double precision in original
                           !! code while everything else was single precision
@@ -665,30 +669,37 @@ subroutine feldg(me,glat,glon,alt,bnorth,beast,bdown,babs)
                                                  1990.0_wp , 1995.0_wp , 2000.0_wp , &
                                                  2005.0_wp , 2010.0_wp , 2015.0_wp , &
                                                  2020.0_wp , 2025.0_wp]
-   integer,parameter :: numye = 16 ! number of 5-year priods represented by IGRF
+   integer,parameter :: numye = size(dtemod)-1 ! number of 5-year priods represented by IGRF
    integer,parameter :: is = 0 !! * is=0 for schmidt normalization
                                !! * is=1 gauss normalization
+
+   logical :: read_file
 
    !-- determine igrf-years for input-year
    me%time = year
    iyea = int(year/5.0_wp)*5
-   l = (iyea-1945)/5 + 1
+   read_file = iyea /= me%iyea  ! if we have to read the file
+   me%iyea = iyea
+   l = (me%iyea-1945)/5 + 1
    if ( l<1 ) l = 1
    if ( l>numye ) l = numye
    dte1 = dtemod(l)
    me%name = filmod(l)
    dte2 = dtemod(l+1)
    fil2 = filmod(l+1)
-   !-- get igrf coefficients for the boundary years
-   call me%getshc(me%name,nmax1,erad,me%g,ier)
-   if ( ier/=0 ) stop
-   call me%getshc(fil2,nmax2,erad,gh2,ier)
-   if ( ier/=0 ) stop
+   if (read_file) then
+      ! get igrf coefficients for the boundary years
+      ! [if they have not ready been loaded]
+      call me%getshc(me%name,nmax1,erad,me%g,ier)
+      if ( ier/=0 ) error stop 'error reading file: '//trim(me%name)
+      call me%getshc(fil2,nmax2,erad,me%gh2,ier)
+      if ( ier/=0 ) error stop 'error reading file: '//trim(fil2)
+   end if
    !-- determine igrf coefficients for year
    if ( l<=numye-1 ) then
-      call me%intershc(year,dte1,nmax1,me%g,dte2,nmax2,gh2,me%nmax,gha)
+      call me%intershc(year,dte1,nmax1,me%g,dte2,nmax2,me%gh2,me%nmax,gha)
    else
-      call me%extrashc(year,dte1,nmax1,me%g,nmax2,gh2,me%nmax,gha)
+      call me%extrashc(year,dte1,nmax1,me%g,nmax2,me%gh2,me%nmax,gha)
    endif
    !-- determine magnetic dipol moment and coeffiecients g
    f0 = 0.0_wp
