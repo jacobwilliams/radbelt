@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="radbelt">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="./favicon.png">
+
+    <title> radbelt </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="./css/pygments.css" rel="stylesheet">
+    <link href="./css/font-awesome.min.css" rel="stylesheet">
+    <link href="./css/local.css" rel="stylesheet">
+      <link  href="./tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="./js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="./index.html">radbelt </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="./lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="./search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="p-5 mb-4 bg-light border rounded-3" id="jumbotron">
+        <p>radbelt</p>
+	<p> Find us on&hellip;</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="https://github.com/jacobwilliams/radbelt" role="button">GitHub</a>
+        </p>
+      </div>
+
+      <div class="row" id='text'>
+        <div class=col-md-8>
+          <h1>radbelt</h1>
+          <p>Radbelt: Work in progress to refactor the AE-8/AP-8 Van Allen belt model.</p>
+<h3>Status</h3>
+<p><a href="https://github.com/topics/fortran"><img alt="Language" src="https://img.shields.io/badge/-Fortran-734f96?logo=fortran&amp;logoColor=white"></a>
+<a href="https://github.com/jacobwilliams/radbelt/releases/latest"><img alt="GitHub release" src="https://img.shields.io/github/release/jacobwilliams/radbelt.svg"></a>
+<a href="https://github.com/jacobwilliams/radbelt/actions"><img alt="CI Status" src="https://github.com/jacobwilliams/radbelt/actions/workflows/CI.yml/badge.svg"></a>
+<a href="https://codecov.io/gh/jacobwilliams/radbelt"><img alt="codecov" src="https://codecov.io/gh/jacobwilliams/radbelt/branch/master/graph/badge.svg"></a>
+<a href="https://github.com/jacobwilliams/radbelt/commits/master"><img alt="last-commit" src="https://img.shields.io/github/last-commit/jacobwilliams/radbelt"></a></p>
+<h3>Compiling</h3>
+<p>A <a href="https://github.com/fortran-lang/fpm">Fortran Package Manager</a> manifest file is included, so that the library and test cases can be compiled with FPM. For example:</p>
+<div class="codehilite"><pre><span></span><code>fpm build --profile release
+fpm test --profile release
+</code></pre></div>
+
+<p>To use <code>radbelt</code> within your fpm project, add the following to your <code>fpm.toml</code> file:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[dependencies]</span>
+<span class="n">radbelt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">git</span><span class="p">=</span><span class="s2">&quot;https://github.com/jacobwilliams/radbelt.git&quot;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<h3>Documentation</h3>
+<p>The latest API documentation can be found <a href="https://jacobwilliams.github.io/radbelt/">here</a>. This was generated from the source code using <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>.</p>
+<h3>See also</h3>
+<ul>
+<li><a href="https://git.smce.nasa.gov/ccmc-share/modelwebarchive">NASA ModelWebArchive</a></li>
+<li><a href="https://github.com/nasa/radbelt">An Astropy-friendly wrapper for the AE-8/AP-8 Van Allen belt model</a></li>
+<li><a href="https://github.com/rilma/pyIGRF">pyIGRF</a></li>
+<li>https://github.com/lanl/RAM-SCB/blob/master/srcExternal/igrf.f</li>
+<li>https://github.com/space-physics/igrf/blob/main/src/igrf/fortran/igrf13.f</li>
+</ul>
+<h1>Original Readme</h1>
+<h1>National Space Science Data Center      Data set  PT-11B         Mar 1996</h1>
+<div class="codehilite"><pre><span></span><code><span class="n">NSSDC</span><span class="o">-</span><span class="n">Id</span><span class="w">     </span><span class="n">PT</span><span class="o">-</span><span class="mi">11</span><span class="n">B</span><span class="w"> </span><span class="p">(</span><span class="n">combines</span><span class="w"> </span><span class="n">PT</span><span class="o">-</span><span class="mi">11</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">MT</span><span class="o">-</span><span class="mi">18</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">MT</span><span class="o">-</span><span class="mi">18</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">MT</span><span class="o">-</span><span class="mi">2</span><span class="n">AA</span><span class="p">,</span><span class="w"> </span><span class="n">MT</span><span class="o">-</span><span class="mi">2</span><span class="n">AB</span><span class="p">)</span>
+
+<span class="nl">NAME</span><span class="p">:</span><span class="w">        </span><span class="n">Models</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">trapped</span><span class="w"> </span><span class="n">particle</span><span class="w"> </span><span class="n">fluxes</span><span class="w"> </span><span class="n">AE</span><span class="o">-</span><span class="mi">8</span><span class="w"> </span><span class="p">(</span><span class="n">electrons</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span>
+<span class="w">         </span><span class="n">AP</span><span class="o">-</span><span class="mi">8</span><span class="w"> </span><span class="p">(</span><span class="n">protons</span><span class="p">)</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">inner</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="k">outer</span><span class="w"> </span><span class="n">radiation</span><span class="w"> </span><span class="n">belts</span>
+
+<span class="nl">SOURCE</span><span class="p">:</span><span class="w">      </span><span class="n">Dieter</span><span class="w"> </span><span class="n">Bilitza</span><span class="p">,</span><span class="w"> </span><span class="n">GSFC</span><span class="o">/</span><span class="n">NSSDC</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">633</span><span class="p">,</span><span class="w"> </span><span class="n">Greenbelt</span><span class="p">,</span>
+<span class="w">             </span><span class="n">MD</span><span class="w"> </span><span class="mi">20771</span><span class="p">,</span><span class="w"> </span><span class="n">tel</span><span class="p">.</span><span class="w"> </span><span class="p">(</span><span class="mi">301</span><span class="p">)</span><span class="w"> </span><span class="mi">286</span><span class="o">-</span><span class="mi">0190</span>
+<span class="w">             </span><span class="n">dbilitza</span><span class="nv">@pop600</span><span class="p">.</span><span class="n">gsfc</span><span class="p">.</span><span class="n">nasa</span><span class="p">.</span><span class="n">gov</span>
+
+<span class="nl">CONTENT</span><span class="p">:</span><span class="w">     </span><span class="mi">12</span><span class="w"> </span><span class="n">files</span><span class="w">                         </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w">   </span><span class="n">blocks</span>
+<span class="w">            </span><span class="k">FORTRAN</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="nl">code</span><span class="p">:</span>
+<span class="w">         </span><span class="n">driver</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">interface</span><span class="w">              </span><span class="n">RADBELT</span><span class="p">.</span><span class="k">FOR</span><span class="w">   </span><span class="mi">48</span>
+<span class="w">             </span><span class="n">subroutines</span><span class="p">,</span><span class="w"> </span><span class="n">functions</span><span class="w">              </span><span class="n">TRMFUN</span><span class="p">.</span><span class="k">FOR</span><span class="w">   </span><span class="mi">30</span>
+
+<span class="w">        </span><span class="n">model</span><span class="w"> </span><span class="n">tables</span><span class="w"> </span><span class="nc">binary</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="nf">ASCII</span><span class="err">:</span>
+<span class="w">             </span><span class="n">AE</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">epoch</span><span class="w"> </span><span class="mi">1964</span><span class="p">,</span><span class="w"> </span><span class="n">solar</span><span class="w"> </span><span class="n">minimum</span><span class="w">         </span><span class="n">AE8MIN</span><span class="p">.</span><span class="n">BIN</span><span class="w">  </span><span class="mi">104</span>
+<span class="w">         </span><span class="n">AE</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">epoch</span><span class="w"> </span><span class="mi">1970</span><span class="p">,</span><span class="w"> </span><span class="n">solar</span><span class="w"> </span><span class="n">maximum</span><span class="w">             </span><span class="n">AE8MAX</span><span class="p">.</span><span class="n">BIN</span><span class="w">  </span><span class="mi">107</span>
+<span class="w">         </span><span class="n">AP</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">epoch</span><span class="w"> </span><span class="mi">1964</span><span class="p">,</span><span class="w"> </span><span class="n">solar</span><span class="w"> </span><span class="n">minimum</span><span class="w">         </span><span class="n">AP8MIN</span><span class="p">.</span><span class="n">BIN</span><span class="w">   </span><span class="mi">53</span>
+<span class="w">         </span><span class="n">AP</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">epoch</span><span class="w"> </span><span class="mi">1970</span><span class="p">,</span><span class="w"> </span><span class="n">solar</span><span class="w"> </span><span class="n">maximum</span><span class="w">         </span><span class="n">AP8MAX</span><span class="p">.</span><span class="n">BIN</span><span class="w">   </span><span class="mi">52</span>
+<span class="w">             </span><span class="nf">ASCII</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">AE8MIN</span><span class="p">.</span><span class="n">BIN</span><span class="w">                 </span><span class="n">AE8MIN</span><span class="p">.</span><span class="k">ASC</span><span class="w">  </span><span class="mi">163</span>
+<span class="w">             </span><span class="nf">ASCII</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">AE8MAX</span><span class="p">.</span><span class="n">BIN</span><span class="w">                 </span><span class="n">AE8MAX</span><span class="p">.</span><span class="k">ASC</span><span class="w">  </span><span class="mi">168</span>
+<span class="w">             </span><span class="nf">ASCII</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">AP8MIN</span><span class="p">.</span><span class="n">BIN</span><span class="w">                 </span><span class="n">AP8MIN</span><span class="p">.</span><span class="n">BIN</span><span class="w">   </span><span class="mi">83</span>
+<span class="w">             </span><span class="nf">ASCII</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">AP8MAX</span><span class="p">.</span><span class="n">BIN</span><span class="w">                 </span><span class="n">AP8MAX</span><span class="p">.</span><span class="n">BIN</span><span class="w">   </span><span class="mi">81</span>
+
+<span class="w">         </span><span class="k">user</span><span class="w"> </span><span class="n">manual</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">examples</span><span class="w">          </span><span class="n">RADBELT</span><span class="p">.</span><span class="nf">LOG</span><span class="w">   </span><span class="mi">48</span>
+<span class="w">             </span><span class="n">This</span><span class="w"> </span><span class="k">file</span><span class="w">                                </span><span class="n">AAAREADME</span><span class="p">.</span><span class="n">DOC</span><span class="w">    </span><span class="mi">9</span>
+</code></pre></div>
+
+<h3>BRIEF DESCRIPTION:</h3>
+<p>These empirical models describe the differential or
+integral, omnidirectional fluxes of electrons (AE-8) and protons
+(AP-8) in the inner and outer radiation belts (electrons: L=1.1
+to 11, protons: L=1.1 to 7) for two epochs representing solar
+maximum (1970) and minimum (1964) conditions. The energy spectrum
+ranges from 0.1 to 400 MeV for the protons and from 0.04 to 7 MeV
+for the electrons. AE-8 and AP-8 are the most recent ones in a
+series of models established by J. Vette and his colleges at NSSDC
+starting in the early sixties. The models are based on almost all
+available satellite data. It is IMPORTANT that the models maps for
+solar maximum are used with a magnetic field model for epoch=1970
+and for solar minimum for epoch=1964.</p>
+<p>For each epoch and particle the model consists of a three-
+dimensional table of (logarithm of) particle fluxes in energy, L-value,
+and B/B0 (magnetic field strength normalized to the equator). The program
+MODEL finds the particle fluxes for given energy, L-value and B/B0 by
+interpolating in energy (subroutine TRARA1) and in L * B/B0 space (TRARA2).
+The program RADBELT produces tables of integral or differential fluxes
+for different energies varying with L or B/B0.</p>
+<p>The coefficient files are provided in VAX/VMS binary (<em>.bin) and
+ASCII (</em>.asc) format. For all systems other than VMS the use of the ASCII
+files is recommended. If using the ASCII coefficient one needs to slightly
+modify the RADBELT.FOR program as described in a comment statement in
+RADBELT (this comments are found after the OPEN statement for the coefficient
+file).</p>
+<p>In March 1995 the earlier used compressed model maps AP8MIC and AP8MAC
+were replaced with the full maps AP8MIN/MAX with the help of D. Heynderickx
+(BIRA, Brussel, Belgium) and A. Beliaev (INP/MSU, Moscow, Russia). Heynderickx
+and Beliaev (1995) had found and corrected a small error in the AP8MIN map;
+two lines had been exchanged.</p>
+<h3>AVAILABILITY:</h3>
+<p>(1) FORTRAN source code from this directory.
+(2) Model parameters can be computed and plotted online at http://nssdc.gsfc.nasa.gov/space/model/ .</p>
+<h3>REFERENCES:</h3>
+<p>G.W. Singley, and J.I. Vette, The AE-4 Model of the Outer Radiation
+  Zone Electron Environment, NSSDC/WDC-A-R&amp;S 72-06, 1972.</p>
+<p>M.J. Teague, and J.I. Vette, A Model of the Trapped Electron
+  Population for Solar Minimum (AE-5), NSSDC/WDC-A-R&amp;S 74-03, 1974.</p>
+<p>M.J. Teague, K.W. Chan, and J.I. Vette, AE-6: A Model Environment
+  of Trapped Electrons for Solar Maximum, NSSDC/WDC-A-R&amp;S 76-04, 1976</p>
+<p>D.W. Sawyer, and J.I. Vette, AP-8 Trapped Proton Environment for
+  Solar Maximum and Minimum, NSSDC/WDC-A-R&amp;S 76-06, 1976.</p>
+<p>J.I. Vette, K.W. Chan, and M.J. Teague, Problems in Modeling the
+  Earth's Trapped Radiation Environment, AFGL-TR-78-0130, 1978.</p>
+<p>K.W. Chan, M.J. Teague, N.J. Schofield, and J.I. Vette, Modeling of
+  Electron Time Variation in the Radiation Belts, p. 121-149, in:
+  Quantitative Modeling of Magnetospheric Processes, W.P. Olson
+  (ed.), geophysical monograph 21, American Geophysical Union, 1979.</p>
+<p>M.T. Teague, N.J. Schofield, K.W. Chan, and J.I. Vette, A Study of
+  Inner Zone Electron Data and their Comparison with Trapped
+  Radiation Models, NSSDC/WDC-A-R&amp;S 79-06, 1979.</p>
+<p>J.I. Vette, The AE-8 Trapped Electron Model Environment,
+  NSSDC/WDC-A-R&amp;S 91-24, 1991.</p>
+<p>J.I. Vette, The NASA/National Space Science Data Center Trapped
+  Radiation Environment Model Program (1964-1991), NSSDC/WDC-A-R&amp;S
+  91-29, 1991.</p>
+<p>(most of these references are available from NSSDC)</p>
+<p>D. Heynderickx and A. Beliaev, J. Spacecraft and Rockets 32, 190-192, 1995.</p>
+<h1>National Space Science Data Center      Data set  PT-11B         Mar 1996</h1>
+        </div>
+          <div class="col-md-4">
+	        <div class="card card-body bg-light">
+              <h2 class="card-title">Developer Info</h2>
+              <h4 class="card-text">Jacob Williams</h4>
+              <p class="card-text"></p>
+                <div class="text-center"><div class="btn-group" role="group">
+                      <a class="btn btn-lg btn-primary" href="https://github.com/jacobwilliams"><i class="fa fa-github fa-lg"></i></a>
+                </div></div>
+            </div>
+          </div>
+      </div>
+        <div class="row">
+          <hr>
+          <div class="col-xs-6 col-sm-3">
+            <div>
+              <h3>Source Files</h3>
+              <ul><li><a href='sourcefile/core.f90.html'>core.f90</a></li><li><a href='sourcefile/radbelt_kinds_module.f90.html'>radbelt_kinds_module.F90</a></li><li><a href='sourcefile/shellig.f90.html'>shellig.f90</a></li><li><a href='sourcefile/trmfun.f90.html'>trmfun.f90</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/files.html"><em>All source files&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div>
+              <h3>Modules</h3>
+              <ul><li><a href='module/core.html'>core</a></li><li><a href='module/radbelt_kinds_module.html'>radbelt_kinds_module</a></li><li><a href='module/shellig_module.html'>shellig_module</a></li><li><a href='module/trmfun_module.html'>trmfun_module</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/modules.html"><em>All modules&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div>
+              <h3>Procedures</h3>
+              <ul><li><a href='proc/aep8.html'>aep8</a></li><li><a href='proc/extrashc.html'>extrashc</a></li><li><a href='proc/feldcof.html'>feldcof</a></li><li><a href='proc/feldg.html'>feldg</a></li><li><a href='proc/findb0.html'>findb0</a></li><li><a href='proc/get_flux.html'>get_flux</a></li><li><a href='proc/getshc.html'>getshc</a></li><li><a href='proc/igrf.html'>igrf</a></li><li><a href='proc/intershc.html'>intershc</a></li><li><a href='proc/shellg.html'>shellg</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/procedures.html"><em>All procedures&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div>
+              <h3>Derived Types</h3>
+              <ul><li><a href='type/shellig_type.html'>shellig_type</a></li><li><a href='type/trm_type.html'>trm_type</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/types.html"><em>All derived types&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col"><p>radbelt was developed by Jacob Williams<br>&copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="./tipuesearch/tipuesearch_content.js"></script>
+          <script src="./tipuesearch/tipuesearch_set.js"></script>
+          <script src="./tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>

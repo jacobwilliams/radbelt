@@ -1,0 +1,677 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="radbelt">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>get_flux &ndash; radbelt</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">radbelt </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>get_flux
+      <small>Function</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 1.7% of total for procedures.">14 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/core.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/core.f90.html'>core.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/core.html'>core</a></li>
+            <li class="breadcrumb-item active" aria-current="page">get_flux</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/get_flux.html#src">get_flux</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  function get_flux(lon, lat, height, year, e, imname) result(flux)  
+</h2>
+    
+
+    <p>Main routine.</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lon~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lon</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lat~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lat</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-height~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>height</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-year~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>year</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-e~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>e</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-imname~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>imname</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <h3>Return Value
+        <small>
+          <span class="anchor" id="variable-flux~2"></span>
+          real(kind=wp)
+        </small>
+      </h3>
+      
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~get_flux~~CallsGraph Pages: 1 -->
+<svg id="procget_fluxCallsGraph" width="641pt" height="227pt"
+ viewBox="0.00 0.00 641.00 226.82" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~get_flux~~CallsGraph" class="graph" transform="scale(1.42 1.42) rotate(0) translate(4 318)">
+<title>proc~~get_flux~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-318 906,-318 906,4 -4,4"/>
+<!-- proc~get_flux -->
+<g id="proc~~get_flux~~CallsGraph_node1" class="node">
+<title>proc~get_flux</title>
+<polygon fill="none" stroke="black" points="85,-167 0,-167 0,-143 85,-143 85,-167"/>
+<text text-anchor="middle" x="42.5" y="-152.6" font-family="Helvetica,sans-Serif" font-size="10.50">core::get_flux</text>
+</g>
+<!-- proc~aep8 -->
+<g id="proc~~get_flux~~CallsGraph_node2" class="node">
+<title>proc~aep8</title>
+<g id="a_proc~~get_flux~~CallsGraph_node2"><a xlink:href="../proc/aep8.html" xlink:title="trmfun_module::trm_type%aep8">
+<polygon fill="#d9534f" stroke="#d9534f" points="309.5,-209 123.5,-209 123.5,-185 309.5,-185 309.5,-209"/>
+<text text-anchor="middle" x="216.5" y="-194.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">trmfun_module::trm_type%aep8</text>
+</a>
+</g>
+</g>
+<!-- proc~get_flux&#45;&gt;proc~aep8 -->
+<g id="proc~~get_flux~~CallsGraph_edge1" class="edge">
+<title>proc~get_flux&#45;&gt;proc~aep8</title>
+<path fill="none" stroke="#000000" d="M85.14,-165.17C106.54,-170.39 132.98,-176.85 156.45,-182.58"/>
+<polygon fill="#000000" stroke="#000000" points="155.76,-186.02 166.31,-184.99 157.42,-179.21 155.76,-186.02"/>
+</g>
+<!-- proc~igrf -->
+<g id="proc~~get_flux~~CallsGraph_node3" class="node">
+<title>proc~igrf</title>
+<g id="a_proc~~get_flux~~CallsGraph_node3"><a xlink:href="../proc/igrf.html" xlink:title="shellig_module::shellig_type%igrf">
+<polygon fill="#d9534f" stroke="#d9534f" points="312,-146 121,-146 121,-122 312,-122 312,-146"/>
+<text text-anchor="middle" x="216.5" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%igrf</text>
+</a>
+</g>
+</g>
+<!-- proc~get_flux&#45;&gt;proc~igrf -->
+<g id="proc~~get_flux~~CallsGraph_edge2" class="edge">
+<title>proc~get_flux&#45;&gt;proc~igrf</title>
+<path fill="none" stroke="#000000" d="M85.14,-149.92C93.08,-148.95 101.72,-147.89 110.65,-146.8"/>
+<polygon fill="#000000" stroke="#000000" points="111.33,-150.24 120.83,-145.56 110.48,-143.3 111.33,-150.24"/>
+</g>
+<!-- proc~trara1 -->
+<g id="proc~~get_flux~~CallsGraph_node8" class="node">
+<title>proc~trara1</title>
+<g id="a_proc~~get_flux~~CallsGraph_node8"><a xlink:href="../proc/trara1.html" xlink:title="trmfun_module::trm_type%trara1">
+<polygon fill="#d9534f" stroke="#d9534f" points="549,-282 357,-282 357,-258 549,-258 549,-282"/>
+<text text-anchor="middle" x="453" y="-267.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">trmfun_module::trm_type%trara1</text>
+</a>
+</g>
+</g>
+<!-- proc~aep8&#45;&gt;proc~trara1 -->
+<g id="proc~~get_flux~~CallsGraph_edge3" class="edge">
+<title>proc~aep8&#45;&gt;proc~trara1</title>
+<path fill="none" stroke="#000000" d="M256.22,-209.05C296.53,-221.6 359.76,-241.29 403.4,-254.87"/>
+<polygon fill="#000000" stroke="#000000" points="402.63,-258.3 413.22,-257.93 404.71,-251.61 402.63,-258.3"/>
+</g>
+<!-- proc~feldcof -->
+<g id="proc~~get_flux~~CallsGraph_node4" class="node">
+<title>proc~feldcof</title>
+<g id="a_proc~~get_flux~~CallsGraph_node4"><a xlink:href="../proc/feldcof.html" xlink:title="shellig_module::shellig_type%feldcof">
+<polygon fill="#d9534f" stroke="#d9534f" points="558,-209 348,-209 348,-185 558,-185 558,-209"/>
+<text text-anchor="middle" x="453" y="-194.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldcof</text>
+</a>
+</g>
+</g>
+<!-- proc~igrf&#45;&gt;proc~feldcof -->
+<g id="proc~~get_flux~~CallsGraph_edge4" class="edge">
+<title>proc~igrf&#45;&gt;proc~feldcof</title>
+<path fill="none" stroke="#000000" d="M262.44,-146.07C300.89,-156.4 356.37,-171.31 397.38,-182.33"/>
+<polygon fill="#000000" stroke="#000000" points="396.65,-185.75 407.22,-184.97 398.47,-178.99 396.65,-185.75"/>
+</g>
+<!-- proc~feldg -->
+<g id="proc~~get_flux~~CallsGraph_node5" class="node">
+<title>proc~feldg</title>
+<g id="a_proc~~get_flux~~CallsGraph_node5"><a xlink:href="../proc/feldg.html" xlink:title="shellig_module::shellig_type%feldg">
+<polygon fill="#d9534f" stroke="#d9534f" points="553,-146 353,-146 353,-122 553,-122 553,-146"/>
+<text text-anchor="middle" x="453" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldg</text>
+</a>
+</g>
+</g>
+<!-- proc~igrf&#45;&gt;proc~feldg -->
+<g id="proc~~get_flux~~CallsGraph_edge5" class="edge">
+<title>proc~igrf&#45;&gt;proc~feldg</title>
+<path fill="none" stroke="#000000" d="M312.2,-134C322.21,-134 332.45,-134 342.61,-134"/>
+<polygon fill="#000000" stroke="#000000" points="342.73,-137.5 352.73,-134 342.73,-130.5 342.73,-137.5"/>
+</g>
+<!-- proc~findb0 -->
+<g id="proc~~get_flux~~CallsGraph_node6" class="node">
+<title>proc~findb0</title>
+<g id="a_proc~~get_flux~~CallsGraph_node6"><a xlink:href="../proc/findb0.html" xlink:title="shellig_module::shellig_type%findb0">
+<polygon fill="#d9534f" stroke="#d9534f" points="556.5,-104 349.5,-104 349.5,-80 556.5,-80 556.5,-104"/>
+<text text-anchor="middle" x="453" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%findb0</text>
+</a>
+</g>
+</g>
+<!-- proc~igrf&#45;&gt;proc~findb0 -->
+<g id="proc~~get_flux~~CallsGraph_edge6" class="edge">
+<title>proc~igrf&#45;&gt;proc~findb0</title>
+<path fill="none" stroke="#000000" d="M284.7,-121.96C312.79,-116.93 345.59,-111.06 374.67,-105.85"/>
+<polygon fill="#000000" stroke="#000000" points="375.57,-109.25 384.79,-104.04 374.33,-102.36 375.57,-109.25"/>
+</g>
+<!-- proc~shellg -->
+<g id="proc~~get_flux~~CallsGraph_node7" class="node">
+<title>proc~shellg</title>
+<g id="a_proc~~get_flux~~CallsGraph_node7"><a xlink:href="../proc/shellg.html" xlink:title="shellig_module::shellig_type%shellg">
+<polygon fill="#d9534f" stroke="#d9534f" points="555.5,-62 350.5,-62 350.5,-38 555.5,-38 555.5,-62"/>
+<text text-anchor="middle" x="453" y="-47.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%shellg</text>
+</a>
+</g>
+</g>
+<!-- proc~igrf&#45;&gt;proc~shellg -->
+<g id="proc~~get_flux~~CallsGraph_edge7" class="edge">
+<title>proc~igrf&#45;&gt;proc~shellg</title>
+<path fill="none" stroke="#000000" d="M238.51,-121.81C263.74,-107.67 307.7,-84.56 348,-71 355.24,-68.56 362.87,-66.37 370.56,-64.39"/>
+<polygon fill="#000000" stroke="#000000" points="371.44,-67.78 380.33,-62.01 369.78,-60.98 371.44,-67.78"/>
+</g>
+<!-- proc~extrashc -->
+<g id="proc~~get_flux~~CallsGraph_node11" class="node">
+<title>proc~extrashc</title>
+<g id="a_proc~~get_flux~~CallsGraph_node11"><a xlink:href="../proc/extrashc.html" xlink:title="shellig_module::shellig_type%extrashc">
+<polygon fill="#d9534f" stroke="#d9534f" points="812,-272 594,-272 594,-248 812,-248 812,-272"/>
+<text text-anchor="middle" x="703" y="-257.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%extrashc</text>
+</a>
+</g>
+</g>
+<!-- proc~feldcof&#45;&gt;proc~extrashc -->
+<g id="proc~~get_flux~~CallsGraph_edge8" class="edge">
+<title>proc~feldcof&#45;&gt;proc~extrashc</title>
+<path fill="none" stroke="#000000" d="M490.57,-209.06C518.66,-218.06 558.52,-230.25 594,-239 603.91,-241.44 614.38,-243.78 624.76,-245.95"/>
+<polygon fill="#000000" stroke="#000000" points="624.16,-249.4 634.66,-247.98 625.56,-242.54 624.16,-249.4"/>
+</g>
+<!-- proc~getshc -->
+<g id="proc~~get_flux~~CallsGraph_node12" class="node">
+<title>proc~getshc</title>
+<g id="a_proc~~get_flux~~CallsGraph_node12"><a xlink:href="../proc/getshc.html" xlink:title="shellig_module::shellig_type%getshc">
+<polygon fill="#d9534f" stroke="#d9534f" points="807,-230 599,-230 599,-206 807,-206 807,-230"/>
+<text text-anchor="middle" x="703" y="-215.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%getshc</text>
+</a>
+</g>
+</g>
+<!-- proc~feldcof&#45;&gt;proc~getshc -->
+<g id="proc~~get_flux~~CallsGraph_edge9" class="edge">
+<title>proc~feldcof&#45;&gt;proc~getshc</title>
+<path fill="none" stroke="#000000" d="M558.1,-205.81C568.24,-206.67 578.56,-207.55 588.78,-208.41"/>
+<polygon fill="#000000" stroke="#000000" points="588.71,-211.92 598.96,-209.28 589.3,-204.94 588.71,-211.92"/>
+</g>
+<!-- proc~intershc -->
+<g id="proc~~get_flux~~CallsGraph_node13" class="node">
+<title>proc~intershc</title>
+<g id="a_proc~~get_flux~~CallsGraph_node13"><a xlink:href="../proc/intershc.html" xlink:title="shellig_module::shellig_type%intershc">
+<polygon fill="#d9534f" stroke="#d9534f" points="811,-188 595,-188 595,-164 811,-164 811,-188"/>
+<text text-anchor="middle" x="703" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%intershc</text>
+</a>
+</g>
+</g>
+<!-- proc~feldcof&#45;&gt;proc~intershc -->
+<g id="proc~~get_flux~~CallsGraph_edge10" class="edge">
+<title>proc~feldcof&#45;&gt;proc~intershc</title>
+<path fill="none" stroke="#000000" d="M558.1,-188.19C566.96,-187.44 575.96,-186.67 584.91,-185.92"/>
+<polygon fill="#000000" stroke="#000000" points="585.32,-189.39 594.98,-185.06 584.72,-182.42 585.32,-189.39"/>
+</g>
+<!-- feldc -->
+<g id="proc~~get_flux~~CallsGraph_node9" class="node">
+<title>feldc</title>
+<polygon fill="#777777" stroke="#777777" points="730,-146 676,-146 676,-122 730,-122 730,-146"/>
+<text text-anchor="middle" x="703" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">feldc</text>
+</g>
+<!-- proc~feldg&#45;&gt;feldc -->
+<g id="proc~~get_flux~~CallsGraph_edge11" class="edge">
+<title>proc~feldg&#45;&gt;feldc</title>
+<path fill="none" stroke="#000000" d="M553.09,-134C592.74,-134 635.94,-134 665.54,-134"/>
+<polygon fill="#000000" stroke="#000000" points="665.81,-137.5 675.81,-134 665.81,-130.5 665.81,-137.5"/>
+</g>
+<!-- feldi -->
+<g id="proc~~get_flux~~CallsGraph_node10" class="node">
+<title>feldi</title>
+<polygon fill="#777777" stroke="#777777" points="902,-86 848,-86 848,-62 902,-62 902,-86"/>
+<text text-anchor="middle" x="875" y="-71.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">feldi</text>
+</g>
+<!-- proc~feldg&#45;&gt;feldi -->
+<g id="proc~~get_flux~~CallsGraph_edge12" class="edge">
+<title>proc~feldg&#45;&gt;feldi</title>
+<path fill="none" stroke="#000000" d="M533.2,-121.97C553.05,-119 574.3,-115.85 594,-113 681.43,-100.35 784.34,-86.21 837.74,-78.93"/>
+<polygon fill="#000000" stroke="#000000" points="838.3,-82.38 847.74,-77.56 837.36,-75.45 838.3,-82.38"/>
+</g>
+<!-- proc~stoer -->
+<g id="proc~~get_flux~~CallsGraph_node14" class="node">
+<title>proc~stoer</title>
+<g id="a_proc~~get_flux~~CallsGraph_node14"><a xlink:href="../proc/stoer.html" xlink:title="shellig_module::shellig_type%stoer">
+<polygon fill="#d9534f" stroke="#d9534f" points="803,-66 603,-66 603,-42 803,-42 803,-66"/>
+<text text-anchor="middle" x="703" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%stoer</text>
+</a>
+</g>
+</g>
+<!-- proc~findb0&#45;&gt;proc~stoer -->
+<g id="proc~~get_flux~~CallsGraph_edge13" class="edge">
+<title>proc~findb0&#45;&gt;proc~stoer</title>
+<path fill="none" stroke="#000000" d="M532.47,-79.98C558.26,-76.02 587.11,-71.6 613.59,-67.55"/>
+<polygon fill="#000000" stroke="#000000" points="614.26,-70.98 623.62,-66.01 613.2,-64.07 614.26,-70.98"/>
+</g>
+<!-- proc~shellg&#45;&gt;proc~stoer -->
+<g id="proc~~get_flux~~CallsGraph_edge14" class="edge">
+<title>proc~shellg&#45;&gt;proc~stoer</title>
+<path fill="none" stroke="#000000" d="M555.59,-51.64C567.81,-51.84 580.34,-52.04 592.67,-52.24"/>
+<polygon fill="#000000" stroke="#000000" points="592.92,-55.74 602.97,-52.4 593.03,-48.74 592.92,-55.74"/>
+</g>
+<!-- shellc -->
+<g id="proc~~get_flux~~CallsGraph_node16" class="node">
+<title>shellc</title>
+<polygon fill="#777777" stroke="#777777" points="730,-24 676,-24 676,0 730,0 730,-24"/>
+<text text-anchor="middle" x="703" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellc</text>
+</g>
+<!-- proc~shellg&#45;&gt;shellc -->
+<g id="proc~~get_flux~~CallsGraph_edge15" class="edge">
+<title>proc~shellg&#45;&gt;shellc</title>
+<path fill="none" stroke="#000000" d="M532.47,-37.98C577.09,-31.14 630.86,-22.9 665.7,-17.56"/>
+<polygon fill="#000000" stroke="#000000" points="666.52,-20.98 675.87,-16 665.46,-14.06 666.52,-20.98"/>
+</g>
+<!-- proc~trara2 -->
+<g id="proc~~get_flux~~CallsGraph_node15" class="node">
+<title>proc~trara2</title>
+<g id="a_proc~~get_flux~~CallsGraph_node15"><a xlink:href="../proc/trara2.html" xlink:title="trmfun_module::trm_type%trara2">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="799,-314 607,-314 607,-290 799,-290 799,-314"/>
+<text text-anchor="middle" x="703" y="-299.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">trmfun_module::trm_type%trara2</text>
+</a>
+</g>
+</g>
+<!-- proc~trara1&#45;&gt;proc~trara2 -->
+<g id="proc~~get_flux~~CallsGraph_edge16" class="edge">
+<title>proc~trara1&#45;&gt;proc~trara2</title>
+<path fill="none" stroke="#000000" d="M547.05,-282.01C563.94,-284.19 581.65,-286.47 598.81,-288.69"/>
+<polygon fill="#000000" stroke="#000000" points="598.47,-292.17 608.84,-289.98 599.37,-285.23 598.47,-292.17"/>
+</g>
+<!-- proc~stoer&#45;&gt;feldi -->
+<g id="proc~~get_flux~~CallsGraph_edge17" class="edge">
+<title>proc~stoer&#45;&gt;feldi</title>
+<path fill="none" stroke="#000000" d="M803.38,-65.69C815.57,-67.13 827.35,-68.51 837.68,-69.73"/>
+<polygon fill="#000000" stroke="#000000" points="837.54,-73.24 847.88,-70.93 838.36,-66.28 837.54,-73.24"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocget_fluxCallsGraph = svgPanZoom('#procget_fluxCallsGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">function </span><span class="n">get_flux</span><span class="p">(</span><span class="n">Lon</span><span class="p">,</span><span class="n">Lat</span><span class="p">,</span><span class="n">Height</span><span class="p">,</span><span class="n">Year</span><span class="p">,</span><span class="n">E</span><span class="p">,</span><span class="n">Imname</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">flux</span><span class="p">)</span>
+
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lon</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lat</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">height</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">year</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">e</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">imname</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">flux</span>
+
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xl</span><span class="p">,</span><span class="w"> </span><span class="n">bbx</span>
+<span class="w">      </span><span class="k">type</span><span class="p">(</span><span class="n">trm_type</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">trm</span>
+<span class="w">      </span><span class="k">type</span><span class="p">(</span><span class="n">shellig_type</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">igrf</span>
+
+<span class="w">      </span><span class="k">call </span><span class="n">igrf</span><span class="p">%</span><span class="n">igrf</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">xl</span><span class="p">,</span><span class="n">bbx</span><span class="p">)</span>
+<span class="w">      </span><span class="k">call </span><span class="n">trm</span><span class="p">%</span><span class="n">aep8</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="n">xl</span><span class="p">,</span><span class="n">bbx</span><span class="p">,</span><span class="n">imname</span><span class="p">,</span><span class="n">flux</span><span class="p">)</span>
+
+<span class="w">   </span><span class="k">end function </span><span class="n">get_flux</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col"><p>radbelt was developed by Jacob Williams<br>&copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>
