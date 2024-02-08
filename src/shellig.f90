@@ -90,7 +90,7 @@
       real(wp),intent(in) :: year !! decimal year for which geomagnetic field is to
                                   !! be calculated (e.g.:1995.5 for day 185 of 1995)
       real(wp),intent(out) :: xl !! l-value
-      real(wp),intent(out) :: bbx
+      real(wp),intent(out) :: bbx !! b_total / b_equatorial ratio
 
       real(wp) :: bab1 , babs , bdel , bdown , beast , &
                   beq , bequ , bnorth , dimo , rr0
