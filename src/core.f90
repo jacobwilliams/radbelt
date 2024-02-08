@@ -20,19 +20,29 @@ module core
 
 !*****************************************************************************************
 !>
-!  Main routine.
+!  Calculate the flux of trapped particles at a specific location and time.
+!
+!@note This routine is not efficient since it will reload all the
+!      files every time it is called.
 
    function get_flux(Lon,Lat,Height,Year,E,Imname) result(flux)
 
-      real(wp),intent(in) :: lon
-      real(wp),intent(in) :: lat
-      real(wp),intent(in) :: height
-      real(wp),intent(in) :: year
-      real(wp),intent(in) :: e
-      integer,intent(in) :: imname
-      real(wp) :: flux
+      real(wp),intent(in) :: lon !! geodetic longitude in degrees (east)
+      real(wp),intent(in) :: lat !! geodetic latitude in degrees (north)
+      real(wp),intent(in) :: height !! altitude in km above sea level
+      real(wp),intent(in) :: year !! decimal year for which geomagnetic field is to
+                                  !! be calculated (e.g.:1995.5 for day 185 of 1995)
+      real(wp),intent(in) :: e !! minimum energy
+      integer,intent(in) :: imname !! which method to use:
+                                   !!
+                                   !! * 1 -- particle species: electrons, solar activity: min
+                                   !! * 2 -- particle species: electrons, solar activity: max
+                                   !! * 3 -- particle species: protons, solar activity: min
+                                   !! * 4 -- particle species: protons, solar activity: max
+      real(wp) :: flux !! The flux of particles above the given energy, in units of cm^-2 s^-1.
 
-      real(wp) :: xl, bbx
+      real(wp) :: xl !! l value
+      real(wp) :: bbx
       type(trm_type) :: trm
       type(shellig_type) :: igrf
 

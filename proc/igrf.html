@@ -176,7 +176,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lon~2"></span>
+              <span class="anchor" id="variable-lon"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -191,7 +191,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lat~2"></span>
+              <span class="anchor" id="variable-lat"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -206,7 +206,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-height~2"></span>
+              <span class="anchor" id="variable-height"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -221,7 +221,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~2"></span>
+              <span class="anchor" id="variable-year"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -237,7 +237,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-xl~2"></span>
+              <span class="anchor" id="variable-xl"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -252,7 +252,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-bbx~2"></span>
+              <span class="anchor" id="variable-bbx"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -262,7 +262,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             <td>::</td>
             <td><strong>bbx</strong></td>
             <td>
-                
+                <p>b_total / b_equatorial ratio</p>
             </td>
         </tr>
     </tbody>
@@ -685,7 +685,7 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="c">!! decimal year for which geomagnetic field is to</span>
 <span class="w">                                  </span><span class="c">!! be calculated (e.g.:1995.5 for day 185 of 1995)</span>
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="c">!! l-value</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bbx</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bbx</span><span class="w"> </span><span class="c">!! b_total / b_equatorial ratio</span>
 
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bab1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">babs</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bdel</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bdown</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">beast</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
 <span class="w">                  </span><span class="n">beq</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bequ</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bnorth</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">dimo</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">rr0</span>

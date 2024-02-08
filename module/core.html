@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title=" 2.4% of total for modules and submodules.">22 statements</a>
+                 title=" 2.5% of total for modules and submodules.">23 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -155,9 +155,9 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <ul class="list-inline">
-                  <li class="list-inline-item"><a href='shellig_module.html'>shellig_module</a></li>
-                  <li class="list-inline-item"><a href='radbelt_kinds_module.html'>radbelt_kinds_module</a></li>
                   <li class="list-inline-item"><a href='trmfun_module.html'>trmfun_module</a></li>
+                  <li class="list-inline-item"><a href='radbelt_kinds_module.html'>radbelt_kinds_module</a></li>
+                  <li class="list-inline-item"><a href='shellig_module.html'>shellig_module</a></li>
               </ul>
             </li>
             <li class="list-group-item">
@@ -340,7 +340,7 @@ modules which it uses.
 </h3></div>
     <div class="card-body">
           
-  <p>Main routine.</p>
+  <p>Calculate the flux of trapped particles at a specific location and time.</p><a href="../proc/get_flux.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -355,7 +355,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-lon"></span>
+              <span class="anchor" id="variable-lon~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -365,12 +365,12 @@ modules which it uses.
             <td>::</td>
             <td><strong>lon</strong></td>
             <td>
-
+<p>geodetic longitude in degrees (east)</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lat"></span>
+              <span class="anchor" id="variable-lat~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -380,12 +380,12 @@ modules which it uses.
             <td>::</td>
             <td><strong>lat</strong></td>
             <td>
-
+<p>geodetic latitude in degrees (north)</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-height"></span>
+              <span class="anchor" id="variable-height~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -395,12 +395,12 @@ modules which it uses.
             <td>::</td>
             <td><strong>height</strong></td>
             <td>
-
+<p>altitude in km above sea level</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year"></span>
+              <span class="anchor" id="variable-year~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -410,7 +410,8 @@ modules which it uses.
             <td>::</td>
             <td><strong>year</strong></td>
             <td>
-
+<p>decimal year for which geomagnetic field is to
+be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             </td>
         </tr>
         <tr>
@@ -425,7 +426,7 @@ modules which it uses.
             <td>::</td>
             <td><strong>e</strong></td>
             <td>
-
+<p>minimum energy</p>
             </td>
         </tr>
         <tr>
@@ -440,7 +441,7 @@ modules which it uses.
             <td>::</td>
             <td><strong>imname</strong></td>
             <td>
-
+<p>which method to use:</p><a href="../proc/get_flux.html#variable-imname~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -450,7 +451,7 @@ modules which it uses.
     Return Value
     <small>real(kind=wp)</small>
     </h4>
-    
+    <p>The flux of particles above the given energy, in units of cm^-2 s^-1.</p>
 
     </div>
   </div>
