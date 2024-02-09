@@ -11,7 +11,7 @@ PROGRAM spag_program_1
 !*** Start of declarations inserted by SPAG
    REAL(wp) alog2 , Aquad , bab1 , babs , bbx , bdel , bdown , &
             beast , beq , bequ , bnorth , Bquad , bvar , dec , dimo , dip , Era ,   &
-      & evar , height , rr0
+            evar , height , rr0
    REAL(wp) svar , Umr , vamax , vamin , varb , vare , xcor , xl , xmax , xmin , xvar , year
    INTEGER iall , ibbb , icode , imax , imin , istart , iswit , ivar , ivarnr , jagnr , lanz , lfd , monito
 !*** End of declarations inserted by SPAG
@@ -61,18 +61,19 @@ PROGRAM spag_program_1
    INTEGER :: spag_nextblock_1
 !
    DATA itext/'LATI' , 'LONG' , 'H/km' , 'YEAR'/
-   DATA lati , longi , height , year , ivar , bvar , evar , svar , ibbb , jagnr/45.1 , 293.1 , 100 , 1985.5 , 3 , 100 , 1000 ,     &
-      & 100 , 0 , 2/
+   DATA lati , longi , height , year , ivar , bvar , evar , svar , &
+        ibbb , jagnr/45.1 , 293.1 , 100 , 1985.5 , 3 , 100 , 1000 , &
+        100 , 0 , 2/
 !### year limit modified
-   DATA varb/ - 90.0 , -360.0 , 0.00000 , 1940.0/
-   DATA vare/ + 90.0 , +360.0 , 30000.0 , 2010.0/
+   DATA varb/ - 90.0_wp , -360.0_wp , 0.00000_wp , 1940.0_wp/
+   DATA vare/ + 90.0_wp , +360.0_wp , 30000.0_wp , 2010.0_wp/
    spag_nextblock_1 = 1
    SPAG_DispatchLoop_1: DO
       SELECT CASE (spag_nextblock_1)
       CASE (1)
 !
          !CALL initize
-         alog2 = alog(2.)
+         alog2 = log(2.0_wp)
          istart = 1
 !
 ! FIRST SPECIFY YOUR COMPUTERS CHANNEL NUMBERS ....................
@@ -379,7 +380,7 @@ PROGRAM spag_program_1
             IF ( ibbb/=0 ) THEN
                bequ = dimo/(xl*xl*xl)
                IF ( icode==1 ) THEN
-                  bdel = 1.E-3
+                  bdel = 1.0E-3_wp
                   CALL igrf%findb0(0.05_wp,bdel,val,beq,rr0)
                   IF ( val ) bequ = beq
                ENDIF
@@ -404,7 +405,7 @@ PROGRAM spag_program_1
                   IF ( jagnr==2 ) WRITE (ognr,99020)
                ENDIF
 ! ### year limits corrected
-               IF ( (year<1945.0) .OR. (year>2005.0) ) THEN
+               IF ( (year<1945.0_wp) .OR. (year>2005.0_wp) ) THEN
                   WRITE (agnr,99021)
                   IF ( jagnr==2 ) WRITE (ognr,99021)
                ENDIF
