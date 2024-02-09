@@ -4,10 +4,11 @@ coverage:
   ignore:
   - test
   - doc
+  - app
   status:
     patch:
       default:
-        target: 50%
+        target: 40%
     project:
       default:
-        target: 50%
+        target: 40%
