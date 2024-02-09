@@ -98,38 +98,17 @@ fpm test --profile release
 <li><a href="https://github.com/rilma/pyIGRF">pyIGRF</a></li>
 <li>https://github.com/lanl/RAM-SCB/blob/master/srcExternal/igrf.f</li>
 <li>https://github.com/space-physics/igrf/blob/main/src/igrf/fortran/igrf13.f</li>
+<li>https://web.archive.org/web/20210318113325/https://ccmc.gsfc.nasa.gov/pub/modelweb/</li>
+<li>Model parameters can be computed and plotted online at http://nssdc.gsfc.nasa.gov/space/model/ [broken link]</li>
 </ul>
-<h1>Original Readme</h1>
-<h1>National Space Science Data Center      Data set  PT-11B         Mar 1996</h1>
-<div class="codehilite"><pre><span></span><code><span class="n">NSSDC</span><span class="o">-</span><span class="n">Id</span><span class="w">     </span><span class="n">PT</span><span class="o">-</span><span class="mi">11</span><span class="n">B</span><span class="w"> </span><span class="p">(</span><span class="n">combines</span><span class="w"> </span><span class="n">PT</span><span class="o">-</span><span class="mi">11</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">MT</span><span class="o">-</span><span class="mi">18</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">MT</span><span class="o">-</span><span class="mi">18</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">MT</span><span class="o">-</span><span class="mi">2</span><span class="n">AA</span><span class="p">,</span><span class="w"> </span><span class="n">MT</span><span class="o">-</span><span class="mi">2</span><span class="n">AB</span><span class="p">)</span>
-
-<span class="nl">NAME</span><span class="p">:</span><span class="w">        </span><span class="n">Models</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">trapped</span><span class="w"> </span><span class="n">particle</span><span class="w"> </span><span class="n">fluxes</span><span class="w"> </span><span class="n">AE</span><span class="o">-</span><span class="mi">8</span><span class="w"> </span><span class="p">(</span><span class="n">electrons</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span>
-<span class="w">         </span><span class="n">AP</span><span class="o">-</span><span class="mi">8</span><span class="w"> </span><span class="p">(</span><span class="n">protons</span><span class="p">)</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">inner</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="k">outer</span><span class="w"> </span><span class="n">radiation</span><span class="w"> </span><span class="n">belts</span>
-
-<span class="nl">SOURCE</span><span class="p">:</span><span class="w">      </span><span class="n">Dieter</span><span class="w"> </span><span class="n">Bilitza</span><span class="p">,</span><span class="w"> </span><span class="n">GSFC</span><span class="o">/</span><span class="n">NSSDC</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">633</span><span class="p">,</span><span class="w"> </span><span class="n">Greenbelt</span><span class="p">,</span>
-<span class="w">             </span><span class="n">MD</span><span class="w"> </span><span class="mi">20771</span><span class="p">,</span><span class="w"> </span><span class="n">tel</span><span class="p">.</span><span class="w"> </span><span class="p">(</span><span class="mi">301</span><span class="p">)</span><span class="w"> </span><span class="mi">286</span><span class="o">-</span><span class="mi">0190</span>
-<span class="w">             </span><span class="n">dbilitza</span><span class="nv">@pop600</span><span class="p">.</span><span class="n">gsfc</span><span class="p">.</span><span class="n">nasa</span><span class="p">.</span><span class="n">gov</span>
-
-<span class="nl">CONTENT</span><span class="p">:</span><span class="w">     </span><span class="mi">12</span><span class="w"> </span><span class="n">files</span><span class="w">                         </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w">   </span><span class="n">blocks</span>
-<span class="w">            </span><span class="k">FORTRAN</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="nl">code</span><span class="p">:</span>
-<span class="w">         </span><span class="n">driver</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">interface</span><span class="w">              </span><span class="n">RADBELT</span><span class="p">.</span><span class="k">FOR</span><span class="w">   </span><span class="mi">48</span>
-<span class="w">             </span><span class="n">subroutines</span><span class="p">,</span><span class="w"> </span><span class="n">functions</span><span class="w">              </span><span class="n">TRMFUN</span><span class="p">.</span><span class="k">FOR</span><span class="w">   </span><span class="mi">30</span>
-
-<span class="w">        </span><span class="n">model</span><span class="w"> </span><span class="n">tables</span><span class="w"> </span><span class="nc">binary</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="nf">ASCII</span><span class="err">:</span>
-<span class="w">             </span><span class="n">AE</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">epoch</span><span class="w"> </span><span class="mi">1964</span><span class="p">,</span><span class="w"> </span><span class="n">solar</span><span class="w"> </span><span class="n">minimum</span><span class="w">         </span><span class="n">AE8MIN</span><span class="p">.</span><span class="n">BIN</span><span class="w">  </span><span class="mi">104</span>
-<span class="w">         </span><span class="n">AE</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">epoch</span><span class="w"> </span><span class="mi">1970</span><span class="p">,</span><span class="w"> </span><span class="n">solar</span><span class="w"> </span><span class="n">maximum</span><span class="w">             </span><span class="n">AE8MAX</span><span class="p">.</span><span class="n">BIN</span><span class="w">  </span><span class="mi">107</span>
-<span class="w">         </span><span class="n">AP</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">epoch</span><span class="w"> </span><span class="mi">1964</span><span class="p">,</span><span class="w"> </span><span class="n">solar</span><span class="w"> </span><span class="n">minimum</span><span class="w">         </span><span class="n">AP8MIN</span><span class="p">.</span><span class="n">BIN</span><span class="w">   </span><span class="mi">53</span>
-<span class="w">         </span><span class="n">AP</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">epoch</span><span class="w"> </span><span class="mi">1970</span><span class="p">,</span><span class="w"> </span><span class="n">solar</span><span class="w"> </span><span class="n">maximum</span><span class="w">         </span><span class="n">AP8MAX</span><span class="p">.</span><span class="n">BIN</span><span class="w">   </span><span class="mi">52</span>
-<span class="w">             </span><span class="nf">ASCII</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">AE8MIN</span><span class="p">.</span><span class="n">BIN</span><span class="w">                 </span><span class="n">AE8MIN</span><span class="p">.</span><span class="k">ASC</span><span class="w">  </span><span class="mi">163</span>
-<span class="w">             </span><span class="nf">ASCII</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">AE8MAX</span><span class="p">.</span><span class="n">BIN</span><span class="w">                 </span><span class="n">AE8MAX</span><span class="p">.</span><span class="k">ASC</span><span class="w">  </span><span class="mi">168</span>
-<span class="w">             </span><span class="nf">ASCII</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">AP8MIN</span><span class="p">.</span><span class="n">BIN</span><span class="w">                 </span><span class="n">AP8MIN</span><span class="p">.</span><span class="n">BIN</span><span class="w">   </span><span class="mi">83</span>
-<span class="w">             </span><span class="nf">ASCII</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">AP8MAX</span><span class="p">.</span><span class="n">BIN</span><span class="w">                 </span><span class="n">AP8MAX</span><span class="p">.</span><span class="n">BIN</span><span class="w">   </span><span class="mi">81</span>
-
-<span class="w">         </span><span class="k">user</span><span class="w"> </span><span class="n">manual</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">examples</span><span class="w">          </span><span class="n">RADBELT</span><span class="p">.</span><span class="nf">LOG</span><span class="w">   </span><span class="mi">48</span>
-<span class="w">             </span><span class="n">This</span><span class="w"> </span><span class="k">file</span><span class="w">                                </span><span class="n">AAAREADME</span><span class="p">.</span><span class="n">DOC</span><span class="w">    </span><span class="mi">9</span>
-</code></pre></div>
-
-<h3>BRIEF DESCRIPTION:</h3>
+<h3>Original source</h3>
+<ul>
+<li>National Space Science Data Center, Data set  PT-11B, Mar 1996</li>
+<li>Dieter Bilitza, GSFC/NSSDC code 633, Greenbelt,
+  MD 20771, tel. (301) 286-0190
+  dbilitza@pop600.gsfc.nasa.gov</li>
+</ul>
+<h3>Brief description</h3>
 <p>These empirical models describe the differential or
 integral, omnidirectional fluxes of electrons (AE-8) and protons
 (AP-8) in the inner and outer radiation belts (electrons: L=1.1
@@ -149,46 +128,69 @@ MODEL finds the particle fluxes for given energy, L-value and B/B0 by
 interpolating in energy (subroutine TRARA1) and in L * B/B0 space (TRARA2).
 The program RADBELT produces tables of integral or differential fluxes
 for different energies varying with L or B/B0.</p>
-<p>The coefficient files are provided in VAX/VMS binary (<em>.bin) and
-ASCII (</em>.asc) format. For all systems other than VMS the use of the ASCII
-files is recommended. If using the ASCII coefficient one needs to slightly
-modify the RADBELT.FOR program as described in a comment statement in
-RADBELT (this comments are found after the OPEN statement for the coefficient
-file).</p>
+<p>The coefficient files are provided in ASCII (*.asc) format:</p>
+<table>
+<thead>
+<tr>
+<th>Description</th>
+<th>Filename</th>
+<th>Size (KB)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AE-8, epoch 1970, solar maximum</td>
+<td>ae8max.asc</td>
+<td>84</td>
+</tr>
+<tr>
+<td>AE-8, epoch 1964, solar minimum</td>
+<td>ae8min.asc</td>
+<td>81</td>
+</tr>
+<tr>
+<td>AP-8, epoch 1970, solar maximum</td>
+<td>ap8max.asc</td>
+<td>101</td>
+</tr>
+<tr>
+<td>AP-8, epoch 1964, solar minimum</td>
+<td>ap8min.asc</td>
+<td>102</td>
+</tr>
+</tbody>
+</table>
 <p>In March 1995 the earlier used compressed model maps AP8MIC and AP8MAC
 were replaced with the full maps AP8MIN/MAX with the help of D. Heynderickx
 (BIRA, Brussel, Belgium) and A. Beliaev (INP/MSU, Moscow, Russia). Heynderickx
 and Beliaev (1995) had found and corrected a small error in the AP8MIN map;
 two lines had been exchanged.</p>
-<h3>AVAILABILITY:</h3>
-<p>(1) FORTRAN source code from this directory.
-(2) Model parameters can be computed and plotted online at http://nssdc.gsfc.nasa.gov/space/model/ .</p>
-<h3>REFERENCES:</h3>
-<p>G.W. Singley, and J.I. Vette, The AE-4 Model of the Outer Radiation
-  Zone Electron Environment, NSSDC/WDC-A-R&amp;S 72-06, 1972.</p>
-<p>M.J. Teague, and J.I. Vette, A Model of the Trapped Electron
-  Population for Solar Minimum (AE-5), NSSDC/WDC-A-R&amp;S 74-03, 1974.</p>
-<p>M.J. Teague, K.W. Chan, and J.I. Vette, AE-6: A Model Environment
-  of Trapped Electrons for Solar Maximum, NSSDC/WDC-A-R&amp;S 76-04, 1976</p>
-<p>D.W. Sawyer, and J.I. Vette, AP-8 Trapped Proton Environment for
-  Solar Maximum and Minimum, NSSDC/WDC-A-R&amp;S 76-06, 1976.</p>
-<p>J.I. Vette, K.W. Chan, and M.J. Teague, Problems in Modeling the
-  Earth's Trapped Radiation Environment, AFGL-TR-78-0130, 1978.</p>
-<p>K.W. Chan, M.J. Teague, N.J. Schofield, and J.I. Vette, Modeling of
+<h3>References</h3>
+<ul>
+<li>G.W. Singley, and J.I. Vette, The AE-4 Model of the Outer Radiation
+  Zone Electron Environment, NSSDC/WDC-A-R&amp;S 72-06, 1972.</li>
+<li>M.J. Teague, and J.I. Vette, A Model of the Trapped Electron
+  Population for Solar Minimum (AE-5), NSSDC/WDC-A-R&amp;S 74-03, 1974.</li>
+<li>M.J. Teague, K.W. Chan, and J.I. Vette, AE-6: A Model Environment
+  of Trapped Electrons for Solar Maximum, NSSDC/WDC-A-R&amp;S 76-04, 1976</li>
+<li>D.W. Sawyer, and J.I. Vette, AP-8 Trapped Proton Environment for
+  Solar Maximum and Minimum, NSSDC/WDC-A-R&amp;S 76-06, 1976.</li>
+<li>J.I. Vette, K.W. Chan, and M.J. Teague, Problems in Modeling the
+  Earth's Trapped Radiation Environment, AFGL-TR-78-0130, 1978.</li>
+<li>K.W. Chan, M.J. Teague, N.J. Schofield, and J.I. Vette, Modeling of
   Electron Time Variation in the Radiation Belts, p. 121-149, in:
   Quantitative Modeling of Magnetospheric Processes, W.P. Olson
-  (ed.), geophysical monograph 21, American Geophysical Union, 1979.</p>
-<p>M.T. Teague, N.J. Schofield, K.W. Chan, and J.I. Vette, A Study of
+  (ed.), geophysical monograph 21, American Geophysical Union, 1979.</li>
+<li>M.T. Teague, N.J. Schofield, K.W. Chan, and J.I. Vette, A Study of
   Inner Zone Electron Data and their Comparison with Trapped
-  Radiation Models, NSSDC/WDC-A-R&amp;S 79-06, 1979.</p>
-<p>J.I. Vette, The AE-8 Trapped Electron Model Environment,
-  NSSDC/WDC-A-R&amp;S 91-24, 1991.</p>
-<p>J.I. Vette, The NASA/National Space Science Data Center Trapped
+  Radiation Models, NSSDC/WDC-A-R&amp;S 79-06, 1979.</li>
+<li>J.I. Vette, The AE-8 Trapped Electron Model Environment,
+  NSSDC/WDC-A-R&amp;S 91-24, 1991.</li>
+<li>J.I. Vette, The NASA/National Space Science Data Center Trapped
   Radiation Environment Model Program (1964-1991), NSSDC/WDC-A-R&amp;S
-  91-29, 1991.</p>
-<p>(most of these references are available from NSSDC)</p>
-<p>D. Heynderickx and A. Beliaev, J. Spacecraft and Rockets 32, 190-192, 1995.</p>
-<h1>National Space Science Data Center      Data set  PT-11B         Mar 1996</h1>
+  91-29, 1991.</li>
+<li>D. Heynderickx and A. Beliaev, J. Spacecraft and Rockets 32, 190-192, 1995.</li>
+</ul>
         </div>
           <div class="col-md-4">
 	        <div class="card card-body bg-light">
