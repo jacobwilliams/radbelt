@@ -24,7 +24,7 @@ for lat in range(-90, 91, 5):
         for alt in range(500, 1001, 100):
             n_cases = n_cases + 1
             coords = EarthLocation(lon * u.deg, lat * u.deg, alt * u.km)
-            f = get_flux(coords, t, energy, 'p', 'max')  # doctest: +FLOAT_CMP
+            f = get_flux(coords, t, energy, 'p', 'max')
             #print(t.utc.decimalyear, lat, lon, alt, f.value)
 tend = time.time()
 print(f'Python version runtime: {tend-tstart} sec. {int(n_cases/(tend-tstart))} (cases/sec)')
