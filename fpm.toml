@@ -1,9 +1,9 @@
 name = "radbelt"
-version = "0.0.0"
+version = "0.0.1"
 author = "Jacob Williams"
 maintainer = "Jacob Williams"
 copyright = "Copyright (c) 2024, Jacob Williams"
-license = "Public Domain"
+license = "BSD-3"
 description = "radbelt"
 homepage = "https://github.com/jacobwilliams/igrf"
 
