@@ -27,6 +27,10 @@ radbelt = { git="https://github.com/jacobwilliams/radbelt.git" }
 
 The latest API documentation can be found [here](https://jacobwilliams.github.io/radbelt/). This was generated from the source code using [FORD](https://github.com/Fortran-FOSS-Programmers/ford).
 
+### Original source
+
+* The original sourcecode was hosted at GSFC "Modelweb", which no longer exists, but an archive can be found at the [Internet Archive](https://web.archive.org/web/20210318113325/https://ccmc.gsfc.nasa.gov/pub/modelweb/). It is presumed to be in the public domain. Reference: National Space Science Data Center, Data set PT-11B, Mar 1996. Dieter Bilitza, GSFC/NSSDC code 633, Greenbelt, MD 20771, tel. (301) 286-0190, dbilitza@pop600.gsfc.nasa.gov
+
 ### See also
 
 * [NASA ModelWebArchive](https://git.smce.nasa.gov/ccmc-share/modelwebarchive)
@@ -37,12 +41,17 @@ The latest API documentation can be found [here](https://jacobwilliams.github.io
 * https://web.archive.org/web/20210318113325/https://ccmc.gsfc.nasa.gov/pub/modelweb/
 * Model parameters can be computed and plotted online at http://nssdc.gsfc.nasa.gov/space/model/ [broken link]
 
-### Original source
+### Test case
 
-* National Space Science Data Center, Data set  PT-11B, Mar 1996
-* Dieter Bilitza, GSFC/NSSDC code 633, Greenbelt,
-  MD 20771, tel. (301) 286-0190
-  dbilitza@pop600.gsfc.nasa.gov
+See the `radbelt_test.f90` and `test.py` files:
+
+Code | Runtime (sec) | Cases per second
+--- | --- | ---
+[Python](https://github.com/nasa/radbelt) version                  | 3.514   |    409
+Fortran Function version (`get_flux()`) | 1.622   |   1198
+Fortran Class version (`radbelt_type%get_flux()`)   | 0.017   | 112259
+
+The main difference in speed from using the class method is that the data files are only read once, rather than each time the function is called (which is done in the other two versions).
 
 ### Brief description
 
