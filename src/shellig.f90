@@ -40,6 +40,8 @@
        type,public :: shellig_type
          private
 
+         character(len=:),allocatable :: igrf_dir !! directory containing the data files
+
          ! formerly in the `fidb0` common block
          real(wp),dimension(3) :: sp = 0.0_wp
 
@@ -49,7 +51,7 @@
 
          ! formerly in `model` common block
          integer :: iyea = 0 !! the int year corresponding to the file `name` that has been read
-         character(len=filename_len) :: name = '' !! file name
+         character(len=:),allocatable :: name !! file name
          integer :: nmax = 0 !! maximum order of spherical harmonics
          real(wp) :: Time = 0.0_wp !! year (decimal: 1973.5) for which magnetic field is to be calculated
          real(wp),dimension(144) :: g = 0.0_wp  !! `g(m)` -- normalized field coefficients (see [[feldcof]]) m=nmax*(nmax+2)
@@ -74,11 +76,36 @@
          procedure, public :: shellg
          procedure, public :: findb0
          procedure :: stoer, getshc, intershc, extrashc
+         procedure,public :: set_data_file_dir, get_data_file_dir
 
       end type shellig_type
 
    contains
 !*****************************************************************************************
+
+!*****************************************************************************************
+!>
+!  Set the directory containing the data files.
+
+   subroutine set_data_file_dir(me,dir)
+      class(shellig_type),intent(inout) :: me
+      character(len=*),intent(in) :: dir
+      me%igrf_dir = trim(dir)
+   end subroutine set_data_file_dir
+
+!*****************************************************************************************
+!>
+!  Get the directory containing the data files.
+
+   function get_data_file_dir(me) result(dir)
+      class(shellig_type),intent(in) :: me
+      character(len=:),allocatable :: dir
+      if (allocated(me%igrf_dir)) then
+         dir = trim(me%igrf_dir) // '/'
+      else
+         dir = 'data/igrf/' ! default
+      end if
+   end function get_data_file_dir
 
 !*****************************************************************************************
 !>
@@ -662,7 +689,7 @@ subroutine feldg(me,glat,glon,alt,bnorth,beast,bdown,babs)
 
    real(wp) :: dte1 , dte2 , erad , gha(144) , sqrt2
    integer :: i , ier , j , l , m , n , iyea
-   character(len=filename_len) :: fil2
+   character(len=:),allocatable :: fil2
    real(wp) :: x , f0 , f !! these were double precision in original
                           !! code while everything else was single precision
 
@@ -694,9 +721,9 @@ subroutine feldg(me,glat,glon,alt,bnorth,beast,bdown,babs)
    if ( l<1 ) l = 1
    if ( l>numye ) l = numye
    dte1 = dtemod(l)
-   me%name = filmod(l)
+   me%name = me%get_data_file_dir() // trim(filmod(l))
    dte2 = dtemod(l+1)
-   fil2 = filmod(l+1)
+   fil2 = me%get_data_file_dir() // trim(filmod(l+1))
    if (read_file) then
       ! get igrf coefficients for the boundary years
       ! [if they have not ready been loaded]
