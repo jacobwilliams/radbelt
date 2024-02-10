@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title="<p>54.3% of total for derived types.</p>Including implementation: 592 statements, 65.9% of total for derived types.">25 statements</a>
+                 title="<p>52.9% of total for derived types.</p>Including implementation: 608 statements, 64.7% of total for derived types.">27 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -114,11 +114,12 @@
       </a>
       <div id="vars-0" class="collapse">
         <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../type/shellig_type.html#variable-igrf_dir~2">igrf_dir</a>
             <a class="list-group-item" href="../type/shellig_type.html#variable-sp">sp</a>
             <a class="list-group-item" href="../type/shellig_type.html#variable-xi">xi</a>
             <a class="list-group-item" href="../type/shellig_type.html#variable-h">h</a>
             <a class="list-group-item" href="../type/shellig_type.html#variable-iyea">iyea</a>
-            <a class="list-group-item" href="../type/shellig_type.html#variable-name~2">name</a>
+            <a class="list-group-item" href="../type/shellig_type.html#variable-name">name</a>
             <a class="list-group-item" href="../type/shellig_type.html#variable-nmax">nmax</a>
             <a class="list-group-item" href="../type/shellig_type.html#variable-time">Time</a>
             <a class="list-group-item" href="../type/shellig_type.html#variable-g">g</a>
@@ -154,7 +155,7 @@
       </a>
       <div id="boundprocs-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-igrf">igrf</a>
+            <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-igrf~2">igrf</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-feldcof">feldcof</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-feldg">feldg</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-shellg">shellg</a>
@@ -163,6 +164,8 @@
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-intershc">intershc</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-getshc">getshc</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-stoer">stoer</a>
+            <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-get_data_file_dir">get_data_file_dir</a>
+            <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-set_data_file_dir">set_data_file_dir</a>
         </div>
       </div>
     </div>
@@ -290,6 +293,23 @@ said component(s).
     <tbody>
         <tr>
             <td>
+              <span class="anchor" id="variable-igrf_dir~2"></span>
+              character(len=:),
+            </td>
+              <td>private,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>igrf_dir</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>directory containing the data files</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
               <span class="anchor" id="variable-sp"></span>
               real(kind=wp),
             </td>
@@ -358,17 +378,17 @@ said component(s).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-name~2"></span>
-              character(len=filename_len),
+              <span class="anchor" id="variable-name"></span>
+              character(len=:),
             </td>
-              <td>private</td>
+              <td>private,</td>
             <td>
-              
+              allocatable
             </td>
             <td>::</td>
             <td><strong>name</strong></td>
-<td> =</td>
-                <td>&#39;&#39;</td>
+                <td></td>
+                <td></td>
             <td>
                 <p>file name</p>
             </td>
@@ -539,7 +559,7 @@ said component(s).
           <div class="row">
               <div class="card mt-3">
     <div class="card-header codesum">
-      <span class="anchor" id="boundprocedure-igrf"></span>
+      <span class="anchor" id="boundprocedure-igrf~2"></span>
       <h3>
           procedure, public ::
   <strong>igrf</strong>
@@ -1822,12 +1842,142 @@ calls entry point <a>feldi</a> in geomagnetic field subroutine <a href="../proc/
   </div>
 
           </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-get_data_file_dir"></span>
+      <h3>
+          procedure, public ::
+  <strong>get_data_file_dir</strong>
+        
+      </h3>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+                  <h3>
+    private  function <a href='../proc/get_data_file_dir.html'>get_data_file_dir</a>(me) result(dir)  
+</h3>
+    
+
+  <p>Get the directory containing the data files.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=:), allocatable</small>
+    </h4>
+    
+
+        </li>
+    </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-set_data_file_dir"></span>
+      <h3>
+          procedure, public ::
+  <strong>set_data_file_dir</strong>
+        
+      </h3>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+                  <h3>
+    private  subroutine <a href='../proc/set_data_file_dir.html'>set_data_file_dir</a>(me, dir)  
+</h3>
+    
+
+  <p>Set the directory containing the data files.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        </li>
+    </ul>
+  </div>
+
+          </div>
       </section>
 
     <section>
     <h3><span class="anchor" id="src"></span>Source Code</h3>
     <div class="hl codehilite"><pre><span></span><span class="w">       </span><span class="k">type</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">shellig_type</span>
 <span class="w">         </span><span class="k">private</span>
+
+<span class="k">         </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">igrf_dir</span><span class="w"> </span><span class="c">!! directory containing the data files</span>
 
 <span class="w">         </span><span class="c">! formerly in the `fidb0` common block</span>
 <span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
@@ -1838,7 +1988,7 @@ calls entry point <a>feldi</a> in geomagnetic field subroutine <a href="../proc/
 
 <span class="w">         </span><span class="c">! formerly in `model` common block</span>
 <span class="w">         </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">iyea</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="c">!! the int year corresponding to the file `name` that has been read</span>
-<span class="w">         </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">filename_len</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="c">!! file name</span>
+<span class="w">         </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="c">!! file name</span>
 <span class="w">         </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="c">!! maximum order of spherical harmonics</span>
 <span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">Time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"> </span><span class="c">!! year (decimal: 1973.5) for which magnetic field is to be calculated</span>
 <span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">144</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! `g(m)` -- normalized field coefficients (see [[feldcof]]) m=nmax*(nmax+2)</span>
@@ -1863,6 +2013,7 @@ calls entry point <a>feldi</a> in geomagnetic field subroutine <a href="../proc/
 <span class="w">         </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">shellg</span>
 <span class="w">         </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">findb0</span>
 <span class="w">         </span><span class="k">procedure</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">stoer</span><span class="p">,</span><span class="w"> </span><span class="n">getshc</span><span class="p">,</span><span class="w"> </span><span class="n">intershc</span><span class="p">,</span><span class="w"> </span><span class="n">extrashc</span>
+<span class="w">         </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">set_data_file_dir</span><span class="p">,</span><span class="w"> </span><span class="n">get_data_file_dir</span>
 
 <span class="w">      </span><span class="k">end type </span><span class="n">shellig_type</span>
 </pre></div>

@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title="64.1% of total for modules and submodules.">606 statements</a>
+                 title="63.1% of total for modules and submodules.">622 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -145,7 +145,18 @@
       </div>
     </div>
 
-  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/shellig_module.html#proc-get_data_file_dir">get_data_file_dir</a>
+        </div>
+      </div>
+    </div>
+
       <div class="card mb-4">
       <a data-bs-toggle="collapse" href="#subs-0"
          aria-expanded="false" aria-controls="subs-0">
@@ -153,6 +164,7 @@
       </a>
       <div id="subs-0" class="collapse">
         <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/shellig_module.html#proc-set_data_file_dir">set_data_file_dir</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-igrf">igrf</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-findb0">findb0</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-shellg">shellg</a>
@@ -627,6 +639,23 @@ parameter,               dimension(3,3)
     <tbody>
         <tr>
             <td>
+              <span class="anchor" id="variable-igrf_dir~2"></span>
+              character(len=:),
+            </td>
+              <td>private,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>igrf_dir</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+<p>directory containing the data files</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
               <span class="anchor" id="variable-sp"></span>
               real(kind=wp),
             </td>
@@ -695,17 +724,17 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-name~2"></span>
-              character(len=filename_len),
+              <span class="anchor" id="variable-name"></span>
+              character(len=:),
             </td>
-              <td>private</td>
+              <td>private,</td>
             <td>
-              
+              allocatable
             </td>
             <td>::</td>
             <td><strong>name</strong></td>
-<td> =</td>
-                <td>&#39;&#39;</td>
+                <td></td>
+                <td></td>
             <td>
 <p>file name</p>
             </td>
@@ -874,7 +903,7 @@ parameter,               dimension(3,3)
           <tbody>
               <tr>
                 <td>  procedure, public ::
-  <strong><a href='../type/shellig_type.html#boundprocedure-igrf'>igrf</a></strong></td>
+  <strong><a href='../type/shellig_type.html#boundprocedure-igrf~2'>igrf</a></strong></td>
                 <td></td>
               </tr>
               <tr>
@@ -917,6 +946,16 @@ parameter,               dimension(3,3)
   <strong><a href='../type/shellig_type.html#boundprocedure-stoer'>stoer</a></strong></td>
                 <td></td>
               </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/shellig_type.html#boundprocedure-get_data_file_dir'>get_data_file_dir</a></strong></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/shellig_type.html#boundprocedure-set_data_file_dir'>set_data_file_dir</a></strong></td>
+                <td></td>
+              </tr>
           </tbody>
         </table>
     </div>
@@ -925,9 +964,113 @@ parameter,               dimension(3,3)
         </section>
         <br>
 
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-get_data_file_dir"></span> <h3>private  function <a href='../proc/get_data_file_dir.html'>get_data_file_dir</a>(me) result(dir)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Get the directory containing the data files.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me~4"></span>
+              class(<a href='../type/shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=:), allocatable</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+        </section>
+        <br>
 
         <section>
           <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-set_data_file_dir"></span> <h3>private  subroutine <a href='../proc/set_data_file_dir.html'>set_data_file_dir</a>(me, dir)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Set the directory containing the data files.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me~3"></span>
+              class(<a href='../type/shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dir"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
               <div class="card">
     <div class="card-header codesum"><span class="anchor" id="proc-igrf"></span> <h3>private  subroutine <a href='../proc/igrf.html'>igrf</a>(me, lon, lat, height, year, xl, bbx)  
 </h3></div>
@@ -948,7 +1091,7 @@ parameter,               dimension(3,3)
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~4"></span>
+              <span class="anchor" id="variable-me~5"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -963,7 +1106,7 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lon"></span>
+              <span class="anchor" id="variable-lon~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -978,7 +1121,7 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lat"></span>
+              <span class="anchor" id="variable-lat~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -993,7 +1136,7 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-height"></span>
+              <span class="anchor" id="variable-height~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1008,7 +1151,7 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year"></span>
+              <span class="anchor" id="variable-year~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1024,7 +1167,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-xl"></span>
+              <span class="anchor" id="variable-xl~2"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -1039,7 +1182,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-bbx"></span>
+              <span class="anchor" id="variable-bbx~2"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -1079,7 +1222,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~5"></span>
+              <span class="anchor" id="variable-me~6"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1195,7 +1338,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~6"></span>
+              <span class="anchor" id="variable-me~7"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1270,7 +1413,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fl~2"></span>
+              <span class="anchor" id="variable-fl"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -1341,7 +1484,7 @@ calls entry point <a>feldi</a> in geomagnetic field subroutine <a href="../proc/
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~7"></span>
+              <span class="anchor" id="variable-me~8"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1426,7 +1569,7 @@ calls entry point <a>feldi</a> in geomagnetic field subroutine <a href="../proc/
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~8"></span>
+              <span class="anchor" id="variable-me~9"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1580,7 +1723,7 @@ and downward.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~9"></span>
+              <span class="anchor" id="variable-me~10"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1595,7 +1738,7 @@ and downward.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~2"></span>
+              <span class="anchor" id="variable-year~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1653,7 +1796,7 @@ to earth's radius) at the time (year)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~10"></span>
+              <span class="anchor" id="variable-me~11"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1772,7 +1915,7 @@ harmonic coefficients</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~11"></span>
+              <span class="anchor" id="variable-me~12"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1948,7 +2091,7 @@ harmonic coefficients</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~12"></span>
+              <span class="anchor" id="variable-me~13"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>

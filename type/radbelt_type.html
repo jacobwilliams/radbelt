@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title="<p>17.4% of total for derived types.</p>Including implementation: 22 statements,  2.4% of total for derived types.">8 statements</a>
+                 title="<p>17.6% of total for derived types.</p>Including implementation: 30 statements,  3.2% of total for derived types.">9 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -115,7 +115,7 @@
       <div id="vars-0" class="collapse">
         <div class="list-group list-group-flush">
             <a class="list-group-item" href="../type/radbelt_type.html#variable-trm">trm</a>
-            <a class="list-group-item" href="../type/radbelt_type.html#variable-igrf~2">igrf</a>
+            <a class="list-group-item" href="../type/radbelt_type.html#variable-igrf">igrf</a>
         </div>
       </div>
     </div>
@@ -143,6 +143,7 @@
       <div id="boundprocs-0" class="collapse">
         <div class="list-group list-group-flush">
             <a class="list-group-item" href="../type/radbelt_type.html#boundprocedure-get_flux">get_flux</a>
+            <a class="list-group-item" href="../type/radbelt_type.html#boundprocedure-set_data_files_paths">set_data_files_paths</a>
         </div>
       </div>
     </div>
@@ -303,7 +304,7 @@ said component(s).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-igrf~2"></span>
+              <span class="anchor" id="variable-igrf"></span>
               type(<a href='shellig_type.html'>shellig_type</a>),
             </td>
               <td>private</td>
@@ -461,7 +462,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             <td>::</td>
             <td><strong>imname</strong></td>
             <td>
-<p>which method to use:</p><a href="../proc/get_flux_.html#variable-imname~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>which method to use:</p><a href="../proc/get_flux_.html#variable-imname" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -472,6 +473,92 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
     <small>real(kind=wp)</small>
     </h4>
     <p>The flux of particles above the given energy, in units of cm^-2 s^-1.</p>
+
+        </li>
+    </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-set_data_files_paths"></span>
+      <h3>
+          procedure, public ::
+  <strong>set_data_files_paths</strong>
+        
+      </h3>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+                  <h3>
+    public  subroutine <a href='../proc/set_data_files_paths.html'>set_data_files_paths</a>(me, aep8_dir, igrf_dir)  
+</h3>
+    
+
+  <p>Set the paths to the data files.
+If not used or blank, the folder <code>data/aep8</code> and <code>data/igrf</code> in the
+current working directory is assumed</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='radbelt_type.html'>radbelt_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>aep8_dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>igrf_dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
 
         </li>
     </ul>
@@ -490,6 +577,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
 <span class="w">      </span><span class="k">contains</span>
 <span class="k">      private</span>
 <span class="k">      procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">get_flux</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">get_flux_</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">set_data_files_paths</span>
 <span class="w">   </span><span class="k">end type </span><span class="n">radbelt_type</span>
 </pre></div>
 

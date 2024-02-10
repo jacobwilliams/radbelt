@@ -22,11 +22,30 @@ module core
       contains
       private
       procedure,public :: get_flux => get_flux_
+      procedure,public :: set_data_files_paths
    end type radbelt_type
 
    public :: get_flux !! simple function version for testing
 
    contains
+
+!*****************************************************************************************
+!>
+!  Set the paths to the data files.
+!  If not used or blank, the folder `data/aep8` and `data/igrf` in the
+!  current working directory is assumed
+
+   subroutine set_data_files_paths(me, aep8_dir, igrf_dir)
+
+      class(radbelt_type),intent(inout) :: me
+      character(len=*),intent(in) :: aep8_dir
+      character(len=*),intent(in) :: igrf_dir
+
+      call me%trm%set_data_file_dir(trim(aep8_dir))
+      call me%igrf%set_data_file_dir(trim(igrf_dir))
+
+   end subroutine set_data_files_paths
+!*****************************************************************************************
 
 !*****************************************************************************************
 !>

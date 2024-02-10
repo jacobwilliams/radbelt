@@ -22,6 +22,8 @@ module trmfun_module
       !! main class for the `aep8` model
       private
 
+      character(len=:),allocatable :: aep8_dir !! directory containing the data files
+
       ! data read from the files:
       character(len=:),allocatable :: file_loaded !! the file that has been loaded
       integer,dimension(8) :: ihead = 0
@@ -38,9 +40,34 @@ module trmfun_module
       private
       procedure,public :: aep8 !! main routine
       procedure,public :: trara1, trara2 !! low-level routine
+      procedure,public :: set_data_file_dir, get_data_file_dir
    end type trm_type
 
    contains
+
+!*****************************************************************************************
+!>
+!  Set the directory containing the data files.
+
+   subroutine set_data_file_dir(me,dir)
+      class(trm_type),intent(inout) :: me
+      character(len=*),intent(in) :: dir
+      me%aep8_dir = trim(dir)
+   end subroutine set_data_file_dir
+
+!*****************************************************************************************
+!>
+!  Get the directory containing the data files.
+
+   function get_data_file_dir(me) result(dir)
+      class(trm_type),intent(in) :: me
+      character(len=:),allocatable :: dir
+      if (allocated(me%aep8_dir)) then
+         dir = trim(me%aep8_dir) // '/'
+      else
+         dir = 'data/aep8/' ! default
+      end if
+   end function get_data_file_dir
 
 !*****************************************************************************************
 !>
@@ -59,10 +86,10 @@ module trmfun_module
 
       real(wp) :: ee(1), f(1) !! temp variables
       integer :: i , ierr, iuaeap , nmap
-      character(len=len(mname)) :: name
+      character(len=:),allocatable :: name
       logical :: load_file
 
-      name = mname(Imname) ! the file to load
+      name = me%get_data_file_dir() // trim(mname(Imname)) ! the file to load
 
       ! JW : do we need to reset some or all of these ?
       me%fistep = 0.0_wp
