@@ -91,6 +91,10 @@ fpm test --profile release
 
 <h3>Documentation</h3>
 <p>The latest API documentation can be found <a href="https://jacobwilliams.github.io/radbelt/">here</a>. This was generated from the source code using <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>.</p>
+<h3>Original source</h3>
+<ul>
+<li>The original sourcecode was hosted at GSFC "Modelweb", which no longer exists, but an archive can be found at the <a href="https://web.archive.org/web/20210318113325/https://ccmc.gsfc.nasa.gov/pub/modelweb/">Internet Archive</a>. It is presumed to be in the public domain. Reference: National Space Science Data Center, Data set PT-11B, Mar 1996. Dieter Bilitza, GSFC/NSSDC code 633, Greenbelt, MD 20771, tel. (301) 286-0190, dbilitza@pop600.gsfc.nasa.gov</li>
+</ul>
 <h3>See also</h3>
 <ul>
 <li><a href="https://git.smce.nasa.gov/ccmc-share/modelwebarchive">NASA ModelWebArchive</a></li>
@@ -101,13 +105,35 @@ fpm test --profile release
 <li>https://web.archive.org/web/20210318113325/https://ccmc.gsfc.nasa.gov/pub/modelweb/</li>
 <li>Model parameters can be computed and plotted online at http://nssdc.gsfc.nasa.gov/space/model/ [broken link]</li>
 </ul>
-<h3>Original source</h3>
-<ul>
-<li>National Space Science Data Center, Data set  PT-11B, Mar 1996</li>
-<li>Dieter Bilitza, GSFC/NSSDC code 633, Greenbelt,
-  MD 20771, tel. (301) 286-0190
-  dbilitza@pop600.gsfc.nasa.gov</li>
-</ul>
+<h3>Test case</h3>
+<p>See the <code>radbelt_test.f90</code> and <code>test.py</code> files:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Runtime (sec)</th>
+<th>Cases per second</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/nasa/radbelt">Python</a> version</td>
+<td>3.514</td>
+<td>409</td>
+</tr>
+<tr>
+<td>Fortran Function version (<code>get_flux()</code>)</td>
+<td>1.622</td>
+<td>1198</td>
+</tr>
+<tr>
+<td>Fortran Class version (<code>radbelt_type%get_flux()</code>)</td>
+<td>0.017</td>
+<td>112259</td>
+</tr>
+</tbody>
+</table>
+<p>The main difference in speed from using the class method is that the data files are only read once, rather than each time the function is called (which is done in the other two versions).</p>
 <h3>Brief description</h3>
 <p>These empirical models describe the differential or
 integral, omnidirectional fluxes of electrons (AE-8) and protons
