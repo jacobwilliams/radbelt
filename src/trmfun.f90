@@ -64,6 +64,11 @@ module trmfun_module
 
       name = mname(Imname) ! the file to load
 
+      ! JW : do we need to reset some or all of these ?
+      me%fistep = 0.0_wp
+      me%f1 = 1.001_wp
+      me%f2 = 1.002_wp
+
       ! check to see if this file has already been loaded
       ! [the class can store one file at a time]
       load_file = .true.
