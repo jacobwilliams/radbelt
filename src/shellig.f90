@@ -53,6 +53,9 @@
          integer :: nmax = 0 !! maximum order of spherical harmonics
          real(wp) :: Time = 0.0_wp !! year (decimal: 1973.5) for which magnetic field is to be calculated
          real(wp),dimension(144) :: g = 0.0_wp  !! `g(m)` -- normalized field coefficients (see [[feldcof]]) m=nmax*(nmax+2)
+         integer :: nmax1 = 0 !! saved variables from the file
+         integer :: nmax2 = 0 !! saved variables from the file
+         real(wp),dimension(144) :: g_cache = 0.0_wp  !! saved `g` from the file
 
          ! formerly saved vars in shellg:
          real(wp) :: step = 0.20_wp !! step size for field line tracing
@@ -98,6 +101,13 @@
       logical :: val
 
       real(wp),parameter :: stps = 0.05_wp
+
+      ! JW : do we need to reset some or all of these ?
+      me%sp = 0.0_wp
+      me%xi = 0.0_wp
+      me%h = 0.0_wp
+      me%step = 0.20_wp
+      me%steq = 0.03_wp
 
       call me%feldcof(year,dimo)
       call me%feldg(lat,lon,height,bnorth,beast,bdown,babs)
@@ -651,7 +661,7 @@ subroutine feldg(me,glat,glon,alt,bnorth,beast,bdown,babs)
                                 !! to earth's radius) at the time (year)
 
    real(wp) :: dte1 , dte2 , erad , gha(144) , sqrt2
-   integer :: i , ier , j , l , m , n , nmax1 , nmax2, iyea
+   integer :: i , ier , j , l , m , n , iyea
    character(len=filename_len) :: fil2
    real(wp) :: x , f0 , f !! these were double precision in original
                           !! code while everything else was single precision
@@ -690,16 +700,19 @@ subroutine feldg(me,glat,glon,alt,bnorth,beast,bdown,babs)
    if (read_file) then
       ! get igrf coefficients for the boundary years
       ! [if they have not ready been loaded]
-      call me%getshc(me%name,nmax1,erad,me%g,ier)
+      call me%getshc(me%name,me%nmax1,erad,me%g,ier)
       if ( ier/=0 ) error stop 'error reading file: '//trim(me%name)
-      call me%getshc(fil2,nmax2,erad,me%gh2,ier)
+      me%g_cache = me%g ! because it is modified below, we have to cache the original values from the file
+      call me%getshc(fil2,me%nmax2,erad,me%gh2,ier)
       if ( ier/=0 ) error stop 'error reading file: '//trim(fil2)
+   else
+      me%g = me%g_cache
    end if
    !-- determine igrf coefficients for year
    if ( l<=numye-1 ) then
-      call me%intershc(year,dte1,nmax1,me%g,dte2,nmax2,me%gh2,me%nmax,gha)
+      call me%intershc(year,dte1,me%nmax1,me%g,dte2,me%nmax2,me%gh2,me%nmax,gha)
    else
-      call me%extrashc(year,dte1,nmax1,me%g,nmax2,me%gh2,me%nmax,gha)
+      call me%extrashc(year,dte1,me%nmax1,me%g,me%nmax2,me%gh2,me%nmax,gha)
    endif
    !-- determine magnetic dipol moment and coeffiecients g
    f0 = 0.0_wp

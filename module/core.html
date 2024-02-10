@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title=" 2.5% of total for modules and submodules.">23 statements</a>
+                 title=" 4.3% of total for modules and submodules.">41 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -115,7 +115,18 @@
   
   
   
-  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#types-0"
+         aria-expanded="false" aria-controls="types-0">
+         <h4 class="card-header bg-primary text-white">Derived Types</h4>
+      </a>
+      <div id="types-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/core.html#type-radbelt_type">radbelt_type</a>
+        </div>
+      </div>
+    </div>
+
       <div class="card mb-4">
       <a data-bs-toggle="collapse" href="#funcs-0"
          aria-expanded="false" aria-controls="funcs-0">
@@ -123,6 +134,7 @@
       </a>
       <div id="funcs-0" class="collapse">
         <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/core.html#proc-get_flux_">get_flux_</a>
             <a class="list-group-item" href="../module/core.html#proc-get_flux">get_flux</a>
         </div>
       </div>
@@ -149,15 +161,16 @@
 <li>https://ccmc.gsfc.nasa.gov/pub/modelweb/geomagnetic/igrf/fortran_code/bilcal.for</li>
 <li>https://ccmc.gsfc.nasa.gov/pub/modelweb/radiation_belt/radbelt/fortran_code/radbelt.for</li>
 </ul>
+<p>simple function version for testing</p>
 <br>          <div class="card mb-4">
       <h3 class="card-header card-title bg-light">Uses</h3>
       <div class="card-body">
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <ul class="list-inline">
-                  <li class="list-inline-item"><a href='trmfun_module.html'>trmfun_module</a></li>
                   <li class="list-inline-item"><a href='radbelt_kinds_module.html'>radbelt_kinds_module</a></li>
                   <li class="list-inline-item"><a href='shellig_module.html'>shellig_module</a></li>
+                  <li class="list-inline-item"><a href='trmfun_module.html'>trmfun_module</a></li>
               </ul>
             </li>
             <li class="list-group-item">
@@ -332,15 +345,95 @@ modules which it uses.
 
 
 
+        <section>
+          <h2>Derived Types</h2>
+              <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="type-radbelt_type"></span>
+      <h3>
+        type, public&nbsp;::&nbsp;
+        <a href='../type/radbelt_type.html'>radbelt_type</a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      <p>the main class that can be used to get the flux.</p>
+
+        <h4>Components</h4>
+          <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-trm"></span>
+              type(<a href='../type/trm_type.html'>trm_type</a>),
+            </td>
+              <td>private</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>trm</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-igrf~2"></span>
+              type(<a href='../type/shellig_type.html'>shellig_type</a>),
+            </td>
+              <td>private</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>igrf</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+
+        <h4>Type-Bound Procedures</h4>
+        <table class="table table-striped varlist">
+          <tbody>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/radbelt_type.html#boundprocedure-get_flux'>get_flux</a></strong> => <a href='/home/runner/work/radbelt/radbelt/doc/proc/get_flux_.html'>get_flux_</a></td>
+                <td></td>
+              </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+        </section>
+        <br>
 
         <section>
           <h2>Functions</h2>
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-get_flux"></span> <h3>public  function <a href='../proc/get_flux.html'>get_flux</a>(lon, lat, height, year, e, imname) result(flux)  
+    <div class="card-header codesum"><span class="anchor" id="proc-get_flux_"></span> <h3>public  function <a href='../proc/get_flux_.html'>get_flux_</a>(me, lon, lat, height, year, e, imname) result(flux)  
 </h3></div>
     <div class="card-body">
           
-  <p>Calculate the flux of trapped particles at a specific location and time.</p><a href="../proc/get_flux.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <p>Calculate the flux of trapped particles at a specific location and time.</p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -355,7 +448,22 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-lon"></span>
+              <span class="anchor" id="variable-me~13"></span>
+              class(<a href='../type/radbelt_type.html'>radbelt_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lon~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -370,7 +478,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lat"></span>
+              <span class="anchor" id="variable-lat~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -385,7 +493,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-height"></span>
+              <span class="anchor" id="variable-height~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -400,7 +508,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year"></span>
+              <span class="anchor" id="variable-year~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -416,7 +524,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e"></span>
+              <span class="anchor" id="variable-e~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -431,7 +539,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-imname"></span>
+              <span class="anchor" id="variable-imname~2"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -441,7 +549,129 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             <td>::</td>
             <td><strong>imname</strong></td>
             <td>
-<p>which method to use:</p><a href="../proc/get_flux.html#variable-imname" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>which method to use:</p><a href="../proc/get_flux_.html#variable-imname~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=wp)</small>
+    </h4>
+    <p>The flux of particles above the given energy, in units of cm^-2 s^-1.</p>
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-get_flux"></span> <h3>public  function <a href='../proc/get_flux.html'>get_flux</a>(lon, lat, height, year, e, imname) result(flux)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Calculate the flux of trapped particles at a specific location and time.
+  This is just a function version of the class method from <a href="../type/radbelt_type.html">radbelt_type</a>.</p><a href="../proc/get_flux.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lon~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lon</strong></td>
+            <td>
+<p>geodetic longitude in degrees (east)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lat~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lat</strong></td>
+            <td>
+<p>geodetic latitude in degrees (north)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-height~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>height</strong></td>
+            <td>
+<p>altitude in km above sea level</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-year~4"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>year</strong></td>
+            <td>
+<p>decimal year for which geomagnetic field is to
+be calculated (e.g.:1995.5 for day 185 of 1995)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-e~4"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>e</strong></td>
+            <td>
+<p>minimum energy</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-imname~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>imname</strong></td>
+            <td>
+<p>which method to use:</p><a href="../proc/get_flux.html#variable-imname~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>

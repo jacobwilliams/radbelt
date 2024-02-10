@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title="65.1% of total for modules and submodules.">595 statements</a>
+                 title="64.1% of total for modules and submodules.">606 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -763,6 +763,57 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
+              <span class="anchor" id="variable-nmax1"></span>
+              integer,
+            </td>
+              <td>private</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nmax1</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+<p>saved variables from the file</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nmax2"></span>
+              integer,
+            </td>
+              <td>private</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nmax2</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+<p>saved variables from the file</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-g_cache"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(144)
+            </td>
+            <td>::</td>
+            <td><strong>g_cache</strong></td>
+<td> =</td>
+                <td>0.0_wp</td>
+            <td>
+<p>saved <code>g</code> from the file</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
               <span class="anchor" id="variable-step"></span>
               real(kind=wp),
             </td>
@@ -823,7 +874,7 @@ parameter,               dimension(3,3)
           <tbody>
               <tr>
                 <td>  procedure, public ::
-  <strong><a href='../type/shellig_type.html#boundprocedure-igrf~2'>igrf</a></strong></td>
+  <strong><a href='../type/shellig_type.html#boundprocedure-igrf'>igrf</a></strong></td>
                 <td></td>
               </tr>
               <tr>
@@ -912,7 +963,7 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lon~2"></span>
+              <span class="anchor" id="variable-lon"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -927,7 +978,7 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lat~2"></span>
+              <span class="anchor" id="variable-lat"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -942,7 +993,7 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-height~2"></span>
+              <span class="anchor" id="variable-height"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -957,7 +1008,7 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~2"></span>
+              <span class="anchor" id="variable-year"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -973,7 +1024,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-xl~2"></span>
+              <span class="anchor" id="variable-xl"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -988,7 +1039,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-bbx~2"></span>
+              <span class="anchor" id="variable-bbx"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -1544,7 +1595,7 @@ and downward.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~3"></span>
+              <span class="anchor" id="variable-year~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
