@@ -36,6 +36,16 @@ program radbelt_test
     if (relerror>10*epsilon(1.0_wp)) error stop 'error'
     write(*,*) ''
 
+    ! cartesian test:
+    flux = get_flux([    0.66161289996712280_wp,&
+                        -0.66161289996712269_wp,&
+                        -0.53685097954130001_wp],year,e,imname)
+    write(*,*) 'Flux      = ', flux
+    write(*,*) 'Error     = ', error
+    write(*,*) 'Rel Error = ', relerror
+    if (relerror>10*epsilon(1.0_wp)) error stop 'error'
+    write(*,*) ''
+
     ! speed tests:
     call cpu_time(tstart)
     n_cases = 0
@@ -67,4 +77,5 @@ program radbelt_test
                                  int(n_cases/(tend - tstart)), ' (cases/sec)'
 
     write(*,*) 'n_cases = ', n_cases
+
 end program radbelt_test
