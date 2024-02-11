@@ -2,7 +2,7 @@ program radbelt_test
 
     !! comparison to the python radbelt example
 
-    use core
+    use redbelt_module
     use radbelt_kinds_module
 
     implicit none

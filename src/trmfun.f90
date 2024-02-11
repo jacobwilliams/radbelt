@@ -256,14 +256,13 @@ function trara2(me,map,il,ib)
                fkbm , fll1 , fll2 , flog , flog1 , flog2 , flogm , &
                fnb , fnl , sl1 , sl2
    integer :: i1 , i2 , itime , j1 , j2 , kt , l1 , l2
-
-   integer :: spag_nextblock_1
+   integer :: itask
 
    fistep = me%fistep
 
-   spag_nextblock_1 = 1
+   itask = 1
    main: do
-      select case (spag_nextblock_1)
+      select case (itask)
       case (1)
          fnl = il
          fnb = ib
@@ -291,11 +290,11 @@ function trara2(me,map,il,ib)
                ! if flog2 less flog1, than ls2 first map and ls1 second map
 
                if ( map(i2+3)<=map(i1+3) ) exit
-               spag_nextblock_1 = 3
+               itask = 3
                cycle main
             endif
          enddo
-         spag_nextblock_1 = 2
+         itask = 2
       case (2)
          kt = i1
          i1 = i2
@@ -303,7 +302,7 @@ function trara2(me,map,il,ib)
          kt = l1
          l1 = l2
          l2 = kt
-         spag_nextblock_1 = 3
+         itask = 3
       case (3)
 
          ! determine interpolate in scaled l-value
@@ -327,14 +326,14 @@ function trara2(me,map,il,ib)
             enddo
             itime = itime + 1
             if ( itime==1 ) then
-               spag_nextblock_1 = 2
+               itask = 2
                cycle main
             endif
             trara2 = 0.0_wp
             return
  10         if ( itime/=1 ) then
                if ( j2==4 ) then
-                  spag_nextblock_1 = 4
+                  itask = 4
                   cycle main
                endif
                sl2 = flog2/fkb2
@@ -356,7 +355,7 @@ function trara2(me,map,il,ib)
                   fkb2 = fkb2 + fincr2
                   sl1 = flog1/fkb1
                   sl2 = flog2/fkb2
-                  spag_nextblock_1 = 5
+                  itask = 5
                   cycle main
                else
                   fkb1 = 0.0_wp
@@ -368,7 +367,7 @@ function trara2(me,map,il,ib)
          fincr2 = map(i2+j2)
          flog2 = map(i2+3)
          flog1 = map(i1+3)
-         spag_nextblock_1 = 4
+         itask = 4
       case (4)
          flogm = flog1 + (flog2-flog1)*dfl
          fkbm = 0.0_wp
@@ -378,7 +377,7 @@ function trara2(me,map,il,ib)
          if ( l1<4 ) then
             fincr1 = 0.0_wp
             sl1 = -900000.0_wp
-            spag_nextblock_1 = 6
+            itask = 6
             cycle main
          else
             j1 = 4
@@ -387,14 +386,14 @@ function trara2(me,map,il,ib)
             flog1 = flog1 - fistep
             sl1 = flog1/fkb1
          endif
-         spag_nextblock_1 = 5
+         itask = 5
       case (5)
          do while ( sl1>=sl2 )
             fkbj2 = ((flog2/fistep)*fincr2+fkb2)/((fincr2/fistep)*sl1+1.0_wp)
             fkb = fkb1 + (fkbj2-fkb1)*dfl
             flog = fkb*sl1
             if ( fkb>=fnb ) then
-               spag_nextblock_1 = 7
+               itask = 7
                cycle main
             endif
             fkbm = fkb
@@ -410,7 +409,7 @@ function trara2(me,map,il,ib)
                sl1 = flog1/fkb1
             endif
          enddo
-         spag_nextblock_1 = 6
+         itask = 6
       case (6)
          fkbj1 = ((flog1/fistep)*fincr1+fkb1)/((fincr1/fistep)*sl2+1.0_wp)
          fkb = fkbj1 + (fkb2-fkbj1)*dfl
@@ -427,11 +426,11 @@ function trara2(me,map,il,ib)
                flog2 = flog2 - fistep
                fkb2 = fkb2 + fincr2
                sl2 = flog2/fkb2
-               spag_nextblock_1 = 5
+               itask = 5
                cycle main
             endif
          endif
-         spag_nextblock_1 = 7
+         itask = 7
       case (7)
          if ( fkb<fkbm+1.0e-10_wp ) then
             trara2 = 0.0_wp
