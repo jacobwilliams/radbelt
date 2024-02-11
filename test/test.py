@@ -67,3 +67,5 @@ with open('results.txt', 'r') as f:
             print(f'Error: {error}')
 
 print(f'{n_failed_cases} failed cases out of {n_cases}')
+if n_failed_cases>0:
+    raise Exception('Test Failed')
