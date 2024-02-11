@@ -8,7 +8,7 @@ program radbelt_test
     implicit none
 
     real(wp) :: lon, lat, height, year, e, flux, error, relerror
-    integer :: imname, i, ilat, ilon, ialt
+    integer :: imname, i, ilat, ilon, ialt, iunit, istat
     real(wp) :: tstart, tend
     type(radbelt_type) :: radbelt
     integer :: n_cases
@@ -47,6 +47,7 @@ program radbelt_test
     write(*,*) ''
 
     ! speed tests:
+    open(newunit=iunit, file = 'results.txt', iostat=istat)
     call cpu_time(tstart)
     n_cases = 0
     do ilat = -89, 90, 5
@@ -54,11 +55,12 @@ program radbelt_test
             do ialt = 500, 1000, 100
                 n_cases = n_cases + 1
                 flux = get_flux(real(ilon,wp),real(ilat,wp),real(ialt,wp),year,e,imname)
-                !if (flux/=0.0_wp) write(*,*) ilat, ilon, ialt, flux
+                write(iunit,*) year, ',', ilat, ',', ilon, ',', ialt, ',', flux
             end do
         end do
     end do
     call cpu_time(tend)
+    close(iunit)
     write(*,'(a25,f6.3,a,i7,a)') 'Function version runtime: ', (tend - tstart), ' sec. ', &
                                  int(n_cases/(tend - tstart)), ' (cases/sec)'
     call cpu_time(tstart)
