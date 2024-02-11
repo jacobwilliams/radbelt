@@ -21,11 +21,17 @@ module core
       type(shellig_type) :: igrf
       contains
       private
-      procedure,public :: get_flux => get_flux_
+      generic,public :: get_flux => get_flux_g_, get_flux_c_
+      procedure :: get_flux_g_, get_flux_c_
       procedure,public :: set_data_files_paths
    end type radbelt_type
 
-   public :: get_flux !! simple function version for testing
+   interface get_flux
+      !! simple function versions for testing
+      procedure :: get_flux_g
+      procedure :: get_flux_c
+   end interface
+   public :: get_flux
 
    contains
 
@@ -51,7 +57,7 @@ module core
 !>
 !  Calculate the flux of trapped particles at a specific location and time.
 
-   function get_flux_(me,lon,lat,height,year,e,imname) result(flux)
+   function get_flux_g_(me,lon,lat,height,year,e,imname) result(flux)
 
       class(radbelt_type),intent(inout) :: me
       real(wp),intent(in) :: lon !! geodetic longitude in degrees (east)
@@ -74,7 +80,7 @@ module core
       call me%igrf%igrf(lon,lat,height,year,xl,bbx)
       call me%trm%aep8(e,xl,bbx,imname,flux)
 
-   end function get_flux_
+   end function get_flux_g_
 !*****************************************************************************************
 
 !*****************************************************************************************
@@ -85,7 +91,7 @@ module core
 !@note This routine is not efficient at all since it will reload all the
 !      files every time it is called.
 
-   function get_flux(lon,lat,height,year,e,imname) result(flux)
+   function get_flux_g(lon,lat,height,year,e,imname) result(flux)
 
       real(wp),intent(in) :: lon !! geodetic longitude in degrees (east)
       real(wp),intent(in) :: lat !! geodetic latitude in degrees (north)
@@ -105,7 +111,64 @@ module core
 
       flux = radbelt%get_flux(lon,lat,height,year,e,imname)
 
-   end function get_flux
+   end function get_flux_g
 !*****************************************************************************************
+
+!*****************************************************************************************
+!>
+!  Calculate the flux of trapped particles at a specific location and time.
+!  This is an alternate version of [[get_flux_g_]] for cartesian coordinates.
+
+   function get_flux_c_(me,v,year,e,imname) result(flux)
+
+      class(radbelt_type),intent(inout) :: me
+      real(wp),dimension(3),intent(in) :: v
+      real(wp),intent(in) :: year !! decimal year for which geomagnetic field is to
+                                  !! be calculated (e.g.:1995.5 for day 185 of 1995)
+      real(wp),intent(in) :: e !! minimum energy
+      integer,intent(in) :: imname !! which method to use:
+                                   !!
+                                   !! * 1 -- particle species: electrons, solar activity: min
+                                   !! * 2 -- particle species: electrons, solar activity: max
+                                   !! * 3 -- particle species: protons, solar activity: min
+                                   !! * 4 -- particle species: protons, solar activity: max
+      real(wp) :: flux !! The flux of particles above the given energy, in units of cm^-2 s^-1.
+
+      real(wp) :: xl !! l value
+      real(wp) :: bbx
+
+      call me%igrf%igrfc(v,year,xl,bbx)
+      call me%trm%aep8(e,xl,bbx,imname,flux)
+
+   end function get_flux_c_
+!*****************************************************************************************
+
+!*****************************************************************************************
+!>
+!  Calculate the flux of trapped particles at a specific location and time.
+!  This is just a function version of the class method from [[radbelt_type]].
+!
+!@note This routine is not efficient at all since it will reload all the
+!      files every time it is called.
+
+   function get_flux_c(v,year,e,imname) result(flux)
+
+      real(wp),dimension(3),intent(in) :: v
+      real(wp),intent(in) :: year !! decimal year for which geomagnetic field is to
+                                  !! be calculated (e.g.:1995.5 for day 185 of 1995)
+      real(wp),intent(in) :: e !! minimum energy
+      integer,intent(in) :: imname !! which method to use:
+                                   !!
+                                   !! * 1 -- particle species: electrons, solar activity: min
+                                   !! * 2 -- particle species: electrons, solar activity: max
+                                   !! * 3 -- particle species: protons, solar activity: min
+                                   !! * 4 -- particle species: protons, solar activity: max
+      real(wp) :: flux !! The flux of particles above the given energy, in units of cm^-2 s^-1.
+
+      type(radbelt_type) :: radbelt
+
+      flux = radbelt%get_flux(v,year,e,imname)
+
+   end function get_flux_c
 
 end module core

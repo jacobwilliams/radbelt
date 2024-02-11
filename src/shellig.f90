@@ -167,7 +167,7 @@
       real(wp),intent(out) :: xl !! l-value
       real(wp),intent(out) :: bbx !! b_total / b_equatorial ratio
 
-      real(wp) :: bab1 , babs , bdel , beq , bequ , dimo , rr0
+      real(wp) :: bab1 , bdel , beq , bequ , dimo , rr0
       integer :: icode
       logical :: val
       real(wp),dimension(3) :: b
@@ -191,7 +191,7 @@
          call me%findb0(stps,bdel,val,beq,rr0)
          if ( val ) bequ = beq
       endif
-      bbx = babs/bequ
+      bbx = norm2(b)/bequ
 
    end subroutine igrfc
 !*****************************************************************************************
