@@ -6,7 +6,7 @@
 !   * https://ccmc.gsfc.nasa.gov/pub/modelweb/geomagnetic/igrf/fortran_code/bilcal.for
 !   * https://ccmc.gsfc.nasa.gov/pub/modelweb/radiation_belt/radbelt/fortran_code/radbelt.for
 
-module core
+module redbelt_module
 
    use radbelt_kinds_module
    use trmfun_module
@@ -171,4 +171,4 @@ module core
 
    end function get_flux_c
 
-end module core
+end module redbelt_module
