@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title="62.7% of total for modules and submodules.">611 statements</a>
+                 title="64.9% of total for modules and submodules.">720 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -166,10 +166,14 @@
         <div class="list-group list-group-flush">
             <a class="list-group-item" href="../module/shellig_module.html#proc-set_data_file_dir~2">set_data_file_dir</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-igrf">igrf</a>
+            <a class="list-group-item" href="../module/shellig_module.html#proc-igrfc">igrfc</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-findb0">findb0</a>
+            <a class="list-group-item" href="../module/shellig_module.html#proc-shellc">shellc</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-shellg">shellg</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-stoer">stoer</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-feldg">feldg</a>
+            <a class="list-group-item" href="../module/shellig_module.html#proc-feldc">feldc</a>
+            <a class="list-group-item" href="../module/shellig_module.html#proc-feldi">feldi</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-feldcof">feldcof</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-getshc">getshc</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-intershc">intershc</a>
@@ -639,7 +643,7 @@ parameter,               dimension(3,3)
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-igrf_dir~2"></span>
+              <span class="anchor" id="variable-igrf_dir"></span>
               character(len=:),
             </td>
               <td>private,</td>
@@ -903,7 +907,12 @@ parameter,               dimension(3,3)
           <tbody>
               <tr>
                 <td>  procedure, public ::
-  <strong><a href='../type/shellig_type.html#boundprocedure-igrf~2'>igrf</a></strong></td>
+  <strong><a href='../type/shellig_type.html#boundprocedure-igrfc'>igrfc</a></strong></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/shellig_type.html#boundprocedure-igrf'>igrf</a></strong></td>
                 <td></td>
               </tr>
               <tr>
@@ -913,7 +922,17 @@ parameter,               dimension(3,3)
               </tr>
               <tr>
                 <td>  procedure, public ::
+  <strong><a href='../type/shellig_type.html#boundprocedure-feldc'>feldc</a></strong></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
   <strong><a href='../type/shellig_type.html#boundprocedure-feldg'>feldg</a></strong></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/shellig_type.html#boundprocedure-shellc'>shellc</a></strong></td>
                 <td></td>
               </tr>
               <tr>
@@ -924,6 +943,11 @@ parameter,               dimension(3,3)
               <tr>
                 <td>  procedure, public ::
   <strong><a href='../type/shellig_type.html#boundprocedure-findb0'>findb0</a></strong></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, private ::
+  <strong><a href='../type/shellig_type.html#boundprocedure-feldi'>feldi</a></strong></td>
                 <td></td>
               </tr>
               <tr>
@@ -986,7 +1010,7 @@ parameter,               dimension(3,3)
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~9"></span>
+              <span class="anchor" id="variable-me~7"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(in)</td>
@@ -1036,7 +1060,7 @@ parameter,               dimension(3,3)
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~8"></span>
+              <span class="anchor" id="variable-me~6"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1091,7 +1115,7 @@ parameter,               dimension(3,3)
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~10"></span>
+              <span class="anchor" id="variable-me~8"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1106,7 +1130,7 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lon~3"></span>
+              <span class="anchor" id="variable-lon"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1121,7 +1145,7 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lat~3"></span>
+              <span class="anchor" id="variable-lat"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1136,7 +1160,7 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-height~3"></span>
+              <span class="anchor" id="variable-height"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1151,7 +1175,111 @@ parameter,               dimension(3,3)
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~3"></span>
+              <span class="anchor" id="variable-year"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>year</strong></td>
+            <td>
+<p>decimal year for which geomagnetic field is to
+be calculated (e.g.:1995.5 for day 185 of 1995)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-xl"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>xl</strong></td>
+            <td>
+<p>l-value</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-bbx"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>bbx</strong></td>
+            <td>
+<p>b_total / b_equatorial ratio</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-igrfc"></span> <h3>private  subroutine <a href='../proc/igrfc.html'>igrfc</a>(me, v, year, xl, bbx)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Alternate version of <a href="../proc/igrf.html">igrf</a> for cartesian coordinates.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me~9"></span>
+              class(<a href='../type/shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-v"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(3)
+            </td>
+            <td>::</td>
+            <td><strong>v</strong></td>
+            <td>
+<p>cartesian coordinates in earth radii (6371.2 km)
+x-axis pointing to equator at 0 longitude
+y-axis pointing to equator at 90 long.
+z-axis pointing to north pole</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-year~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1222,7 +1350,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~11"></span>
+              <span class="anchor" id="variable-me~10"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1237,7 +1365,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-stps~2"></span>
+              <span class="anchor" id="variable-stps~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1252,7 +1380,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-bdel~2"></span>
+              <span class="anchor" id="variable-bdel~3"></span>
               real(kind=wp),
             </td>
 <td>intent(inout)</td>
@@ -1282,7 +1410,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-bequ~2"></span>
+              <span class="anchor" id="variable-bequ~3"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -1297,7 +1425,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-rr0~2"></span>
+              <span class="anchor" id="variable-rr0~3"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -1318,7 +1446,125 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-shellg"></span> <h3>private  subroutine <a href='../proc/shellg.html'>shellg</a>(me, glat, glon, alt, dimo, fl, icode, b0)  
+    <div class="card-header codesum"><span class="anchor" id="proc-shellc"></span> <h3>private  subroutine <a href='../proc/shellc.html'>shellc</a>(me, v, dimo, fl, icode, b0)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Wrapper to <a href="../proc/shellg.html">shellg</a> to be used with cartesian coordinates.</p><a href="../proc/shellc.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me~11"></span>
+              class(<a href='../type/shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-v~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(3)
+            </td>
+            <td>::</td>
+            <td><strong>v</strong></td>
+            <td>
+<p>cartesian coordinates in earth radii (6371.2 km)
+* x-axis pointing to equator at 0 longitude
+* y-axis pointing to equator at 90 long.
+* z-axis pointing to north pole</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dimo~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dimo</strong></td>
+            <td>
+<p>dipol moment in gauss (normalized to earth radius)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fl~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>fl</strong></td>
+            <td>
+<p>l-value</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-icode~3"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>icode</strong></td>
+            <td>
+<a href="../proc/shellc.html#variable-icode~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b0"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>b0</strong></td>
+            <td>
+<p>magnetic field strength in gauss</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-shellg"></span> <h3>private  subroutine <a href='../proc/shellg.html'>shellg</a>(me, glat, glon, alt, dimo, fl, icode, b0, v)  
 </h3></div>
     <div class="card-body">
           
@@ -1353,7 +1599,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-glat"></span>
+              <span class="anchor" id="variable-glat~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1368,7 +1614,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-glon"></span>
+              <span class="anchor" id="variable-glon~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1383,7 +1629,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-alt"></span>
+              <span class="anchor" id="variable-alt~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1398,7 +1644,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-dimo~2"></span>
+              <span class="anchor" id="variable-dimo~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1413,7 +1659,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fl~2"></span>
+              <span class="anchor" id="variable-fl~3"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -1428,7 +1674,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-icode~2"></span>
+              <span class="anchor" id="variable-icode~4"></span>
               integer,
             </td>
 <td>intent(out)</td>
@@ -1438,12 +1684,12 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             <td>::</td>
             <td><strong>icode</strong></td>
             <td>
-<a href="../proc/shellg.html#variable-icode~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+<a href="../proc/shellg.html#variable-icode~4" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-b0"></span>
+              <span class="anchor" id="variable-b0~2"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -1454,6 +1700,21 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             <td><strong>b0</strong></td>
             <td>
 <p>magnetic field strength in gauss</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-v~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td>optional,</td>            <td>
+              dimension(3)
+            </td>
+            <td>::</td>
+            <td><strong>v</strong></td>
+            <td>
+<p>cartesian coordinates in earth radii (6371.2 km)</p><a href="../proc/shellg.html#variable-v~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -1468,8 +1729,8 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
 </h3></div>
     <div class="card-body">
           
-  <p>subroutine used for field line tracing in <a href="../proc/shellg.html">shellg</a>
-calls entry point <a>feldi</a> in geomagnetic field subroutine <a href="../proc/feldg.html">feldg</a></p>
+  <p>subroutine used for field line tracing in <a href="../proc/shellg.html">shellg</a>.
+calls entry point <a href="../proc/feldi.html">feldi</a> in geomagnetic field subroutine <a href="../proc/feldg.html">feldg</a></p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -1584,7 +1845,7 @@ calls entry point <a>feldi</a> in geomagnetic field subroutine <a href="../proc/
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-glat~2"></span>
+              <span class="anchor" id="variable-glat~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1599,7 +1860,7 @@ calls entry point <a>feldi</a> in geomagnetic field subroutine <a href="../proc/
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-glon~2"></span>
+              <span class="anchor" id="variable-glon~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1614,7 +1875,7 @@ calls entry point <a>feldi</a> in geomagnetic field subroutine <a href="../proc/
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-alt~2"></span>
+              <span class="anchor" id="variable-alt~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1704,11 +1965,11 @@ and downward.</p>
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-feldcof"></span> <h3>private  subroutine <a href='../proc/feldcof.html'>feldcof</a>(me, year, dimo)  
+    <div class="card-header codesum"><span class="anchor" id="proc-feldc"></span> <h3>private  subroutine <a href='../proc/feldc.html'>feldc</a>(me, v, b)  
 </h3></div>
     <div class="card-body">
           
-  <p>Determines coefficients and dipol moment from IGRF models</p><a href="../proc/feldcof.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <p>Alternate version of <a href="../proc/feldg.html">feldg</a> to be used with cartesian coordinates</p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -1738,7 +1999,120 @@ and downward.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~4"></span>
+              <span class="anchor" id="variable-v~4"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(3)
+            </td>
+            <td>::</td>
+            <td><strong>v</strong></td>
+            <td>
+<p>cartesian coordinates in earth radii (6371.2 km)
+x-axis pointing to equator at 0 longitude
+y-axis pointing to equator at 90 long.
+z-axis pointing to north pole</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>b</strong>(3)</td>
+            <td>
+<p>field components</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-feldi"></span> <h3>private  subroutine <a href='../proc/feldi.html'>feldi</a>(me)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Used for <code>l</code> computation.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me~16"></span>
+              class(<a href='../type/shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-feldcof"></span> <h3>private  subroutine <a href='../proc/feldcof.html'>feldcof</a>(me, year, dimo)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Determines coefficients and dipol moment from IGRF models</p><a href="../proc/feldcof.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me~17"></span>
+              class(<a href='../type/shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-year~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1754,7 +2128,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-dimo~3"></span>
+              <span class="anchor" id="variable-dimo~5"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -1796,7 +2170,7 @@ to earth's radius) at the time (year)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~16"></span>
+              <span class="anchor" id="variable-me~18"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1915,7 +2289,7 @@ harmonic coefficients</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~17"></span>
+              <span class="anchor" id="variable-me~19"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -2091,7 +2465,7 @@ harmonic coefficients</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~18"></span>
+              <span class="anchor" id="variable-me~20"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>

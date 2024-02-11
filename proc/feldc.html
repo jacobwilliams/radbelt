@@ -10,7 +10,7 @@
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
 
-    <title>feldg &ndash; radbelt</title>
+    <title>feldc &ndash; radbelt</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -62,7 +62,7 @@
 
     <div class="container">
   <div class="row">
-    <h1>feldg
+    <h1>feldc
       <small>Subroutine</small>
       
     </h1>
@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title=" 6.3% of total for procedures.">64 statements</a>
+                 title=" 4.7% of total for procedures.">48 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -88,7 +88,7 @@
           <ol class="breadcrumb justify-content-end mb-0">
                 <li class="breadcrumb-item"><a href='../sourcefile/shellig.f90.html'>shellig.f90</a></li>
                 <li class="breadcrumb-item"><a href='../module/shellig_module.html'>shellig_module</a></li>
-            <li class="breadcrumb-item active" aria-current="page">feldg</li>
+            <li class="breadcrumb-item active" aria-current="page">feldc</li>
           </ol>
         </nav>
       </div>
@@ -129,7 +129,7 @@
     <div class="card card-primary">
       <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
       <div class="list-group">
-        <a class="list-group-item" href="../proc/feldg.html#src">feldg</a>
+        <a class="list-group-item" href="../proc/feldc.html#src">feldc</a>
       </div>
     </div>
 
@@ -139,25 +139,11 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>private  subroutine feldg(me, glat, glon, alt, bnorth, beast, bdown, Babs)  
+    <h2>private  subroutine feldc(me, v, b)  
 </h2>
     
 
-    <p>Calculates earth magnetic field from spherical harmonics model</p>
-<h3>Reference</h3>
-<p>ref: g. kluge, european space operations centre, internal note 61,
-      1970.</p>
-<h3>History</h3>
-<ul>
-<li>changes (d. bilitza, nov 87):</li>
-<li>field coefficients in binary data files instead of block data</li>
-<li>calculates dipol moment</li>
-</ul>
-<div class="alert alert-info">
-<p class="alert-title h4">Note</p>
-<p>In the original code, [[feldc] and <a href="../proc/feldi.html">feldi</a> were
-      ENTRY points to this routine</p>
-</div>
+    <p>Alternate version of <a href="../proc/feldg.html">feldg</a> to be used with cartesian coordinates</p>
 
     <h3>Type Bound</h3>
     <p><a href='../type/shellig_type.html'>shellig_type</a></p>
@@ -175,7 +161,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~14"></span>
+              <span class="anchor" id="variable-me~15"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -190,52 +176,25 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-glat~3"></span>
+              <span class="anchor" id="variable-v~4"></span>
               real(kind=wp),
             </td>
-<td>intent(in)</td>
+<td>intent(in),</td>
               <td></td>            <td>
-              
+              dimension(3)
             </td>
             <td>::</td>
-            <td><strong>glat</strong></td>
+            <td><strong>v</strong></td>
             <td>
-                <p>geodetic latitude in degrees (north)</p>
+                <p>cartesian coordinates in earth radii (6371.2 km)
+x-axis pointing to equator at 0 longitude
+y-axis pointing to equator at 90 long.
+z-axis pointing to north pole</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-glon~3"></span>
-              real(kind=wp),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>glon</strong></td>
-            <td>
-                <p>geodetic longitude in degrees (east)</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-alt~3"></span>
-              real(kind=wp),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>alt</strong></td>
-            <td>
-                <p>altitude in km above sea level</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-bnorth~2"></span>
+              <span class="anchor" id="variable-b~3"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -243,63 +202,9 @@
               
             </td>
             <td>::</td>
-            <td><strong>bnorth</strong></td>
+            <td><strong>b</strong>(3)</td>
             <td>
-                <p>components of the field with respect
-to the local geodetic coordinate system, with axis
-pointing in the tangential plane to the north, east
-and downward.</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-beast~2"></span>
-              real(kind=wp),
-            </td>
-<td>intent(out)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>beast</strong></td>
-            <td>
-                <p>components of the field with respect
-to the local geodetic coordinate system, with axis
-pointing in the tangential plane to the north, east
-and downward.</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-bdown~2"></span>
-              real(kind=wp),
-            </td>
-<td>intent(out)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>bdown</strong></td>
-            <td>
-                <p>components of the field with respect
-to the local geodetic coordinate system, with axis
-pointing in the tangential plane to the north, east
-and downward.</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-babs"></span>
-              real(kind=wp),
-            </td>
-<td>intent(out)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>Babs</strong></td>
-            <td>
-                <p>magnetic field strength in gauss</p>
+                <p>field components</p>
             </td>
         </tr>
     </tbody>
@@ -316,110 +221,110 @@ and downward.</p>
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
-<!-- Title: proc~~feldg~~CalledByGraph Pages: 1 -->
-<svg id="procfeldgCalledByGraph" width="641pt" height="43pt"
- viewBox="0.00 0.00 641.00 43.04" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~feldg~~CalledByGraph" class="graph" transform="scale(1.72 1.72) rotate(0) translate(4 70)">
-<title>proc~~feldg~~CalledByGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 1098,-70 1098,4 -4,4"/>
-<!-- proc~feldg -->
-<g id="proc~~feldg~~CalledByGraph_node1" class="node">
-<title>proc~feldg</title>
-<polygon fill="none" stroke="black" points="1094,-45 894,-45 894,-21 1094,-21 1094,-45"/>
-<text text-anchor="middle" x="994" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">shellig_module::shellig_type%feldg</text>
+<!-- Title: proc~~feldc~~CalledByGraph Pages: 1 -->
+<svg id="procfeldcCalledByGraph" width="641pt" height="43pt"
+ viewBox="0.00 0.00 641.00 42.89" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~feldc~~CalledByGraph" class="graph" transform="scale(1.73 1.73) rotate(0) translate(4 70)">
+<title>proc~~feldc~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 1102,-70 1102,4 -4,4"/>
+<!-- proc~feldc -->
+<g id="proc~~feldc~~CalledByGraph_node1" class="node">
+<title>proc~feldc</title>
+<polygon fill="none" stroke="black" points="1098,-45 899,-45 899,-21 1098,-21 1098,-45"/>
+<text text-anchor="middle" x="998.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">shellig_module::shellig_type%feldc</text>
 </g>
-<!-- proc~igrf -->
-<g id="proc~~feldg~~CalledByGraph_node2" class="node">
-<title>proc~igrf</title>
-<g id="a_proc~~feldg~~CalledByGraph_node2"><a xlink:href="../proc/igrf.html" xlink:title="shellig_module::shellig_type%igrf">
-<polygon fill="#d9534f" stroke="#d9534f" points="858,-45 667,-45 667,-21 858,-21 858,-45"/>
-<text text-anchor="middle" x="762.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%igrf</text>
+<!-- proc~igrfc -->
+<g id="proc~~feldc~~CalledByGraph_node2" class="node">
+<title>proc~igrfc</title>
+<g id="a_proc~~feldc~~CalledByGraph_node2"><a xlink:href="../proc/igrfc.html" xlink:title="shellig_module::shellig_type%igrfc">
+<polygon fill="#d9534f" stroke="#d9534f" points="863,-45 666,-45 666,-21 863,-21 863,-45"/>
+<text text-anchor="middle" x="764.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%igrfc</text>
 </a>
 </g>
 </g>
-<!-- proc~igrf&#45;&gt;proc~feldg -->
-<g id="proc~~feldg~~CalledByGraph_edge1" class="edge">
-<title>proc~igrf&#45;&gt;proc~feldg</title>
-<path fill="none" stroke="#000000" d="M858.17,-33C866.51,-33 875,-33 883.44,-33"/>
-<polygon fill="#000000" stroke="#000000" points="883.72,-36.5 893.72,-33 883.72,-29.5 883.72,-36.5"/>
+<!-- proc~igrfc&#45;&gt;proc~feldc -->
+<g id="proc~~feldc~~CalledByGraph_edge1" class="edge">
+<title>proc~igrfc&#45;&gt;proc~feldc</title>
+<path fill="none" stroke="#000000" d="M863.22,-33C871.58,-33 880.07,-33 888.52,-33"/>
+<polygon fill="#000000" stroke="#000000" points="888.78,-36.5 898.78,-33 888.78,-29.5 888.78,-36.5"/>
 </g>
-<!-- proc~get_flux_g_ -->
-<g id="proc~~feldg~~CalledByGraph_node3" class="node">
-<title>proc~get_flux_g_</title>
-<g id="a_proc~~feldg~~CalledByGraph_node3"><a xlink:href="../proc/get_flux_g_.html" xlink:title="core::radbelt_type%get_flux_g_">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="631,-45 452,-45 452,-21 631,-21 631,-45"/>
-<text text-anchor="middle" x="541.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::radbelt_type%get_flux_g_</text>
+<!-- proc~get_flux_c_ -->
+<g id="proc~~feldc~~CalledByGraph_node3" class="node">
+<title>proc~get_flux_c_</title>
+<g id="a_proc~~feldc~~CalledByGraph_node3"><a xlink:href="../proc/get_flux_c_.html" xlink:title="core::radbelt_type%get_flux_c_">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="630,-45 452,-45 452,-21 630,-21 630,-45"/>
+<text text-anchor="middle" x="541" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::radbelt_type%get_flux_c_</text>
 </a>
 </g>
 </g>
-<!-- proc~get_flux_g_&#45;&gt;proc~igrf -->
-<g id="proc~~feldg~~CalledByGraph_edge2" class="edge">
-<title>proc~get_flux_g_&#45;&gt;proc~igrf</title>
-<path fill="none" stroke="#000000" d="M631.26,-33C639.7,-33 648.3,-33 656.87,-33"/>
-<polygon fill="#000000" stroke="#000000" points="656.9,-36.5 666.9,-33 656.9,-29.5 656.9,-36.5"/>
+<!-- proc~get_flux_c_&#45;&gt;proc~igrfc -->
+<g id="proc~~feldc~~CalledByGraph_edge2" class="edge">
+<title>proc~get_flux_c_&#45;&gt;proc~igrfc</title>
+<path fill="none" stroke="#000000" d="M630.18,-33C638.59,-33 647.18,-33 655.75,-33"/>
+<polygon fill="#000000" stroke="#000000" points="655.79,-36.5 665.79,-33 655.79,-29.5 655.79,-36.5"/>
 </g>
 <!-- none~get_flux -->
-<g id="proc~~feldg~~CalledByGraph_node4" class="node">
+<g id="proc~~feldc~~CalledByGraph_node4" class="node">
 <title>none~get_flux</title>
-<g id="a_proc~~feldg~~CalledByGraph_node4"><a xlink:href="../type/radbelt_type.html#boundprocedure-get_flux" xlink:title="core::radbelt_type%get_flux">
+<g id="a_proc~~feldc~~CalledByGraph_node4"><a xlink:href="../type/radbelt_type.html#boundprocedure-get_flux" xlink:title="core::radbelt_type%get_flux">
 <polygon fill="#a7506f" stroke="#a7506f" points="416,-45 254,-45 254,-21 416,-21 416,-45"/>
 <text text-anchor="middle" x="335" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::radbelt_type%get_flux</text>
 </a>
 </g>
 </g>
-<!-- none~get_flux&#45;&gt;proc~get_flux_g_ -->
-<g id="proc~~feldg~~CalledByGraph_edge3" class="edge">
-<title>none~get_flux&#45;&gt;proc~get_flux_g_</title>
-<path fill="none" stroke="#000000" d="M416.24,-33C424.51,-33 432.99,-33 441.43,-33"/>
-<polygon fill="#000000" stroke="#000000" points="441.7,-36.5 451.7,-33 441.7,-29.5 441.7,-36.5"/>
+<!-- none~get_flux&#45;&gt;proc~get_flux_c_ -->
+<g id="proc~~feldc~~CalledByGraph_edge3" class="edge">
+<title>none~get_flux&#45;&gt;proc~get_flux_c_</title>
+<path fill="none" stroke="#000000" d="M416.04,-33C424.46,-33 433.1,-33 441.7,-33"/>
+<polygon fill="#000000" stroke="#000000" points="441.76,-36.5 451.76,-33 441.76,-29.5 441.76,-36.5"/>
 </g>
 <!-- proc~get_flux_c -->
-<g id="proc~~feldg~~CalledByGraph_node5" class="node">
+<g id="proc~~feldc~~CalledByGraph_node5" class="node">
 <title>proc~get_flux_c</title>
-<g id="a_proc~~feldg~~CalledByGraph_node5"><a xlink:href="../proc/get_flux_c.html" xlink:title="core::get_flux_c">
+<g id="a_proc~~feldc~~CalledByGraph_node5"><a xlink:href="../proc/get_flux_c.html" xlink:title="core::get_flux_c">
 <polygon fill="#d94e8f" stroke="#d94e8f" points="218,-66 121,-66 121,-42 218,-42 218,-66"/>
 <text text-anchor="middle" x="169.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::get_flux_c</text>
 </a>
 </g>
 </g>
 <!-- proc~get_flux_c&#45;&gt;none~get_flux -->
-<g id="proc~~feldg~~CalledByGraph_edge4" class="edge">
+<g id="proc~~feldc~~CalledByGraph_edge4" class="edge">
 <title>proc~get_flux_c&#45;&gt;none~get_flux</title>
 <path fill="none" stroke="#000000" d="M218.23,-47.87C226.38,-46.82 235.08,-45.71 243.91,-44.57"/>
 <polygon fill="#000000" stroke="#000000" points="244.44,-48.03 253.91,-43.29 243.55,-41.09 244.44,-48.03"/>
 </g>
 <!-- proc~get_flux_g -->
-<g id="proc~~feldg~~CalledByGraph_node6" class="node">
+<g id="proc~~feldc~~CalledByGraph_node6" class="node">
 <title>proc~get_flux_g</title>
-<g id="a_proc~~feldg~~CalledByGraph_node6"><a xlink:href="../proc/get_flux_g.html" xlink:title="core::get_flux_g">
+<g id="a_proc~~feldc~~CalledByGraph_node6"><a xlink:href="../proc/get_flux_g.html" xlink:title="core::get_flux_g">
 <polygon fill="#d94e8f" stroke="#d94e8f" points="218,-24 121,-24 121,0 218,0 218,-24"/>
 <text text-anchor="middle" x="169.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::get_flux_g</text>
 </a>
 </g>
 </g>
 <!-- proc~get_flux_g&#45;&gt;none~get_flux -->
-<g id="proc~~feldg~~CalledByGraph_edge5" class="edge">
+<g id="proc~~feldc~~CalledByGraph_edge5" class="edge">
 <title>proc~get_flux_g&#45;&gt;none~get_flux</title>
 <path fill="none" stroke="#000000" d="M218.23,-18.13C226.38,-19.18 235.08,-20.29 243.91,-21.43"/>
 <polygon fill="#000000" stroke="#000000" points="243.55,-24.91 253.91,-22.71 244.44,-17.97 243.55,-24.91"/>
 </g>
 <!-- interface~get_flux -->
-<g id="proc~~feldg~~CalledByGraph_node7" class="node">
+<g id="proc~~feldc~~CalledByGraph_node7" class="node">
 <title>interface~get_flux</title>
-<g id="a_proc~~feldg~~CalledByGraph_node7"><a xlink:href="../interface/get_flux.html" xlink:title="core::get_flux">
+<g id="a_proc~~feldc~~CalledByGraph_node7"><a xlink:href="../interface/get_flux.html" xlink:title="core::get_flux">
 <polygon fill="#a7506f" stroke="#a7506f" points="85,-45 0,-45 0,-21 85,-21 85,-45"/>
 <text text-anchor="middle" x="42.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::get_flux</text>
 </a>
 </g>
 </g>
 <!-- interface~get_flux&#45;&gt;proc~get_flux_c -->
-<g id="proc~~feldg~~CalledByGraph_edge6" class="edge">
+<g id="proc~~feldc~~CalledByGraph_edge6" class="edge">
 <title>interface~get_flux&#45;&gt;proc~get_flux_c</title>
 <path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M85.12,-39.99C93.29,-41.36 102,-42.83 110.58,-44.27"/>
 <polygon fill="#000000" stroke="#000000" points="110.13,-47.74 120.57,-45.95 111.29,-40.84 110.13,-47.74"/>
 </g>
 <!-- interface~get_flux&#45;&gt;proc~get_flux_g -->
-<g id="proc~~feldg~~CalledByGraph_edge7" class="edge">
+<g id="proc~~feldc~~CalledByGraph_edge7" class="edge">
 <title>interface~get_flux&#45;&gt;proc~get_flux_g</title>
 <path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M85.12,-26.01C93.29,-24.64 102,-23.17 110.58,-21.73"/>
 <polygon fill="#000000" stroke="#000000" points="111.29,-25.16 120.57,-20.05 110.13,-18.26 111.29,-25.16"/>
@@ -427,7 +332,7 @@ and downward.</p>
 </g>
 </svg>
 </div>                <script>
-                  var panprocfeldgCalledByGraph = svgPanZoom('#procfeldgCalledByGraph',
+                  var panprocfeldcCalledByGraph = svgPanZoom('#procfeldcCalledByGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
                 </script>          <div>
@@ -523,34 +428,21 @@ implementation in a submodule of an interface in a parent module.
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">subroutine </span><span class="n">feldg</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">glat</span><span class="p">,</span><span class="n">glon</span><span class="p">,</span><span class="n">alt</span><span class="p">,</span><span class="n">bnorth</span><span class="p">,</span><span class="n">beast</span><span class="p">,</span><span class="n">bdown</span><span class="p">,</span><span class="n">babs</span><span class="p">)</span>
+    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">subroutine </span><span class="n">feldc</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
 
 <span class="w">   </span><span class="k">class</span><span class="p">(</span><span class="n">shellig_type</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span>
-<span class="w">   </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">glat</span><span class="w">  </span><span class="c">!! geodetic latitude in degrees (north)</span>
-<span class="w">   </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">glon</span><span class="w">  </span><span class="c">!! geodetic longitude in degrees (east)</span>
-<span class="w">   </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">alt</span><span class="w">   </span><span class="c">!! altitude in km above sea level</span>
-<span class="w">   </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bnorth</span><span class="p">,</span><span class="w"> </span><span class="n">beast</span><span class="p">,</span><span class="w"> </span><span class="n">bdown</span><span class="w"> </span><span class="c">!! components of the field with respect</span>
-<span class="w">                                                </span><span class="c">!! to the local geodetic coordinate system, with axis</span>
-<span class="w">                                                </span><span class="c">!! pointing in the tangential plane to the north, east</span>
-<span class="w">                                                </span><span class="c">!! and downward.</span>
-<span class="w">   </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Babs</span><span class="w"> </span><span class="c">!! magnetic field strength in gauss</span>
+<span class="w">   </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span><span class="w">  </span><span class="c">!! cartesian coordinates in earth radii (6371.2 km)</span>
+<span class="w">                                          </span><span class="c">!! x-axis pointing to equator at 0 longitude</span>
+<span class="w">                                          </span><span class="c">!! y-axis pointing to equator at 90 long.</span>
+<span class="w">                                          </span><span class="c">!! z-axis pointing to north pole</span>
+<span class="w">   </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="c">!! field components</span>
 
-<span class="w">   </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">brho</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bxxx</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">byyy</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bzzz</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ct</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">               </span><span class="n">rlat</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">rlon</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">rq</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">st</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">               </span><span class="n">x</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">xxx</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">yyy</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">zzz</span>
+<span class="w">   </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">rq</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">xxx</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">yyy</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">zzz</span>
 <span class="w">   </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ih</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ihmax</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">il</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">imax</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">m</span>
 
-<span class="w">   </span><span class="n">rlat</span><span class="o">=</span><span class="n">glat</span><span class="o">*</span><span class="n">umr</span>
-<span class="w">   </span><span class="n">ct</span><span class="o">=</span><span class="nb">sin</span><span class="p">(</span><span class="n">rlat</span><span class="p">)</span>
-<span class="w">   </span><span class="n">st</span><span class="o">=</span><span class="nb">cos</span><span class="p">(</span><span class="n">rlat</span><span class="p">)</span>
-<span class="w">   </span><span class="n">d</span><span class="o">=</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">aquad</span><span class="o">-</span><span class="p">(</span><span class="n">aquad</span><span class="o">-</span><span class="n">bquad</span><span class="p">)</span><span class="o">*</span><span class="n">ct</span><span class="o">*</span><span class="n">ct</span><span class="p">)</span>
-<span class="w">   </span><span class="n">rlon</span><span class="o">=</span><span class="n">glon</span><span class="o">*</span><span class="n">umr</span>
-<span class="w">   </span><span class="n">cp</span><span class="o">=</span><span class="nb">cos</span><span class="p">(</span><span class="n">rlon</span><span class="p">)</span>
-<span class="w">   </span><span class="n">sp</span><span class="o">=</span><span class="nb">sin</span><span class="p">(</span><span class="n">rlon</span><span class="p">)</span>
-<span class="w">   </span><span class="n">zzz</span><span class="o">=</span><span class="p">(</span><span class="n">alt</span><span class="o">+</span><span class="n">bquad</span><span class="o">/</span><span class="n">d</span><span class="p">)</span><span class="o">*</span><span class="n">ct</span><span class="o">/</span><span class="n">era</span>
-<span class="w">   </span><span class="n">rho</span><span class="o">=</span><span class="p">(</span><span class="n">alt</span><span class="o">+</span><span class="n">aquad</span><span class="o">/</span><span class="n">d</span><span class="p">)</span><span class="o">*</span><span class="n">st</span><span class="o">/</span><span class="n">era</span>
-<span class="w">   </span><span class="n">xxx</span><span class="o">=</span><span class="n">rho</span><span class="o">*</span><span class="n">cp</span>
-<span class="w">   </span><span class="n">yyy</span><span class="o">=</span><span class="n">rho</span><span class="o">*</span><span class="n">sp</span>
+<span class="w">   </span><span class="n">xxx</span><span class="o">=</span><span class="n">v</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">   </span><span class="n">yyy</span><span class="o">=</span><span class="n">v</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">   </span><span class="n">zzz</span><span class="o">=</span><span class="n">v</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 
 <span class="w">   </span><span class="n">rq</span><span class="o">=</span><span class="mf">1.0_wp</span><span class="o">/</span><span class="p">(</span><span class="n">xxx</span><span class="o">*</span><span class="n">xxx</span><span class="o">+</span><span class="n">yyy</span><span class="o">*</span><span class="n">yyy</span><span class="o">+</span><span class="n">zzz</span><span class="o">*</span><span class="n">zzz</span><span class="p">)</span>
 <span class="w">   </span><span class="n">me</span><span class="p">%</span><span class="n">xi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">xxx</span><span class="p">,</span><span class="n">yyy</span><span class="p">,</span><span class="n">zzz</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rq</span>
@@ -591,17 +483,12 @@ implementation in a submodule of an interface in a parent module.
 
 <span class="k">   </span><span class="n">s</span><span class="o">=</span><span class="mf">0.5_wp</span><span class="o">*</span><span class="n">me</span><span class="p">%</span><span class="n">h</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="mf">2.0_wp</span><span class="o">*</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">h</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">me</span><span class="p">%</span><span class="n">xi</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="n">me</span><span class="p">%</span><span class="n">h</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="n">me</span><span class="p">%</span><span class="n">xi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">me</span><span class="p">%</span><span class="n">h</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">me</span><span class="p">%</span><span class="n">xi</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <span class="w">   </span><span class="n">t</span><span class="o">=</span><span class="p">(</span><span class="n">rq</span><span class="o">+</span><span class="n">rq</span><span class="p">)</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">rq</span><span class="p">)</span>
-<span class="w">   </span><span class="n">bxxx</span><span class="o">=</span><span class="n">t</span><span class="o">*</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">h</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="n">xxx</span><span class="p">)</span>
-<span class="w">   </span><span class="n">byyy</span><span class="o">=</span><span class="n">t</span><span class="o">*</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">h</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="n">yyy</span><span class="p">)</span>
-<span class="w">   </span><span class="n">bzzz</span><span class="o">=</span><span class="n">t</span><span class="o">*</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">h</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="n">zzz</span><span class="p">)</span>
 
-<span class="w">   </span><span class="n">babs</span><span class="o">=</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">bxxx</span><span class="o">*</span><span class="n">bxxx</span><span class="o">+</span><span class="n">byyy</span><span class="o">*</span><span class="n">byyy</span><span class="o">+</span><span class="n">bzzz</span><span class="o">*</span><span class="n">bzzz</span><span class="p">)</span>
-<span class="w">   </span><span class="n">beast</span><span class="o">=</span><span class="n">byyy</span><span class="o">*</span><span class="n">cp</span><span class="o">-</span><span class="n">bxxx</span><span class="o">*</span><span class="n">sp</span>
-<span class="w">   </span><span class="n">brho</span><span class="o">=</span><span class="n">byyy</span><span class="o">*</span><span class="n">sp</span><span class="o">+</span><span class="n">bxxx</span><span class="o">*</span><span class="n">cp</span>
-<span class="w">   </span><span class="n">bnorth</span><span class="o">=</span><span class="n">bzzz</span><span class="o">*</span><span class="n">st</span><span class="o">-</span><span class="n">brho</span><span class="o">*</span><span class="n">ct</span>
-<span class="w">   </span><span class="n">bdown</span><span class="o">=-</span><span class="n">bzzz</span><span class="o">*</span><span class="n">ct</span><span class="o">-</span><span class="n">brho</span><span class="o">*</span><span class="n">st</span>
+<span class="w">   </span><span class="n">b</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">t</span><span class="o">*</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">h</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="n">xxx</span><span class="p">)</span>
+<span class="w">   </span><span class="n">b</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">=</span><span class="n">t</span><span class="o">*</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">h</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="n">yyy</span><span class="p">)</span>
+<span class="w">   </span><span class="n">b</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">=</span><span class="n">t</span><span class="o">*</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">h</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="n">zzz</span><span class="p">)</span>
 
-<span class="w">   </span><span class="k">end subroutine </span><span class="n">feldg</span>
+<span class="w">   </span><span class="k">end subroutine </span><span class="n">feldc</span>
 </pre></div>
 
     </section>

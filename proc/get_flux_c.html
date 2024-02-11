@@ -1,0 +1,896 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="radbelt">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>get_flux_c &ndash; radbelt</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">radbelt </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>get_flux_c
+      <small>Function</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.9% of total for procedures.">9 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/core.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/core.f90.html'>core.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/core.html'>core</a></li>
+            <li class="breadcrumb-item active" aria-current="page">get_flux_c</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/get_flux_c.html#src">get_flux_c</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  function get_flux_c(v, year, e, imname) result(flux)  
+</h2>
+    
+
+    <p>Calculate the flux of trapped particles at a specific location and time.
+  This is just a function version of the class method from <a href="../type/radbelt_type.html">radbelt_type</a>.</p>
+<div class="alert alert-info">
+<p class="alert-title h4">Note</p>
+<p>This routine is not efficient at all since it will reload all the
+      files every time it is called.</p>
+</div>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-v~6"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(3)
+            </td>
+            <td>::</td>
+            <td><strong>v</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-year~7"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>year</strong></td>
+            <td>
+                <p>decimal year for which geomagnetic field is to
+be calculated (e.g.:1995.5 for day 185 of 1995)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-e~6"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>e</strong></td>
+            <td>
+                <p>minimum energy</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-imname~5"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>imname</strong></td>
+            <td>
+                <p>which method to use:</p>
+<ul>
+<li>1 -- particle species: electrons, solar activity: min</li>
+<li>2 -- particle species: electrons, solar activity: max</li>
+<li>3 -- particle species: protons, solar activity: min</li>
+<li>4 -- particle species: protons, solar activity: max</li>
+</ul>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <h3>Return Value
+        <small>
+          <span class="anchor" id="variable-flux~5"></span>
+          real(kind=wp)
+        </small>
+      </h3>
+      <p>The flux of particles above the given energy, in units of cm^-2 s^-1.</p>
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~get_flux_c~~CallsGraph Pages: 1 -->
+<svg id="procget_flux_cCallsGraph" width="641pt" height="130pt"
+ viewBox="0.00 0.00 641.00 130.41" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~get_flux_c~~CallsGraph" class="graph" transform="scale(2.81 2.81) rotate(0) translate(4 362)">
+<title>proc~~get_flux_c~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-362 1795,-362 1795,4 -4,4"/>
+<!-- proc~get_flux_c -->
+<g id="proc~~get_flux_c~~CallsGraph_node1" class="node">
+<title>proc~get_flux_c</title>
+<polygon fill="none" stroke="black" points="97,-129 0,-129 0,-105 97,-105 97,-129"/>
+<text text-anchor="middle" x="48.5" y="-114.6" font-family="Helvetica,sans-Serif" font-size="10.50">core::get_flux_c</text>
+</g>
+<!-- none~get_flux -->
+<g id="proc~~get_flux_c~~CallsGraph_node2" class="node">
+<title>none~get_flux</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node2"><a xlink:href="../type/radbelt_type.html#boundprocedure-get_flux" xlink:title="core::radbelt_type%get_flux">
+<polygon fill="#a7506f" stroke="#a7506f" points="295,-129 133,-129 133,-105 295,-105 295,-129"/>
+<text text-anchor="middle" x="214" y="-114.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::radbelt_type%get_flux</text>
+</a>
+</g>
+</g>
+<!-- proc~get_flux_c&#45;&gt;none~get_flux -->
+<g id="proc~~get_flux_c~~CallsGraph_edge1" class="edge">
+<title>proc~get_flux_c&#45;&gt;none~get_flux</title>
+<path fill="none" stroke="#000000" d="M97.23,-117C105.38,-117 114.08,-117 122.91,-117"/>
+<polygon fill="#000000" stroke="#000000" points="122.91,-120.5 132.91,-117 122.91,-113.5 122.91,-120.5"/>
+</g>
+<!-- proc~get_flux_c_ -->
+<g id="proc~~get_flux_c~~CallsGraph_node3" class="node">
+<title>proc~get_flux_c_</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node3"><a xlink:href="../proc/get_flux_c_.html" xlink:title="core::radbelt_type%get_flux_c_">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="509.5,-150 331.5,-150 331.5,-126 509.5,-126 509.5,-150"/>
+<text text-anchor="middle" x="420.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::radbelt_type%get_flux_c_</text>
+</a>
+</g>
+</g>
+<!-- none~get_flux&#45;&gt;proc~get_flux_c_ -->
+<g id="proc~~get_flux_c~~CallsGraph_edge2" class="edge">
+<title>none~get_flux&#45;&gt;proc~get_flux_c_</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M295.24,-125.24C303.76,-126.11 312.5,-127.01 321.2,-127.91"/>
+<polygon fill="#000000" stroke="#000000" points="321.08,-131.41 331.38,-128.95 321.79,-124.45 321.08,-131.41"/>
+</g>
+<!-- proc~get_flux_g_ -->
+<g id="proc~~get_flux_c~~CallsGraph_node4" class="node">
+<title>proc~get_flux_g_</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node4"><a xlink:href="../proc/get_flux_g_.html" xlink:title="core::radbelt_type%get_flux_g_">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="510,-108 331,-108 331,-84 510,-84 510,-108"/>
+<text text-anchor="middle" x="420.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::radbelt_type%get_flux_g_</text>
+</a>
+</g>
+</g>
+<!-- none~get_flux&#45;&gt;proc~get_flux_g_ -->
+<g id="proc~~get_flux_c~~CallsGraph_edge3" class="edge">
+<title>none~get_flux&#45;&gt;proc~get_flux_g_</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M295.24,-108.76C303.6,-107.9 312.17,-107.02 320.71,-106.14"/>
+<polygon fill="#000000" stroke="#000000" points="321.11,-109.62 330.7,-105.12 320.4,-102.66 321.11,-109.62"/>
+</g>
+<!-- proc~aep8 -->
+<g id="proc~~get_flux_c~~CallsGraph_node5" class="node">
+<title>proc~aep8</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node5"><a xlink:href="../proc/aep8.html" xlink:title="trmfun_module::trm_type%aep8">
+<polygon fill="#d9534f" stroke="#d9534f" points="737.5,-87 551.5,-87 551.5,-63 737.5,-63 737.5,-87"/>
+<text text-anchor="middle" x="644.5" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">trmfun_module::trm_type%aep8</text>
+</a>
+</g>
+</g>
+<!-- proc~get_flux_c_&#45;&gt;proc~aep8 -->
+<g id="proc~~get_flux_c~~CallsGraph_edge4" class="edge">
+<title>proc~get_flux_c_&#45;&gt;proc~aep8</title>
+<path fill="none" stroke="#000000" d="M475.01,-125.96C486.59,-123.17 498.73,-120.1 510,-117 539.47,-108.88 572.21,-98.6 597.9,-90.24"/>
+<polygon fill="#000000" stroke="#000000" points="599.31,-93.46 607.73,-87.02 597.13,-86.81 599.31,-93.46"/>
+</g>
+<!-- proc~igrfc -->
+<g id="proc~~get_flux_c~~CallsGraph_node7" class="node">
+<title>proc~igrfc</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node7"><a xlink:href="../proc/igrfc.html" xlink:title="shellig_module::shellig_type%igrfc">
+<polygon fill="#d9534f" stroke="#d9534f" points="743,-230 546,-230 546,-206 743,-206 743,-230"/>
+<text text-anchor="middle" x="644.5" y="-215.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%igrfc</text>
+</a>
+</g>
+</g>
+<!-- proc~get_flux_c_&#45;&gt;proc~igrfc -->
+<g id="proc~~get_flux_c~~CallsGraph_edge5" class="edge">
+<title>proc~get_flux_c_&#45;&gt;proc~igrfc</title>
+<path fill="none" stroke="#000000" d="M455.22,-150.15C494.15,-164.18 558.27,-187.29 600.7,-202.58"/>
+<polygon fill="#000000" stroke="#000000" points="599.6,-205.9 610.19,-206 601.97,-199.31 599.6,-205.9"/>
+</g>
+<!-- proc~get_flux_g_&#45;&gt;proc~aep8 -->
+<g id="proc~~get_flux_c~~CallsGraph_edge6" class="edge">
+<title>proc~get_flux_g_&#45;&gt;proc~aep8</title>
+<path fill="none" stroke="#000000" d="M510.2,-87.61C520.34,-86.65 530.75,-85.67 541.05,-84.69"/>
+<polygon fill="#000000" stroke="#000000" points="541.68,-88.15 551.31,-83.72 541.03,-81.18 541.68,-88.15"/>
+</g>
+<!-- proc~igrf -->
+<g id="proc~~get_flux_c~~CallsGraph_node6" class="node">
+<title>proc~igrf</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node6"><a xlink:href="../proc/igrf.html" xlink:title="shellig_module::shellig_type%igrf">
+<polygon fill="#d9534f" stroke="#d9534f" points="740,-150 549,-150 549,-126 740,-126 740,-150"/>
+<text text-anchor="middle" x="644.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%igrf</text>
+</a>
+</g>
+</g>
+<!-- proc~get_flux_g_&#45;&gt;proc~igrf -->
+<g id="proc~~get_flux_c~~CallsGraph_edge7" class="edge">
+<title>proc~get_flux_g_&#45;&gt;proc~igrf</title>
+<path fill="none" stroke="#000000" d="M485.12,-108.04C511.59,-113.04 542.49,-118.89 569.93,-124.08"/>
+<polygon fill="#000000" stroke="#000000" points="569.4,-127.54 579.87,-125.96 570.7,-120.66 569.4,-127.54"/>
+</g>
+<!-- proc~get_data_file_dir -->
+<g id="proc~~get_flux_c~~CallsGraph_node12" class="node">
+<title>proc~get_data_file_dir</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node12"><a xlink:href="../proc/get_data_file_dir.html" xlink:title="trmfun_module::trm_type%get_data_file_dir">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1026,-66 779,-66 779,-42 1026,-42 1026,-66"/>
+<text text-anchor="middle" x="902.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">trmfun_module::trm_type%get_data_file_dir</text>
+</a>
+</g>
+</g>
+<!-- proc~aep8&#45;&gt;proc~get_data_file_dir -->
+<g id="proc~~get_flux_c~~CallsGraph_edge8" class="edge">
+<title>proc~aep8&#45;&gt;proc~get_data_file_dir</title>
+<path fill="none" stroke="#000000" d="M737.56,-67.45C747.66,-66.62 758.09,-65.76 768.56,-64.91"/>
+<polygon fill="#000000" stroke="#000000" points="768.93,-68.39 778.61,-64.08 768.35,-61.41 768.93,-68.39"/>
+</g>
+<!-- proc~trara1 -->
+<g id="proc~~get_flux_c~~CallsGraph_node15" class="node">
+<title>proc~trara1</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node15"><a xlink:href="../proc/trara1.html" xlink:title="trmfun_module::trm_type%trara1">
+<polygon fill="#d9534f" stroke="#d9534f" points="998.5,-24 806.5,-24 806.5,0 998.5,0 998.5,-24"/>
+<text text-anchor="middle" x="902.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">trmfun_module::trm_type%trara1</text>
+</a>
+</g>
+</g>
+<!-- proc~aep8&#45;&gt;proc~trara1 -->
+<g id="proc~~get_flux_c~~CallsGraph_edge9" class="edge">
+<title>proc~aep8&#45;&gt;proc~trara1</title>
+<path fill="none" stroke="#000000" d="M679.44,-62.92C706.21,-53.74 744.64,-41.31 779,-33 789.71,-30.41 801.01,-28.02 812.26,-25.85"/>
+<polygon fill="#000000" stroke="#000000" points="812.92,-29.29 822.1,-24 811.63,-22.41 812.92,-29.29"/>
+</g>
+<!-- proc~feldcof -->
+<g id="proc~~get_flux_c~~CallsGraph_node9" class="node">
+<title>proc~feldcof</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node9"><a xlink:href="../proc/feldcof.html" xlink:title="shellig_module::shellig_type%feldcof">
+<polygon fill="#d9534f" stroke="#d9534f" points="1007.5,-272 797.5,-272 797.5,-248 1007.5,-248 1007.5,-272"/>
+<text text-anchor="middle" x="902.5" y="-257.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldcof</text>
+</a>
+</g>
+</g>
+<!-- proc~igrf&#45;&gt;proc~feldcof -->
+<g id="proc~~get_flux_c~~CallsGraph_edge10" class="edge">
+<title>proc~igrf&#45;&gt;proc~feldcof</title>
+<path fill="none" stroke="#000000" d="M670.16,-150.1C690.78,-160.85 720.36,-177.81 743,-197 761.75,-212.9 757.62,-226.87 779,-239 782.29,-240.87 785.7,-242.58 789.21,-244.14"/>
+<polygon fill="#000000" stroke="#000000" points="788.1,-247.47 798.68,-247.95 790.71,-240.97 788.1,-247.47"/>
+</g>
+<!-- proc~feldg -->
+<g id="proc~~get_flux_c~~CallsGraph_node10" class="node">
+<title>proc~feldg</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node10"><a xlink:href="../proc/feldg.html" xlink:title="shellig_module::shellig_type%feldg">
+<polygon fill="#d9534f" stroke="#d9534f" points="1002.5,-108 802.5,-108 802.5,-84 1002.5,-84 1002.5,-108"/>
+<text text-anchor="middle" x="902.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldg</text>
+</a>
+</g>
+</g>
+<!-- proc~igrf&#45;&gt;proc~feldg -->
+<g id="proc~~get_flux_c~~CallsGraph_edge11" class="edge">
+<title>proc~igrf&#45;&gt;proc~feldg</title>
+<path fill="none" stroke="#000000" d="M718.86,-125.96C749.79,-120.89 785.96,-114.96 817.92,-109.71"/>
+<polygon fill="#000000" stroke="#000000" points="818.83,-113.11 828.13,-108.04 817.7,-106.2 818.83,-113.11"/>
+</g>
+<!-- proc~findb0 -->
+<g id="proc~~get_flux_c~~CallsGraph_node11" class="node">
+<title>proc~findb0</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node11"><a xlink:href="../proc/findb0.html" xlink:title="shellig_module::shellig_type%findb0">
+<polygon fill="#d9534f" stroke="#d9534f" points="1006,-150 799,-150 799,-126 1006,-126 1006,-150"/>
+<text text-anchor="middle" x="902.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%findb0</text>
+</a>
+</g>
+</g>
+<!-- proc~igrf&#45;&gt;proc~findb0 -->
+<g id="proc~~get_flux_c~~CallsGraph_edge12" class="edge">
+<title>proc~igrf&#45;&gt;proc~findb0</title>
+<path fill="none" stroke="#000000" d="M740.1,-138C755.9,-138 772.44,-138 788.65,-138"/>
+<polygon fill="#000000" stroke="#000000" points="788.69,-141.5 798.69,-138 788.69,-134.5 788.69,-141.5"/>
+</g>
+<!-- proc~shellg -->
+<g id="proc~~get_flux_c~~CallsGraph_node14" class="node">
+<title>proc~shellg</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node14"><a xlink:href="../proc/shellg.html" xlink:title="shellig_module::shellig_type%shellg">
+<polygon fill="#d9534f" stroke="#d9534f" points="1295,-190 1090,-190 1090,-166 1295,-166 1295,-190"/>
+<text text-anchor="middle" x="1192.5" y="-175.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%shellg</text>
+</a>
+</g>
+</g>
+<!-- proc~igrf&#45;&gt;proc~shellg -->
+<g id="proc~~get_flux_c~~CallsGraph_edge13" class="edge">
+<title>proc~igrf&#45;&gt;proc~shellg</title>
+<path fill="none" stroke="#000000" d="M712.54,-150.02C733.74,-153.43 757.29,-156.8 779,-159 880.51,-169.29 996.63,-174.01 1079.76,-176.17"/>
+<polygon fill="#000000" stroke="#000000" points="1079.9,-179.68 1089.98,-176.43 1080.07,-172.68 1079.9,-179.68"/>
+</g>
+<!-- proc~feldc -->
+<g id="proc~~get_flux_c~~CallsGraph_node8" class="node">
+<title>proc~feldc</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node8"><a xlink:href="../proc/feldc.html" xlink:title="shellig_module::shellig_type%feldc">
+<polygon fill="#d9534f" stroke="#d9534f" points="1002,-314 803,-314 803,-290 1002,-290 1002,-314"/>
+<text text-anchor="middle" x="902.5" y="-299.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldc</text>
+</a>
+</g>
+</g>
+<!-- proc~igrfc&#45;&gt;proc~feldc -->
+<g id="proc~~get_flux_c~~CallsGraph_edge14" class="edge">
+<title>proc~igrfc&#45;&gt;proc~feldc</title>
+<path fill="none" stroke="#000000" d="M666.51,-230.12C692.21,-244.42 737.45,-267.9 779,-281 786.99,-283.52 795.37,-285.75 803.84,-287.74"/>
+<polygon fill="#000000" stroke="#000000" points="803.29,-291.2 813.81,-289.95 804.81,-284.37 803.29,-291.2"/>
+</g>
+<!-- proc~igrfc&#45;&gt;proc~feldcof -->
+<g id="proc~~get_flux_c~~CallsGraph_edge15" class="edge">
+<title>proc~igrfc&#45;&gt;proc~feldcof</title>
+<path fill="none" stroke="#000000" d="M718.86,-230.04C749.79,-235.11 785.96,-241.04 817.92,-246.29"/>
+<polygon fill="#000000" stroke="#000000" points="817.7,-249.8 828.13,-247.96 818.83,-242.89 817.7,-249.8"/>
+</g>
+<!-- proc~igrfc&#45;&gt;proc~findb0 -->
+<g id="proc~~get_flux_c~~CallsGraph_edge16" class="edge">
+<title>proc~igrfc&#45;&gt;proc~findb0</title>
+<path fill="none" stroke="#000000" d="M684.1,-205.94C729.32,-191.81 804.26,-168.39 853.26,-153.07"/>
+<polygon fill="#000000" stroke="#000000" points="854.5,-156.35 863,-150.03 852.41,-149.67 854.5,-156.35"/>
+</g>
+<!-- proc~shellc -->
+<g id="proc~~get_flux_c~~CallsGraph_node13" class="node">
+<title>proc~shellc</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node13"><a xlink:href="../proc/shellc.html" xlink:title="shellig_module::shellig_type%shellc">
+<polygon fill="#d9534f" stroke="#d9534f" points="1004.5,-230 800.5,-230 800.5,-206 1004.5,-206 1004.5,-230"/>
+<text text-anchor="middle" x="902.5" y="-215.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%shellc</text>
+</a>
+</g>
+</g>
+<!-- proc~igrfc&#45;&gt;proc~shellc -->
+<g id="proc~~get_flux_c~~CallsGraph_edge17" class="edge">
+<title>proc~igrfc&#45;&gt;proc~shellc</title>
+<path fill="none" stroke="#000000" d="M743.01,-218C758.43,-218 774.47,-218 790.17,-218"/>
+<polygon fill="#000000" stroke="#000000" points="790.43,-221.5 800.43,-218 790.43,-214.5 790.43,-221.5"/>
+</g>
+<!-- proc~extrashc -->
+<g id="proc~~get_flux_c~~CallsGraph_node16" class="node">
+<title>proc~extrashc</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node16"><a xlink:href="../proc/extrashc.html" xlink:title="shellig_module::shellig_type%extrashc">
+<polygon fill="#d9534f" stroke="#d9534f" points="1301.5,-358 1083.5,-358 1083.5,-334 1301.5,-334 1301.5,-358"/>
+<text text-anchor="middle" x="1192.5" y="-343.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%extrashc</text>
+</a>
+</g>
+</g>
+<!-- proc~feldcof&#45;&gt;proc~extrashc -->
+<g id="proc~~get_flux_c~~CallsGraph_edge18" class="edge">
+<title>proc~feldcof&#45;&gt;proc~extrashc</title>
+<path fill="none" stroke="#000000" d="M1007.03,-272.12C1013.64,-274.59 1020.03,-277.52 1026,-281 1047.83,-293.72 1040.11,-312.38 1062,-325 1065.77,-327.18 1069.71,-329.14 1073.75,-330.92"/>
+<polygon fill="#000000" stroke="#000000" points="1072.8,-334.31 1083.38,-334.74 1075.38,-327.8 1072.8,-334.31"/>
+</g>
+<!-- proc~get_data_file_dir~2 -->
+<g id="proc~~get_flux_c~~CallsGraph_node17" class="node">
+<title>proc~get_data_file_dir~2</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node17"><a xlink:href="../proc/get_data_file_dir~2.html" xlink:title="shellig_module::shellig_type%get_data_file_dir">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1323,-316 1062,-316 1062,-292 1323,-292 1323,-316"/>
+<text text-anchor="middle" x="1192.5" y="-301.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%get_data_file_dir</text>
+</a>
+</g>
+</g>
+<!-- proc~feldcof&#45;&gt;proc~get_data_file_dir~2 -->
+<g id="proc~~get_flux_c~~CallsGraph_edge19" class="edge">
+<title>proc~feldcof&#45;&gt;proc~get_data_file_dir~2</title>
+<path fill="none" stroke="#000000" d="M982.2,-272.02C1019.5,-277.72 1064.22,-284.55 1102.73,-290.44"/>
+<polygon fill="#000000" stroke="#000000" points="1102.48,-293.94 1112.9,-291.99 1103.54,-287.02 1102.48,-293.94"/>
+</g>
+<!-- proc~getshc -->
+<g id="proc~~get_flux_c~~CallsGraph_node18" class="node">
+<title>proc~getshc</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node18"><a xlink:href="../proc/getshc.html" xlink:title="shellig_module::shellig_type%getshc">
+<polygon fill="#d9534f" stroke="#d9534f" points="1296.5,-274 1088.5,-274 1088.5,-250 1296.5,-250 1296.5,-274"/>
+<text text-anchor="middle" x="1192.5" y="-259.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%getshc</text>
+</a>
+</g>
+</g>
+<!-- proc~feldcof&#45;&gt;proc~getshc -->
+<g id="proc~~get_flux_c~~CallsGraph_edge20" class="edge">
+<title>proc~feldcof&#45;&gt;proc~getshc</title>
+<path fill="none" stroke="#000000" d="M1007.88,-260.72C1030.74,-260.88 1055.04,-261.05 1078.23,-261.21"/>
+<polygon fill="#000000" stroke="#000000" points="1078.41,-264.71 1088.44,-261.28 1078.46,-257.71 1078.41,-264.71"/>
+</g>
+<!-- proc~intershc -->
+<g id="proc~~get_flux_c~~CallsGraph_node19" class="node">
+<title>proc~intershc</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node19"><a xlink:href="../proc/intershc.html" xlink:title="shellig_module::shellig_type%intershc">
+<polygon fill="#d9534f" stroke="#d9534f" points="1300.5,-232 1084.5,-232 1084.5,-208 1300.5,-208 1300.5,-232"/>
+<text text-anchor="middle" x="1192.5" y="-217.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%intershc</text>
+</a>
+</g>
+</g>
+<!-- proc~feldcof&#45;&gt;proc~intershc -->
+<g id="proc~~get_flux_c~~CallsGraph_edge21" class="edge">
+<title>proc~feldcof&#45;&gt;proc~intershc</title>
+<path fill="none" stroke="#000000" d="M989.91,-248C1022.94,-243.41 1060.8,-238.15 1094.73,-233.44"/>
+<polygon fill="#000000" stroke="#000000" points="1095.23,-236.9 1104.65,-232.06 1094.27,-229.97 1095.23,-236.9"/>
+</g>
+<!-- proc~stoer -->
+<g id="proc~~get_flux_c~~CallsGraph_node20" class="node">
+<title>proc~stoer</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node20"><a xlink:href="../proc/stoer.html" xlink:title="shellig_module::shellig_type%stoer">
+<polygon fill="#d9534f" stroke="#d9534f" points="1559,-170 1359,-170 1359,-146 1559,-146 1559,-170"/>
+<text text-anchor="middle" x="1459" y="-155.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%stoer</text>
+</a>
+</g>
+</g>
+<!-- proc~findb0&#45;&gt;proc~stoer -->
+<g id="proc~~get_flux_c~~CallsGraph_edge22" class="edge">
+<title>proc~findb0&#45;&gt;proc~stoer</title>
+<path fill="none" stroke="#000000" d="M1006.17,-141.7C1103.48,-145.21 1249.16,-150.47 1348.62,-154.05"/>
+<polygon fill="#000000" stroke="#000000" points="1348.58,-157.56 1358.7,-154.42 1348.83,-150.56 1348.58,-157.56"/>
+</g>
+<!-- proc~shellc&#45;&gt;proc~shellg -->
+<g id="proc~~get_flux_c~~CallsGraph_edge23" class="edge">
+<title>proc~shellc&#45;&gt;proc~shellg</title>
+<path fill="none" stroke="#000000" d="M989.91,-206C1022.94,-201.41 1060.8,-196.15 1094.73,-191.44"/>
+<polygon fill="#000000" stroke="#000000" points="1095.23,-194.9 1104.65,-190.06 1094.27,-187.97 1095.23,-194.9"/>
+</g>
+<!-- proc~shellg&#45;&gt;proc~stoer -->
+<g id="proc~~get_flux_c~~CallsGraph_edge24" class="edge">
+<title>proc~shellg&#45;&gt;proc~stoer</title>
+<path fill="none" stroke="#000000" d="M1295.01,-170.32C1312.54,-169 1330.84,-167.61 1348.58,-166.27"/>
+<polygon fill="#000000" stroke="#000000" points="1349.24,-169.73 1358.95,-165.49 1348.71,-162.75 1349.24,-169.73"/>
+</g>
+<!-- proc~trara2 -->
+<g id="proc~~get_flux_c~~CallsGraph_node21" class="node">
+<title>proc~trara2</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node21"><a xlink:href="../proc/trara2.html" xlink:title="trmfun_module::trm_type%trara2">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1288.5,-24 1096.5,-24 1096.5,0 1288.5,0 1288.5,-24"/>
+<text text-anchor="middle" x="1192.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">trmfun_module::trm_type%trara2</text>
+</a>
+</g>
+</g>
+<!-- proc~trara1&#45;&gt;proc~trara2 -->
+<g id="proc~~get_flux_c~~CallsGraph_edge25" class="edge">
+<title>proc~trara1&#45;&gt;proc~trara2</title>
+<path fill="none" stroke="#000000" d="M998.6,-12C1026.74,-12 1057.71,-12 1086.44,-12"/>
+<polygon fill="#000000" stroke="#000000" points="1086.5,-15.5 1096.5,-12 1086.5,-8.5 1086.5,-15.5"/>
+</g>
+<!-- proc~feldi -->
+<g id="proc~~get_flux_c~~CallsGraph_node22" class="node">
+<title>proc~feldi</title>
+<g id="a_proc~~get_flux_c~~CallsGraph_node22"><a xlink:href="../proc/feldi.html" xlink:title="shellig_module::shellig_type%feldi">
+<polygon fill="#d9534f" stroke="#d9534f" points="1791,-170 1595,-170 1595,-146 1791,-146 1791,-170"/>
+<text text-anchor="middle" x="1693" y="-155.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldi</text>
+</a>
+</g>
+</g>
+<!-- proc~stoer&#45;&gt;proc~feldi -->
+<g id="proc~~get_flux_c~~CallsGraph_edge26" class="edge">
+<title>proc~stoer&#45;&gt;proc~feldi</title>
+<path fill="none" stroke="#000000" d="M1559.06,-158C1567.56,-158 1576.18,-158 1584.74,-158"/>
+<polygon fill="#000000" stroke="#000000" points="1584.75,-161.5 1594.75,-158 1584.75,-154.5 1584.75,-161.5"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocget_flux_cCallsGraph = svgPanZoom('#procget_flux_cCallsGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~get_flux_c~~CalledByGraph Pages: 1 -->
+<svg id="procget_flux_cCalledByGraph" width="226pt" height="32pt"
+ viewBox="0.00 0.00 226.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~get_flux_c~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>proc~~get_flux_c~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 222,-28 222,4 -4,4"/>
+<!-- proc~get_flux_c -->
+<g id="proc~~get_flux_c~~CalledByGraph_node1" class="node">
+<title>proc~get_flux_c</title>
+<polygon fill="none" stroke="black" points="218,-24 121,-24 121,0 218,0 218,-24"/>
+<text text-anchor="middle" x="169.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">core::get_flux_c</text>
+</g>
+<!-- interface~get_flux -->
+<g id="proc~~get_flux_c~~CalledByGraph_node2" class="node">
+<title>interface~get_flux</title>
+<g id="a_proc~~get_flux_c~~CalledByGraph_node2"><a xlink:href="../interface/get_flux.html" xlink:title="core::get_flux">
+<polygon fill="#a7506f" stroke="#a7506f" points="85,-24 0,-24 0,0 85,0 85,-24"/>
+<text text-anchor="middle" x="42.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::get_flux</text>
+</a>
+</g>
+</g>
+<!-- interface~get_flux&#45;&gt;proc~get_flux_c -->
+<g id="proc~~get_flux_c~~CalledByGraph_edge1" class="edge">
+<title>interface~get_flux&#45;&gt;proc~get_flux_c</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M85.12,-12C93.2,-12 101.81,-12 110.3,-12"/>
+<polygon fill="#000000" stroke="#000000" points="110.57,-15.5 120.57,-12 110.57,-8.5 110.57,-15.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">function </span><span class="n">get_flux_c</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">imname</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">flux</span><span class="p">)</span>
+
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="c">!! decimal year for which geomagnetic field is to</span>
+<span class="w">                                  </span><span class="c">!! be calculated (e.g.:1995.5 for day 185 of 1995)</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="c">!! minimum energy</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">imname</span><span class="w"> </span><span class="c">!! which method to use:</span>
+<span class="w">                                   </span><span class="c">!!</span>
+<span class="w">                                   </span><span class="c">!! * 1 -- particle species: electrons, solar activity: min</span>
+<span class="w">                                   </span><span class="c">!! * 2 -- particle species: electrons, solar activity: max</span>
+<span class="w">                                   </span><span class="c">!! * 3 -- particle species: protons, solar activity: min</span>
+<span class="w">                                   </span><span class="c">!! * 4 -- particle species: protons, solar activity: max</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">flux</span><span class="w"> </span><span class="c">!! The flux of particles above the given energy, in units of cm^-2 s^-1.</span>
+
+<span class="w">      </span><span class="k">type</span><span class="p">(</span><span class="n">radbelt_type</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">radbelt</span>
+
+<span class="w">      </span><span class="n">flux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">radbelt</span><span class="p">%</span><span class="n">get_flux</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">imname</span><span class="p">)</span>
+
+<span class="w">   </span><span class="k">end function </span><span class="n">get_flux_c</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col"><p>radbelt was developed by Jacob Williams<br>&copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>

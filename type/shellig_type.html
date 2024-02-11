@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title="<p>52.9% of total for derived types.</p>Including implementation: 597 statements, 64.3% of total for derived types.">27 statements</a>
+                 title="<p>51.9% of total for derived types.</p>Including implementation: 706 statements, 67.2% of total for derived types.">27 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -114,7 +114,7 @@
       </a>
       <div id="vars-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../type/shellig_type.html#variable-igrf_dir~2">igrf_dir</a>
+            <a class="list-group-item" href="../type/shellig_type.html#variable-igrf_dir">igrf_dir</a>
             <a class="list-group-item" href="../type/shellig_type.html#variable-sp">sp</a>
             <a class="list-group-item" href="../type/shellig_type.html#variable-xi">xi</a>
             <a class="list-group-item" href="../type/shellig_type.html#variable-h">h</a>
@@ -155,11 +155,15 @@
       </a>
       <div id="boundprocs-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-igrf~2">igrf</a>
+            <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-igrfc">igrfc</a>
+            <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-igrf">igrf</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-feldcof">feldcof</a>
+            <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-feldc">feldc</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-feldg">feldg</a>
+            <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-shellc">shellc</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-shellg">shellg</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-findb0">findb0</a>
+            <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-feldi">feldi</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-extrashc">extrashc</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-intershc">intershc</a>
             <a class="list-group-item" href="../type/shellig_type.html#boundprocedure-getshc">getshc</a>
@@ -293,7 +297,7 @@ said component(s).
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-igrf_dir~2"></span>
+              <span class="anchor" id="variable-igrf_dir"></span>
               character(len=:),
             </td>
               <td>private,</td>
@@ -559,7 +563,125 @@ said component(s).
           <div class="row">
               <div class="card mt-3">
     <div class="card-header codesum">
-      <span class="anchor" id="boundprocedure-igrf~2"></span>
+      <span class="anchor" id="boundprocedure-igrfc"></span>
+      <h3>
+          procedure, public ::
+  <strong>igrfc</strong>
+        
+      </h3>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+                  <h3>
+    private  subroutine <a href='../proc/igrfc.html'>igrfc</a>(me, v, year, xl, bbx)  
+</h3>
+    
+
+  <p>Alternate version of <a href="../proc/igrf.html">igrf</a> for cartesian coordinates.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(3)
+            </td>
+            <td>::</td>
+            <td><strong>v</strong></td>
+            <td>
+<p>cartesian coordinates in earth radii (6371.2 km)
+x-axis pointing to equator at 0 longitude
+y-axis pointing to equator at 90 long.
+z-axis pointing to north pole</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>year</strong></td>
+            <td>
+<p>decimal year for which geomagnetic field is to
+be calculated (e.g.:1995.5 for day 185 of 1995)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>xl</strong></td>
+            <td>
+<p>l-value</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>bbx</strong></td>
+            <td>
+<p>b_total / b_equatorial ratio</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        </li>
+    </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-igrf"></span>
       <h3>
           procedure, public ::
   <strong>igrf</strong>
@@ -790,6 +912,93 @@ to earth's radius) at the time (year)</p>
           <div class="row">
               <div class="card mt-3">
     <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-feldc"></span>
+      <h3>
+          procedure, public ::
+  <strong>feldc</strong>
+        
+      </h3>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+                  <h3>
+    private  subroutine <a href='../proc/feldc.html'>feldc</a>(me, v, b)  
+</h3>
+    
+
+  <p>Alternate version of <a href="../proc/feldg.html">feldg</a> to be used with cartesian coordinates</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(3)
+            </td>
+            <td>::</td>
+            <td><strong>v</strong></td>
+            <td>
+<p>cartesian coordinates in earth radii (6371.2 km)
+x-axis pointing to equator at 0 longitude
+y-axis pointing to equator at 90 long.
+z-axis pointing to north pole</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>b</strong>(3)</td>
+            <td>
+<p>field components</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        </li>
+    </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
       <span class="anchor" id="boundprocedure-feldg"></span>
       <h3>
           procedure, public ::
@@ -958,6 +1167,138 @@ and downward.</p>
           <div class="row">
               <div class="card mt-3">
     <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-shellc"></span>
+      <h3>
+          procedure, public ::
+  <strong>shellc</strong>
+        
+      </h3>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+                  <h3>
+    private  subroutine <a href='../proc/shellc.html'>shellc</a>(me, v, dimo, fl, icode, b0)  
+</h3>
+    
+
+  <p>Wrapper to <a href="../proc/shellg.html">shellg</a> to be used with cartesian coordinates.</p><a href="../proc/shellc.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(3)
+            </td>
+            <td>::</td>
+            <td><strong>v</strong></td>
+            <td>
+<p>cartesian coordinates in earth radii (6371.2 km)
+* x-axis pointing to equator at 0 longitude
+* y-axis pointing to equator at 90 long.
+* z-axis pointing to north pole</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dimo</strong></td>
+            <td>
+<p>dipol moment in gauss (normalized to earth radius)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>fl</strong></td>
+            <td>
+<p>l-value</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>icode</strong></td>
+            <td>
+<a href="../proc/shellc.html#variable-icode~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>b0</strong></td>
+            <td>
+<p>magnetic field strength in gauss</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        </li>
+    </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
       <span class="anchor" id="boundprocedure-shellg"></span>
       <h3>
           procedure, public ::
@@ -968,7 +1309,7 @@ and downward.</p>
     <ul class="list-group">
         <li class="list-group-item">
                   <h3>
-    private  subroutine <a href='../proc/shellg.html'>shellg</a>(me, glat, glon, alt, dimo, fl, icode, b0)  
+    private  subroutine <a href='../proc/shellg.html'>shellg</a>(me, glat, glon, alt, dimo, fl, icode, b0, v)  
 </h3>
     
 
@@ -1088,7 +1429,7 @@ and downward.</p>
             <td>::</td>
             <td><strong>icode</strong></td>
             <td>
-<a href="../proc/shellg.html#variable-icode~2" class="pull-right"><emph>Read more&hellip;</emph></a>
+<a href="../proc/shellg.html#variable-icode~4" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
@@ -1104,6 +1445,21 @@ and downward.</p>
             <td><strong>b0</strong></td>
             <td>
 <p>magnetic field strength in gauss</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td>optional,</td>            <td>
+              dimension(3)
+            </td>
+            <td>::</td>
+            <td><strong>v</strong></td>
+            <td>
+<p>cartesian coordinates in earth radii (6371.2 km)</p><a href="../proc/shellg.html#variable-v~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -1231,6 +1587,60 @@ and downward.</p>
             </td>
             <td>::</td>
             <td><strong>rr0</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        </li>
+    </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-feldi"></span>
+      <h3>
+          procedure, private ::
+  <strong>feldi</strong>
+        
+      </h3>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+                  <h3>
+    private  subroutine <a href='../proc/feldi.html'>feldi</a>(me)  
+</h3>
+    
+
+  <p>Used for <code>l</code> computation.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
             <td>
 
             </td>
@@ -1759,8 +2169,8 @@ harmonic coefficients</p>
 </h3>
     
 
-  <p>subroutine used for field line tracing in <a href="../proc/shellg.html">shellg</a>
-calls entry point <a>feldi</a> in geomagnetic field subroutine <a href="../proc/feldg.html">feldg</a></p>
+  <p>subroutine used for field line tracing in <a href="../proc/shellg.html">shellg</a>.
+calls entry point <a href="../proc/feldi.html">feldi</a> in geomagnetic field subroutine <a href="../proc/feldg.html">feldg</a></p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2006,13 +2416,13 @@ calls entry point <a>feldi</a> in geomagnetic field subroutine <a href="../proc/
 <span class="w">         </span><span class="k">contains</span>
 <span class="k">         private</span>
 
-<span class="k">         procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">igrf</span>
+<span class="k">         procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">igrf</span><span class="p">,</span><span class="w"> </span><span class="n">igrfc</span>
 
 <span class="w">         </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">feldcof</span>
-<span class="w">         </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">feldg</span>
-<span class="w">         </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">shellg</span>
+<span class="w">         </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">feldg</span><span class="p">,</span><span class="w"> </span><span class="n">feldc</span>
+<span class="w">         </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">shellg</span><span class="p">,</span><span class="w"> </span><span class="n">shellc</span>
 <span class="w">         </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">findb0</span>
-<span class="w">         </span><span class="k">procedure</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">stoer</span><span class="p">,</span><span class="w"> </span><span class="n">getshc</span><span class="p">,</span><span class="w"> </span><span class="n">intershc</span><span class="p">,</span><span class="w"> </span><span class="n">extrashc</span>
+<span class="w">         </span><span class="k">procedure</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">stoer</span><span class="p">,</span><span class="w"> </span><span class="n">getshc</span><span class="p">,</span><span class="w"> </span><span class="n">intershc</span><span class="p">,</span><span class="w"> </span><span class="n">extrashc</span><span class="p">,</span><span class="w"> </span><span class="n">feldi</span>
 <span class="w">         </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">set_data_file_dir</span><span class="p">,</span><span class="w"> </span><span class="n">get_data_file_dir</span>
 
 <span class="w">      </span><span class="k">end type </span><span class="n">shellig_type</span>

@@ -10,7 +10,7 @@
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
 
-    <title>igrf &ndash; radbelt</title>
+    <title>igrfc &ndash; radbelt</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -62,7 +62,7 @@
 
     <div class="container">
   <div class="row">
-    <h1>igrf
+    <h1>igrfc
       <small>Subroutine</small>
       
     </h1>
@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title=" 2.7% of total for procedures.">28 statements</a>
+                 title=" 2.6% of total for procedures.">27 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -88,7 +88,7 @@
           <ol class="breadcrumb justify-content-end mb-0">
                 <li class="breadcrumb-item"><a href='../sourcefile/shellig.f90.html'>shellig.f90</a></li>
                 <li class="breadcrumb-item"><a href='../module/shellig_module.html'>shellig_module</a></li>
-            <li class="breadcrumb-item active" aria-current="page">igrf</li>
+            <li class="breadcrumb-item active" aria-current="page">igrfc</li>
           </ol>
         </nav>
       </div>
@@ -129,7 +129,7 @@
     <div class="card card-primary">
       <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
       <div class="list-group">
-        <a class="list-group-item" href="../proc/igrf.html#src">igrf</a>
+        <a class="list-group-item" href="../proc/igrfc.html#src">igrfc</a>
       </div>
     </div>
 
@@ -139,11 +139,11 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>private  subroutine igrf(me, lon, lat, height, year, xl, bbx)  
+    <h2>private  subroutine igrfc(me, v, year, xl, bbx)  
 </h2>
     
 
-    <p>Wrapper for IGRF functions.</p>
+    <p>Alternate version of <a href="../proc/igrf.html">igrf</a> for cartesian coordinates.</p>
 
     <h3>Type Bound</h3>
     <p><a href='../type/shellig_type.html'>shellig_type</a></p>
@@ -161,7 +161,7 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~8"></span>
+              <span class="anchor" id="variable-me~9"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -176,52 +176,25 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lon"></span>
+              <span class="anchor" id="variable-v"></span>
               real(kind=wp),
             </td>
-<td>intent(in)</td>
+<td>intent(in),</td>
               <td></td>            <td>
-              
+              dimension(3)
             </td>
             <td>::</td>
-            <td><strong>lon</strong></td>
+            <td><strong>v</strong></td>
             <td>
-                <p>geodetic longitude in degrees (east)</p>
+                <p>cartesian coordinates in earth radii (6371.2 km)
+x-axis pointing to equator at 0 longitude
+y-axis pointing to equator at 90 long.
+z-axis pointing to north pole</p>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lat"></span>
-              real(kind=wp),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>lat</strong></td>
-            <td>
-                <p>geodetic latitude in degrees (north)</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-height"></span>
-              real(kind=wp),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>height</strong></td>
-            <td>
-                <p>altitude in km above sea level</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-year"></span>
+              <span class="anchor" id="variable-year~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -237,7 +210,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-xl"></span>
+              <span class="anchor" id="variable-xl~2"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -252,7 +225,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-bbx"></span>
+              <span class="anchor" id="variable-bbx~2"></span>
               real(kind=wp),
             </td>
 <td>intent(out)</td>
@@ -279,178 +252,193 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
-<!-- Title: proc~~igrf~~CallsGraph Pages: 1 -->
-<svg id="procigrfCallsGraph" width="641pt" height="145pt"
- viewBox="0.00 0.00 641.00 145.44" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~igrf~~CallsGraph" class="graph" transform="scale(1.52 1.52) rotate(0) translate(4 217)">
-<title>proc~~igrf~~CallsGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-217 970,-217 970,4 -4,4"/>
-<!-- proc~igrf -->
-<g id="proc~~igrf~~CallsGraph_node1" class="node">
-<title>proc~igrf</title>
-<polygon fill="none" stroke="black" points="191,-87 0,-87 0,-63 191,-63 191,-87"/>
-<text text-anchor="middle" x="95.5" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50">shellig_module::shellig_type%igrf</text>
+<!-- Title: proc~~igrfc~~CallsGraph Pages: 1 -->
+<svg id="procigrfcCallsGraph" width="641pt" height="125pt"
+ viewBox="0.00 0.00 641.00 125.46" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~igrfc~~CallsGraph" class="graph" transform="scale(1.9 1.9) rotate(0) translate(4 234)">
+<title>proc~~igrfc~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-234 1212,-234 1212,4 -4,4"/>
+<!-- proc~igrfc -->
+<g id="proc~~igrfc~~CallsGraph_node1" class="node">
+<title>proc~igrfc</title>
+<polygon fill="none" stroke="black" points="197,-115 0,-115 0,-91 197,-91 197,-115"/>
+<text text-anchor="middle" x="98.5" y="-100.6" font-family="Helvetica,sans-Serif" font-size="10.50">shellig_module::shellig_type%igrfc</text>
+</g>
+<!-- proc~feldc -->
+<g id="proc~~igrfc~~CallsGraph_node2" class="node">
+<title>proc~feldc</title>
+<g id="a_proc~~igrfc~~CallsGraph_node2"><a xlink:href="../proc/feldc.html" xlink:title="shellig_module::shellig_type%feldc">
+<polygon fill="#d9534f" stroke="#d9534f" points="437.5,-183 238.5,-183 238.5,-159 437.5,-159 437.5,-183"/>
+<text text-anchor="middle" x="338" y="-168.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldc</text>
+</a>
+</g>
+</g>
+<!-- proc~igrfc&#45;&gt;proc~feldc -->
+<g id="proc~~igrfc~~CallsGraph_edge1" class="edge">
+<title>proc~igrfc&#45;&gt;proc~feldc</title>
+<path fill="none" stroke="#000000" d="M129.87,-115.06C156.68,-125.37 196.99,-140.08 233,-150 241.8,-152.43 251.1,-154.7 260.36,-156.79"/>
+<polygon fill="#000000" stroke="#000000" points="259.86,-160.26 270.38,-158.98 261.36,-153.42 259.86,-160.26"/>
 </g>
 <!-- proc~feldcof -->
-<g id="proc~~igrf~~CallsGraph_node2" class="node">
+<g id="proc~~igrfc~~CallsGraph_node3" class="node">
 <title>proc~feldcof</title>
-<g id="a_proc~~igrf~~CallsGraph_node2"><a xlink:href="../proc/feldcof.html" xlink:title="shellig_module::shellig_type%feldcof">
-<polygon fill="#d9534f" stroke="#d9534f" points="437,-150 227,-150 227,-126 437,-126 437,-150"/>
-<text text-anchor="middle" x="332" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldcof</text>
+<g id="a_proc~~igrfc~~CallsGraph_node3"><a xlink:href="../proc/feldcof.html" xlink:title="shellig_module::shellig_type%feldcof">
+<polygon fill="#d9534f" stroke="#d9534f" points="443,-141 233,-141 233,-117 443,-117 443,-141"/>
+<text text-anchor="middle" x="338" y="-126.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldcof</text>
 </a>
 </g>
 </g>
-<!-- proc~igrf&#45;&gt;proc~feldcof -->
-<g id="proc~~igrf~~CallsGraph_edge1" class="edge">
-<title>proc~igrf&#45;&gt;proc~feldcof</title>
-<path fill="none" stroke="#000000" d="M130.26,-87.02C156.43,-96.05 193.72,-108.31 227,-117 236.19,-119.4 245.9,-121.68 255.55,-123.8"/>
-<polygon fill="#000000" stroke="#000000" points="255.04,-127.27 265.56,-125.95 256.51,-120.43 255.04,-127.27"/>
-</g>
-<!-- proc~feldg -->
-<g id="proc~~igrf~~CallsGraph_node3" class="node">
-<title>proc~feldg</title>
-<g id="a_proc~~igrf~~CallsGraph_node3"><a xlink:href="../proc/feldg.html" xlink:title="shellig_module::shellig_type%feldg">
-<polygon fill="#d9534f" stroke="#d9534f" points="432,-108 232,-108 232,-84 432,-84 432,-108"/>
-<text text-anchor="middle" x="332" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldg</text>
-</a>
-</g>
-</g>
-<!-- proc~igrf&#45;&gt;proc~feldg -->
-<g id="proc~~igrf~~CallsGraph_edge2" class="edge">
-<title>proc~igrf&#45;&gt;proc~feldg</title>
-<path fill="none" stroke="#000000" d="M191.2,-83.48C201.21,-84.38 211.45,-85.29 221.61,-86.2"/>
-<polygon fill="#000000" stroke="#000000" points="221.46,-89.7 231.73,-87.11 222.08,-82.73 221.46,-89.7"/>
+<!-- proc~igrfc&#45;&gt;proc~feldcof -->
+<g id="proc~~igrfc~~CallsGraph_edge2" class="edge">
+<title>proc~igrfc&#45;&gt;proc~feldcof</title>
+<path fill="none" stroke="#000000" d="M197.13,-113.69C205.59,-114.61 214.2,-115.56 222.77,-116.5"/>
+<polygon fill="#000000" stroke="#000000" points="222.49,-119.99 232.82,-117.59 223.26,-113.03 222.49,-119.99"/>
 </g>
 <!-- proc~findb0 -->
-<g id="proc~~igrf~~CallsGraph_node4" class="node">
+<g id="proc~~igrfc~~CallsGraph_node4" class="node">
 <title>proc~findb0</title>
-<g id="a_proc~~igrf~~CallsGraph_node4"><a xlink:href="../proc/findb0.html" xlink:title="shellig_module::shellig_type%findb0">
-<polygon fill="#d9534f" stroke="#d9534f" points="435.5,-66 228.5,-66 228.5,-42 435.5,-42 435.5,-66"/>
-<text text-anchor="middle" x="332" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%findb0</text>
+<g id="a_proc~~igrfc~~CallsGraph_node4"><a xlink:href="../proc/findb0.html" xlink:title="shellig_module::shellig_type%findb0">
+<polygon fill="#d9534f" stroke="#d9534f" points="441.5,-94 234.5,-94 234.5,-70 441.5,-70 441.5,-94"/>
+<text text-anchor="middle" x="338" y="-79.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%findb0</text>
 </a>
 </g>
 </g>
-<!-- proc~igrf&#45;&gt;proc~findb0 -->
-<g id="proc~~igrf~~CallsGraph_edge3" class="edge">
-<title>proc~igrf&#45;&gt;proc~findb0</title>
-<path fill="none" stroke="#000000" d="M191.2,-66.52C200.07,-65.73 209.12,-64.92 218.13,-64.11"/>
-<polygon fill="#000000" stroke="#000000" points="218.62,-67.58 228.27,-63.2 218,-60.61 218.62,-67.58"/>
+<!-- proc~igrfc&#45;&gt;proc~findb0 -->
+<g id="proc~~igrfc~~CallsGraph_edge3" class="edge">
+<title>proc~igrfc&#45;&gt;proc~findb0</title>
+<path fill="none" stroke="#000000" d="M197.13,-94.37C206.05,-93.58 215.14,-92.77 224.18,-91.98"/>
+<polygon fill="#000000" stroke="#000000" points="224.71,-95.44 234.36,-91.08 224.09,-88.47 224.71,-95.44"/>
 </g>
-<!-- proc~shellg -->
-<g id="proc~~igrf~~CallsGraph_node5" class="node">
-<title>proc~shellg</title>
-<g id="a_proc~~igrf~~CallsGraph_node5"><a xlink:href="../proc/shellg.html" xlink:title="shellig_module::shellig_type%shellg">
-<polygon fill="#d9534f" stroke="#d9534f" points="434.5,-24 229.5,-24 229.5,0 434.5,0 434.5,-24"/>
-<text text-anchor="middle" x="332" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%shellg</text>
+<!-- proc~shellc -->
+<g id="proc~~igrfc~~CallsGraph_node5" class="node">
+<title>proc~shellc</title>
+<g id="a_proc~~igrfc~~CallsGraph_node5"><a xlink:href="../proc/shellc.html" xlink:title="shellig_module::shellig_type%shellc">
+<polygon fill="#d9534f" stroke="#d9534f" points="440,-43 236,-43 236,-19 440,-19 440,-43"/>
+<text text-anchor="middle" x="338" y="-28.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%shellc</text>
 </a>
 </g>
 </g>
-<!-- proc~igrf&#45;&gt;proc~shellg -->
-<g id="proc~~igrf~~CallsGraph_edge4" class="edge">
-<title>proc~igrf&#45;&gt;proc~shellg</title>
-<path fill="none" stroke="#000000" d="M130.26,-62.98C156.43,-53.95 193.72,-41.69 227,-33 236.19,-30.6 245.9,-28.32 255.55,-26.2"/>
-<polygon fill="#000000" stroke="#000000" points="256.51,-29.57 265.56,-24.05 255.04,-22.73 256.51,-29.57"/>
+<!-- proc~igrfc&#45;&gt;proc~shellc -->
+<g id="proc~~igrfc~~CallsGraph_edge4" class="edge">
+<title>proc~igrfc&#45;&gt;proc~shellc</title>
+<path fill="none" stroke="#000000" d="M136.83,-90.99C163.56,-82.46 200.43,-70.82 233,-61 249.69,-55.97 267.93,-50.65 284.42,-45.9"/>
+<polygon fill="#000000" stroke="#000000" points="285.78,-49.15 294.43,-43.03 283.85,-42.42 285.78,-49.15"/>
 </g>
 <!-- proc~extrashc -->
-<g id="proc~~igrf~~CallsGraph_node6" class="node">
+<g id="proc~~igrfc~~CallsGraph_node6" class="node">
 <title>proc~extrashc</title>
-<g id="a_proc~~igrf~~CallsGraph_node6"><a xlink:href="../proc/extrashc.html" xlink:title="shellig_module::shellig_type%extrashc">
-<polygon fill="#d9534f" stroke="#d9534f" points="712.5,-213 494.5,-213 494.5,-189 712.5,-189 712.5,-213"/>
-<text text-anchor="middle" x="603.5" y="-198.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%extrashc</text>
+<g id="a_proc~~igrfc~~CallsGraph_node6"><a xlink:href="../proc/extrashc.html" xlink:title="shellig_module::shellig_type%extrashc">
+<polygon fill="#d9534f" stroke="#d9534f" points="718.5,-230 500.5,-230 500.5,-206 718.5,-206 718.5,-230"/>
+<text text-anchor="middle" x="609.5" y="-215.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%extrashc</text>
 </a>
 </g>
 </g>
 <!-- proc~feldcof&#45;&gt;proc~extrashc -->
-<g id="proc~~igrf~~CallsGraph_edge5" class="edge">
+<g id="proc~~igrfc~~CallsGraph_edge5" class="edge">
 <title>proc~feldcof&#45;&gt;proc~extrashc</title>
-<path fill="none" stroke="#000000" d="M368.62,-150.09C396.71,-159.29 437.02,-171.72 473,-180 484.36,-182.61 496.35,-185.02 508.27,-187.2"/>
-<polygon fill="#000000" stroke="#000000" points="507.79,-190.67 518.25,-188.98 509.02,-183.78 507.79,-190.67"/>
+<path fill="none" stroke="#000000" d="M424.95,-141.09C431.28,-143.55 437.38,-146.49 443,-150 465.32,-163.94 456.42,-183.5 479,-197 482.74,-199.24 486.64,-201.25 490.66,-203.08"/>
+<polygon fill="#000000" stroke="#000000" points="489.66,-206.45 500.24,-206.98 492.3,-199.96 489.66,-206.45"/>
 </g>
 <!-- proc~get_data_file_dir~2 -->
-<g id="proc~~igrf~~CallsGraph_node7" class="node">
+<g id="proc~~igrfc~~CallsGraph_node7" class="node">
 <title>proc~get_data_file_dir~2</title>
-<g id="a_proc~~igrf~~CallsGraph_node7"><a xlink:href="../proc/get_data_file_dir~2.html" xlink:title="shellig_module::shellig_type%get_data_file_dir">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="734,-171 473,-171 473,-147 734,-147 734,-171"/>
-<text text-anchor="middle" x="603.5" y="-156.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%get_data_file_dir</text>
+<g id="a_proc~~igrfc~~CallsGraph_node7"><a xlink:href="../proc/get_data_file_dir~2.html" xlink:title="shellig_module::shellig_type%get_data_file_dir">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="740,-188 479,-188 479,-164 740,-164 740,-188"/>
+<text text-anchor="middle" x="609.5" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%get_data_file_dir</text>
 </a>
 </g>
 </g>
 <!-- proc~feldcof&#45;&gt;proc~get_data_file_dir~2 -->
-<g id="proc~~igrf~~CallsGraph_edge6" class="edge">
+<g id="proc~~igrfc~~CallsGraph_edge6" class="edge">
 <title>proc~feldcof&#45;&gt;proc~get_data_file_dir~2</title>
-<path fill="none" stroke="#000000" d="M437.2,-146.12C445.61,-146.77 454.18,-147.44 462.79,-148.11"/>
-<polygon fill="#000000" stroke="#000000" points="462.65,-151.61 472.89,-148.9 463.2,-144.63 462.65,-151.61"/>
+<path fill="none" stroke="#000000" d="M402.02,-141.02C426.08,-145.53 453.79,-150.62 479,-155 493.04,-157.44 507.95,-159.94 522.47,-162.33"/>
+<polygon fill="#000000" stroke="#000000" points="522.01,-165.8 532.44,-163.96 523.14,-158.89 522.01,-165.8"/>
 </g>
 <!-- proc~getshc -->
-<g id="proc~~igrf~~CallsGraph_node8" class="node">
+<g id="proc~~igrfc~~CallsGraph_node8" class="node">
 <title>proc~getshc</title>
-<g id="a_proc~~igrf~~CallsGraph_node8"><a xlink:href="../proc/getshc.html" xlink:title="shellig_module::shellig_type%getshc">
-<polygon fill="#d9534f" stroke="#d9534f" points="707.5,-129 499.5,-129 499.5,-105 707.5,-105 707.5,-129"/>
-<text text-anchor="middle" x="603.5" y="-114.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%getshc</text>
+<g id="a_proc~~igrfc~~CallsGraph_node8"><a xlink:href="../proc/getshc.html" xlink:title="shellig_module::shellig_type%getshc">
+<polygon fill="#d9534f" stroke="#d9534f" points="713.5,-146 505.5,-146 505.5,-122 713.5,-122 713.5,-146"/>
+<text text-anchor="middle" x="609.5" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%getshc</text>
 </a>
 </g>
 </g>
 <!-- proc~feldcof&#45;&gt;proc~getshc -->
-<g id="proc~~igrf~~CallsGraph_edge7" class="edge">
+<g id="proc~~igrfc~~CallsGraph_edge7" class="edge">
 <title>proc~feldcof&#45;&gt;proc~getshc</title>
-<path fill="none" stroke="#000000" d="M437.2,-129.88C454.28,-128.55 472.06,-127.16 489.35,-125.82"/>
-<polygon fill="#000000" stroke="#000000" points="489.77,-129.29 499.47,-125.03 489.23,-122.32 489.77,-129.29"/>
+<path fill="none" stroke="#000000" d="M443.2,-130.93C460.28,-131.25 478.06,-131.58 495.35,-131.9"/>
+<polygon fill="#000000" stroke="#000000" points="495.41,-135.4 505.47,-132.09 495.54,-128.4 495.41,-135.4"/>
 </g>
 <!-- proc~intershc -->
-<g id="proc~~igrf~~CallsGraph_node9" class="node">
+<g id="proc~~igrfc~~CallsGraph_node9" class="node">
 <title>proc~intershc</title>
-<g id="a_proc~~igrf~~CallsGraph_node9"><a xlink:href="../proc/intershc.html" xlink:title="shellig_module::shellig_type%intershc">
-<polygon fill="#d9534f" stroke="#d9534f" points="711.5,-87 495.5,-87 495.5,-63 711.5,-63 711.5,-87"/>
-<text text-anchor="middle" x="603.5" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%intershc</text>
+<g id="a_proc~~igrfc~~CallsGraph_node9"><a xlink:href="../proc/intershc.html" xlink:title="shellig_module::shellig_type%intershc">
+<polygon fill="#d9534f" stroke="#d9534f" points="717.5,-104 501.5,-104 501.5,-80 717.5,-80 717.5,-104"/>
+<text text-anchor="middle" x="609.5" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%intershc</text>
 </a>
 </g>
 </g>
 <!-- proc~feldcof&#45;&gt;proc~intershc -->
-<g id="proc~~igrf~~CallsGraph_edge8" class="edge">
+<g id="proc~~igrfc~~CallsGraph_edge8" class="edge">
 <title>proc~feldcof&#45;&gt;proc~intershc</title>
-<path fill="none" stroke="#000000" d="M407.98,-125.95C417.89,-123.46 427.79,-120.51 437,-117 454.31,-110.41 455.56,-102.25 473,-96 479.78,-93.57 486.86,-91.42 494.07,-89.51"/>
-<polygon fill="#000000" stroke="#000000" points="495.08,-92.87 503.95,-87.07 493.4,-86.07 495.08,-92.87"/>
+<path fill="none" stroke="#000000" d="M426.5,-116.99C453.47,-113.28 483.32,-109.19 510.92,-105.4"/>
+<polygon fill="#000000" stroke="#000000" points="511.55,-108.84 520.98,-104.02 510.6,-101.91 511.55,-108.84"/>
 </g>
 <!-- proc~stoer -->
-<g id="proc~~igrf~~CallsGraph_node10" class="node">
+<g id="proc~~igrfc~~CallsGraph_node11" class="node">
 <title>proc~stoer</title>
-<g id="a_proc~~igrf~~CallsGraph_node10"><a xlink:href="../proc/stoer.html" xlink:title="shellig_module::shellig_type%stoer">
-<polygon fill="#d9534f" stroke="#d9534f" points="703.5,-35 503.5,-35 503.5,-11 703.5,-11 703.5,-35"/>
-<text text-anchor="middle" x="603.5" y="-20.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%stoer</text>
+<g id="a_proc~~igrfc~~CallsGraph_node11"><a xlink:href="../proc/stoer.html" xlink:title="shellig_module::shellig_type%stoer">
+<polygon fill="#d9534f" stroke="#d9534f" points="976,-44 776,-44 776,-20 976,-20 976,-44"/>
+<text text-anchor="middle" x="876" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%stoer</text>
 </a>
 </g>
 </g>
 <!-- proc~findb0&#45;&gt;proc~stoer -->
-<g id="proc~~igrf~~CallsGraph_edge9" class="edge">
+<g id="proc~~igrfc~~CallsGraph_edge9" class="edge">
 <title>proc~findb0&#45;&gt;proc~stoer</title>
-<path fill="none" stroke="#000000" d="M435.66,-42.19C454.44,-40.03 474.11,-37.77 493.09,-35.59"/>
-<polygon fill="#000000" stroke="#000000" points="493.71,-39.04 503.24,-34.42 492.91,-32.08 493.71,-39.04"/>
+<path fill="none" stroke="#000000" d="M441.71,-72.42C534.54,-63.76 670.77,-51.05 765.61,-42.2"/>
+<polygon fill="#000000" stroke="#000000" points="766.17,-45.67 775.81,-41.25 765.52,-38.7 766.17,-45.67"/>
+</g>
+<!-- proc~shellg -->
+<g id="proc~~igrfc~~CallsGraph_node10" class="node">
+<title>proc~shellg</title>
+<g id="a_proc~~igrfc~~CallsGraph_node10"><a xlink:href="../proc/shellg.html" xlink:title="shellig_module::shellig_type%shellg">
+<polygon fill="#d9534f" stroke="#d9534f" points="712,-24 507,-24 507,0 712,0 712,-24"/>
+<text text-anchor="middle" x="609.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%shellg</text>
+</a>
+</g>
+</g>
+<!-- proc~shellc&#45;&gt;proc~shellg -->
+<g id="proc~~igrfc~~CallsGraph_edge10" class="edge">
+<title>proc~shellc&#45;&gt;proc~shellg</title>
+<path fill="none" stroke="#000000" d="M440.12,-23.87C458.6,-22.57 477.99,-21.2 496.76,-19.88"/>
+<polygon fill="#000000" stroke="#000000" points="497.09,-23.36 506.81,-19.17 496.59,-16.38 497.09,-23.36"/>
 </g>
 <!-- proc~shellg&#45;&gt;proc~stoer -->
-<g id="proc~~igrf~~CallsGraph_edge10" class="edge">
+<g id="proc~~igrfc~~CallsGraph_edge11" class="edge">
 <title>proc~shellg&#45;&gt;proc~stoer</title>
-<path fill="none" stroke="#000000" d="M434.5,-16.14C453.69,-16.93 473.83,-17.75 493.25,-18.54"/>
-<polygon fill="#000000" stroke="#000000" points="493.19,-22.04 503.32,-18.95 493.47,-15.05 493.19,-22.04"/>
+<path fill="none" stroke="#000000" d="M712.01,-19.68C729.54,-21 747.84,-22.39 765.58,-23.73"/>
+<polygon fill="#000000" stroke="#000000" points="765.71,-27.25 775.95,-24.51 766.24,-20.27 765.71,-27.25"/>
 </g>
 <!-- proc~feldi -->
-<g id="proc~~igrf~~CallsGraph_node11" class="node">
+<g id="proc~~igrfc~~CallsGraph_node12" class="node">
 <title>proc~feldi</title>
-<g id="a_proc~~igrf~~CallsGraph_node11"><a xlink:href="../proc/feldi.html" xlink:title="shellig_module::shellig_type%feldi">
-<polygon fill="#d9534f" stroke="#d9534f" points="966,-35 770,-35 770,-11 966,-11 966,-35"/>
-<text text-anchor="middle" x="868" y="-20.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldi</text>
+<g id="a_proc~~igrfc~~CallsGraph_node12"><a xlink:href="../proc/feldi.html" xlink:title="shellig_module::shellig_type%feldi">
+<polygon fill="#d9534f" stroke="#d9534f" points="1208,-44 1012,-44 1012,-20 1208,-20 1208,-44"/>
+<text text-anchor="middle" x="1110" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module::shellig_type%feldi</text>
 </a>
 </g>
 </g>
 <!-- proc~stoer&#45;&gt;proc~feldi -->
-<g id="proc~~igrf~~CallsGraph_edge11" class="edge">
+<g id="proc~~igrfc~~CallsGraph_edge12" class="edge">
 <title>proc~stoer&#45;&gt;proc~feldi</title>
-<path fill="none" stroke="#000000" d="M703.74,-23C721.99,-23 741.12,-23 759.6,-23"/>
-<polygon fill="#000000" stroke="#000000" points="759.79,-26.5 769.79,-23 759.79,-19.5 759.79,-26.5"/>
+<path fill="none" stroke="#000000" d="M976.06,-32C984.56,-32 993.18,-32 1001.74,-32"/>
+<polygon fill="#000000" stroke="#000000" points="1001.75,-35.5 1011.75,-32 1001.75,-28.5 1001.75,-35.5"/>
 </g>
 </g>
 </svg>
 </div>                <script>
-                  var panprocigrfCallsGraph = svgPanZoom('#procigrfCallsGraph',
+                  var panprocigrfcCallsGraph = svgPanZoom('#procigrfcCallsGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
                 </script>          <div>
@@ -542,95 +530,95 @@ implementation in a submodule of an interface in a parent module.
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
-<!-- Title: proc~~igrf~~CalledByGraph Pages: 1 -->
-<svg id="procigrfCalledByGraph" width="641pt" height="55pt"
- viewBox="0.00 0.00 641.00 54.77" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~igrf~~CalledByGraph" class="graph" transform="scale(1.35 1.35) rotate(0) translate(4 70)">
-<title>proc~~igrf~~CalledByGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 862,-70 862,4 -4,4"/>
-<!-- proc~igrf -->
-<g id="proc~~igrf~~CalledByGraph_node1" class="node">
-<title>proc~igrf</title>
-<polygon fill="none" stroke="black" points="858,-45 667,-45 667,-21 858,-21 858,-45"/>
-<text text-anchor="middle" x="762.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">shellig_module::shellig_type%igrf</text>
+<!-- Title: proc~~igrfc~~CalledByGraph Pages: 1 -->
+<svg id="procigrfcCalledByGraph" width="641pt" height="54pt"
+ viewBox="0.00 0.00 641.00 54.46" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~igrfc~~CalledByGraph" class="graph" transform="scale(1.36 1.36) rotate(0) translate(4 70)">
+<title>proc~~igrfc~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 867,-70 867,4 -4,4"/>
+<!-- proc~igrfc -->
+<g id="proc~~igrfc~~CalledByGraph_node1" class="node">
+<title>proc~igrfc</title>
+<polygon fill="none" stroke="black" points="863,-45 666,-45 666,-21 863,-21 863,-45"/>
+<text text-anchor="middle" x="764.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">shellig_module::shellig_type%igrfc</text>
 </g>
-<!-- proc~get_flux_g_ -->
-<g id="proc~~igrf~~CalledByGraph_node2" class="node">
-<title>proc~get_flux_g_</title>
-<g id="a_proc~~igrf~~CalledByGraph_node2"><a xlink:href="../proc/get_flux_g_.html" xlink:title="core::radbelt_type%get_flux_g_">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="631,-45 452,-45 452,-21 631,-21 631,-45"/>
-<text text-anchor="middle" x="541.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::radbelt_type%get_flux_g_</text>
+<!-- proc~get_flux_c_ -->
+<g id="proc~~igrfc~~CalledByGraph_node2" class="node">
+<title>proc~get_flux_c_</title>
+<g id="a_proc~~igrfc~~CalledByGraph_node2"><a xlink:href="../proc/get_flux_c_.html" xlink:title="core::radbelt_type%get_flux_c_">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="630,-45 452,-45 452,-21 630,-21 630,-45"/>
+<text text-anchor="middle" x="541" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::radbelt_type%get_flux_c_</text>
 </a>
 </g>
 </g>
-<!-- proc~get_flux_g_&#45;&gt;proc~igrf -->
-<g id="proc~~igrf~~CalledByGraph_edge1" class="edge">
-<title>proc~get_flux_g_&#45;&gt;proc~igrf</title>
-<path fill="none" stroke="#000000" d="M631.26,-33C639.7,-33 648.3,-33 656.87,-33"/>
-<polygon fill="#000000" stroke="#000000" points="656.9,-36.5 666.9,-33 656.9,-29.5 656.9,-36.5"/>
+<!-- proc~get_flux_c_&#45;&gt;proc~igrfc -->
+<g id="proc~~igrfc~~CalledByGraph_edge1" class="edge">
+<title>proc~get_flux_c_&#45;&gt;proc~igrfc</title>
+<path fill="none" stroke="#000000" d="M630.18,-33C638.59,-33 647.18,-33 655.75,-33"/>
+<polygon fill="#000000" stroke="#000000" points="655.79,-36.5 665.79,-33 655.79,-29.5 655.79,-36.5"/>
 </g>
 <!-- none~get_flux -->
-<g id="proc~~igrf~~CalledByGraph_node3" class="node">
+<g id="proc~~igrfc~~CalledByGraph_node3" class="node">
 <title>none~get_flux</title>
-<g id="a_proc~~igrf~~CalledByGraph_node3"><a xlink:href="../type/radbelt_type.html#boundprocedure-get_flux" xlink:title="core::radbelt_type%get_flux">
+<g id="a_proc~~igrfc~~CalledByGraph_node3"><a xlink:href="../type/radbelt_type.html#boundprocedure-get_flux" xlink:title="core::radbelt_type%get_flux">
 <polygon fill="#a7506f" stroke="#a7506f" points="416,-45 254,-45 254,-21 416,-21 416,-45"/>
 <text text-anchor="middle" x="335" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::radbelt_type%get_flux</text>
 </a>
 </g>
 </g>
-<!-- none~get_flux&#45;&gt;proc~get_flux_g_ -->
-<g id="proc~~igrf~~CalledByGraph_edge2" class="edge">
-<title>none~get_flux&#45;&gt;proc~get_flux_g_</title>
-<path fill="none" stroke="#000000" d="M416.24,-33C424.51,-33 432.99,-33 441.43,-33"/>
-<polygon fill="#000000" stroke="#000000" points="441.7,-36.5 451.7,-33 441.7,-29.5 441.7,-36.5"/>
+<!-- none~get_flux&#45;&gt;proc~get_flux_c_ -->
+<g id="proc~~igrfc~~CalledByGraph_edge2" class="edge">
+<title>none~get_flux&#45;&gt;proc~get_flux_c_</title>
+<path fill="none" stroke="#000000" d="M416.04,-33C424.46,-33 433.1,-33 441.7,-33"/>
+<polygon fill="#000000" stroke="#000000" points="441.76,-36.5 451.76,-33 441.76,-29.5 441.76,-36.5"/>
 </g>
 <!-- proc~get_flux_c -->
-<g id="proc~~igrf~~CalledByGraph_node4" class="node">
+<g id="proc~~igrfc~~CalledByGraph_node4" class="node">
 <title>proc~get_flux_c</title>
-<g id="a_proc~~igrf~~CalledByGraph_node4"><a xlink:href="../proc/get_flux_c.html" xlink:title="core::get_flux_c">
+<g id="a_proc~~igrfc~~CalledByGraph_node4"><a xlink:href="../proc/get_flux_c.html" xlink:title="core::get_flux_c">
 <polygon fill="#d94e8f" stroke="#d94e8f" points="218,-66 121,-66 121,-42 218,-42 218,-66"/>
 <text text-anchor="middle" x="169.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::get_flux_c</text>
 </a>
 </g>
 </g>
 <!-- proc~get_flux_c&#45;&gt;none~get_flux -->
-<g id="proc~~igrf~~CalledByGraph_edge3" class="edge">
+<g id="proc~~igrfc~~CalledByGraph_edge3" class="edge">
 <title>proc~get_flux_c&#45;&gt;none~get_flux</title>
 <path fill="none" stroke="#000000" d="M218.23,-47.87C226.38,-46.82 235.08,-45.71 243.91,-44.57"/>
 <polygon fill="#000000" stroke="#000000" points="244.44,-48.03 253.91,-43.29 243.55,-41.09 244.44,-48.03"/>
 </g>
 <!-- proc~get_flux_g -->
-<g id="proc~~igrf~~CalledByGraph_node5" class="node">
+<g id="proc~~igrfc~~CalledByGraph_node5" class="node">
 <title>proc~get_flux_g</title>
-<g id="a_proc~~igrf~~CalledByGraph_node5"><a xlink:href="../proc/get_flux_g.html" xlink:title="core::get_flux_g">
+<g id="a_proc~~igrfc~~CalledByGraph_node5"><a xlink:href="../proc/get_flux_g.html" xlink:title="core::get_flux_g">
 <polygon fill="#d94e8f" stroke="#d94e8f" points="218,-24 121,-24 121,0 218,0 218,-24"/>
 <text text-anchor="middle" x="169.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::get_flux_g</text>
 </a>
 </g>
 </g>
 <!-- proc~get_flux_g&#45;&gt;none~get_flux -->
-<g id="proc~~igrf~~CalledByGraph_edge4" class="edge">
+<g id="proc~~igrfc~~CalledByGraph_edge4" class="edge">
 <title>proc~get_flux_g&#45;&gt;none~get_flux</title>
 <path fill="none" stroke="#000000" d="M218.23,-18.13C226.38,-19.18 235.08,-20.29 243.91,-21.43"/>
 <polygon fill="#000000" stroke="#000000" points="243.55,-24.91 253.91,-22.71 244.44,-17.97 243.55,-24.91"/>
 </g>
 <!-- interface~get_flux -->
-<g id="proc~~igrf~~CalledByGraph_node6" class="node">
+<g id="proc~~igrfc~~CalledByGraph_node6" class="node">
 <title>interface~get_flux</title>
-<g id="a_proc~~igrf~~CalledByGraph_node6"><a xlink:href="../interface/get_flux.html" xlink:title="core::get_flux">
+<g id="a_proc~~igrfc~~CalledByGraph_node6"><a xlink:href="../interface/get_flux.html" xlink:title="core::get_flux">
 <polygon fill="#a7506f" stroke="#a7506f" points="85,-45 0,-45 0,-21 85,-21 85,-45"/>
 <text text-anchor="middle" x="42.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">core::get_flux</text>
 </a>
 </g>
 </g>
 <!-- interface~get_flux&#45;&gt;proc~get_flux_c -->
-<g id="proc~~igrf~~CalledByGraph_edge5" class="edge">
+<g id="proc~~igrfc~~CalledByGraph_edge5" class="edge">
 <title>interface~get_flux&#45;&gt;proc~get_flux_c</title>
 <path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M85.12,-39.99C93.29,-41.36 102,-42.83 110.58,-44.27"/>
 <polygon fill="#000000" stroke="#000000" points="110.13,-47.74 120.57,-45.95 111.29,-40.84 110.13,-47.74"/>
 </g>
 <!-- interface~get_flux&#45;&gt;proc~get_flux_g -->
-<g id="proc~~igrf~~CalledByGraph_edge6" class="edge">
+<g id="proc~~igrfc~~CalledByGraph_edge6" class="edge">
 <title>interface~get_flux&#45;&gt;proc~get_flux_g</title>
 <path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M85.12,-26.01C93.29,-24.64 102,-23.17 110.58,-21.73"/>
 <polygon fill="#000000" stroke="#000000" points="111.29,-25.16 120.57,-20.05 110.13,-18.26 111.29,-25.16"/>
@@ -638,7 +626,7 @@ implementation in a submodule of an interface in a parent module.
 </g>
 </svg>
 </div>                <script>
-                  var panprocigrfCalledByGraph = svgPanZoom('#procigrfCalledByGraph',
+                  var panprocigrfcCalledByGraph = svgPanZoom('#procigrfcCalledByGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
                 </script>          <div>
@@ -734,21 +722,22 @@ implementation in a submodule of an interface in a parent module.
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">subroutine </span><span class="n">igrf</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">xl</span><span class="p">,</span><span class="n">bbx</span><span class="p">)</span>
+    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">subroutine </span><span class="n">igrfc</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">xl</span><span class="p">,</span><span class="n">bbx</span><span class="p">)</span>
 
 <span class="w">      </span><span class="k">class</span><span class="p">(</span><span class="n">shellig_type</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lon</span><span class="w"> </span><span class="c">!! geodetic longitude in degrees (east)</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lat</span><span class="w"> </span><span class="c">!! geodetic latitude in degrees (north)</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="c">!! altitude in km above sea level</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span><span class="w">  </span><span class="c">!! cartesian coordinates in earth radii (6371.2 km)</span>
+<span class="w">                                             </span><span class="c">!! x-axis pointing to equator at 0 longitude</span>
+<span class="w">                                             </span><span class="c">!! y-axis pointing to equator at 90 long.</span>
+<span class="w">                                             </span><span class="c">!! z-axis pointing to north pole</span>
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="c">!! decimal year for which geomagnetic field is to</span>
 <span class="w">                                  </span><span class="c">!! be calculated (e.g.:1995.5 for day 185 of 1995)</span>
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="c">!! l-value</span>
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bbx</span><span class="w"> </span><span class="c">!! b_total / b_equatorial ratio</span>
 
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bab1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">babs</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bdel</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bdown</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">beast</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">                  </span><span class="n">beq</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bequ</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bnorth</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">dimo</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">rr0</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bab1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bdel</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">beq</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">bequ</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">dimo</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">rr0</span>
 <span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">icode</span>
 <span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">val</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">b</span>
 
 <span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">stps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.05_wp</span>
 
@@ -760,8 +749,8 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">      </span><span class="n">me</span><span class="p">%</span><span class="n">steq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.03_wp</span>
 
 <span class="w">      </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">feldcof</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">dimo</span><span class="p">)</span>
-<span class="w">      </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">feldg</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span><span class="n">lon</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">bnorth</span><span class="p">,</span><span class="n">beast</span><span class="p">,</span><span class="n">bdown</span><span class="p">,</span><span class="n">babs</span><span class="p">)</span>
-<span class="w">      </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">shellg</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span><span class="n">lon</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">dimo</span><span class="p">,</span><span class="n">xl</span><span class="p">,</span><span class="n">icode</span><span class="p">,</span><span class="n">bab1</span><span class="p">)</span>
+<span class="w">      </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">feldc</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="w">      </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">shellc</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">dimo</span><span class="p">,</span><span class="n">xl</span><span class="p">,</span><span class="n">icode</span><span class="p">,</span><span class="n">bab1</span><span class="p">)</span>
 
 <span class="w">      </span><span class="n">bequ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dimo</span><span class="o">/</span><span class="p">(</span><span class="n">xl</span><span class="o">*</span><span class="n">xl</span><span class="o">*</span><span class="n">xl</span><span class="p">)</span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">icode</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
@@ -769,9 +758,9 @@ implementation in a submodule of an interface in a parent module.
 <span class="w">         </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">findb0</span><span class="p">(</span><span class="n">stps</span><span class="p">,</span><span class="n">bdel</span><span class="p">,</span><span class="n">val</span><span class="p">,</span><span class="n">beq</span><span class="p">,</span><span class="n">rr0</span><span class="p">)</span>
 <span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">bequ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">beq</span>
 <span class="w">      </span><span class="k">endif</span>
-<span class="k">      </span><span class="n">bbx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">babs</span><span class="o">/</span><span class="n">bequ</span>
+<span class="k">      </span><span class="n">bbx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">norm2</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="n">bequ</span>
 
-<span class="w">   </span><span class="k">end subroutine </span><span class="n">igrf</span>
+<span class="w">   </span><span class="k">end subroutine </span><span class="n">igrfc</span>
 </pre></div>
 
     </section>
