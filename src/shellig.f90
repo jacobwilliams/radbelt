@@ -359,10 +359,9 @@
                                                   !! instead of glat,glon,alt. See [[shellc]].
 
    real(wp) :: arg1 , arg2 , bequ , bq1 , bq2 , bq3 , c0 , c1 , c2 , c3 , &
-               ct , d , d0 , d1 , d2, dimob0 , e0 , e1 , e2 , ff , fi , gg , &
+               d0 , d1 , d2, dimob0 , e0 , e1 , e2 , ff , fi , gg , &
                hli , oradik , oterm , p(8,100) , r , r1 , r2 , r3 , r3h , radik , &
-               rlat , rlon , rq , st , step12 , step2 , &
-               stp , t , term , xx , z , zq , zz
+               rq , step12 , step2 , stp , t , term , xx , z , zq , zz
    integer :: i , iequ , n
 
    real(wp),parameter :: rmin = 0.05_wp !! boundaries for identification of `icode=2 and 3`
@@ -376,15 +375,7 @@
       me%xi(2) = v(2)
       me%xi(3) = v(3)
    else
-      rlat = glat*umr
-      rlon = glon*umr
-      ct = sin(rlat)
-      st = cos(rlat)
-      d = sqrt(aquad-(aquad-bquad)*ct*ct)
-      me%xi(1) = (alt+aquad/d)*st/era
-      me%xi(3) = (alt+bquad/d)*ct/era
-      me%xi(2) = me%xi(1)*sin(rlon)
-      me%xi(1) = me%xi(1)*cos(rlon)
+      me%xi = geo_to_cart(glat,glon,alt)
    end if
 
    !*****convert to dipol-oriented co-ordinates
@@ -642,19 +633,21 @@ end subroutine stoer
                x , xxx , y , yyy , z , zzz
    integer :: i , ih , ihmax , il , imax , k , last , m
 
-   rlat=glat*umr
-   ct=sin(rlat)
-   st=cos(rlat)
-   d=sqrt(aquad-(aquad-bquad)*ct*ct)
-   rlon=glon*umr
-   cp=cos(rlon)
-   sp=sin(rlon)
-   zzz=(alt+bquad/d)*ct/era
-   rho=(alt+aquad/d)*st/era
-   xxx=rho*cp
-   yyy=rho*sp
+   ! same calculation as geo_to_cart, but not used here
+   ! because the intermediate variables are also used below.
+   rlat = glat*umr
+   ct   = sin(rlat)
+   st   = cos(rlat)
+   d    = sqrt(aquad-(aquad-bquad)*ct*ct)
+   rlon = glon*umr
+   cp   = cos(rlon)
+   sp   = sin(rlon)
+   zzz  = (alt+bquad/d)*ct/era
+   rho  = (alt+aquad/d)*st/era
+   xxx  = rho*cp
+   yyy  = rho*sp
 
-   rq=1.0_wp/(xxx*xxx+yyy*yyy+zzz*zzz)
+   rq = 1.0_wp/(xxx*xxx+yyy*yyy+zzz*zzz)
    me%xi = [xxx,yyy,zzz] * rq
 
    ihmax=me%nmax*me%nmax+1
@@ -1129,5 +1122,37 @@ subroutine extrashc(me,date,dte1,nmax1,gh1,nmax2,gh2,nmax,gh)
    enddo
 
 end subroutine extrashc
+
+!*****************************************************************************************
+!>
+!  geodetic to scaled cartesian coordinates
+
+pure function geo_to_cart(glat,glon,alt) result(x)
+
+   real(wp),intent(in) :: glat  !! geodetic latitude in degrees (north)
+   real(wp),intent(in) :: glon  !! geodetic longitude in degrees (east)
+   real(wp),intent(in) :: alt   !! altitude in km above sea level
+   real(wp),dimension(3) :: x   !! cartesian coordinates in earth radii (6371.2 km)
+                                !!
+                                !! * x-axis pointing to equator at 0 longitude
+                                !! * y-axis pointing to equator at 90 long.
+                                !! * z-axis pointing to north pole
+
+   real(wp) :: rlat !! latitude in radians
+   real(wp) :: rlon !! longitude in radians
+   real(wp) :: d, rho
+
+   ! deg to radians:
+   rlat = glat*umr
+   rlon = glon*umr
+
+   ! JW : it's weird that ct is sin, and st is cos...it was like that in the original code
+   associate (ct => sin(rlat), st => cos(rlat), cp => cos(rlon), sp => sin(rlon))
+      d   = sqrt(aquad-(aquad-bquad)*ct*ct)
+      rho = (alt+aquad/d)*st/era
+      x   = [rho*cp, rho*sp, (alt+bquad/d)*ct/era]
+   end associate
+
+end function geo_to_cart
 
 end module SHELLIG_module
