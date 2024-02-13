@@ -1,0 +1,20 @@
+# To use:
+#
+#   $ conda env create --prefix ./env -f ./python/environment.yml
+#   $ conda activate ./env
+
+channels:
+  - nodefaults
+  - conda-forge
+
+dependencies:
+  #- compilers
+  #- gfortran
+  - fortran-compiler
+  - meson
+  - pkg-config
+  - fpm
+  - ford
+  - graphviz
+  - fprettify
+  - numpy

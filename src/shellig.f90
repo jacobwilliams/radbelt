@@ -214,6 +214,7 @@
 
       step=stps
       irun=0
+      rold = 0.0_wp ! to avoid -Wmaybe-uninitialized warnings
 
       main : do
         irun=irun+1

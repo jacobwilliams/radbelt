@@ -152,6 +152,11 @@ module trmfun_module
    integer :: i0 , i1 , i2 , i3 , ie , l3 , nb , nl
    logical :: s0 , s1 , s2
 
+   e0 = 0.0_wp  ! to avoid -Wmaybe-uninitialized warnings
+   f0 = 0.0_wp  ! to avoid -Wmaybe-uninitialized warnings
+   i0 = 0       ! to avoid -Wmaybe-uninitialized warnings
+   s0 = .false. ! to avoid -Wmaybe-uninitialized warnings  -- but not sure what default value here should be !  -JW
+
    bb0_ = bb0
    me%fistep = descr(7)/descr(2)
    escale = descr(4)
