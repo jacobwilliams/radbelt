@@ -8,8 +8,6 @@ channels:
   - conda-forge
 
 dependencies:
-  #- compilers
-  #- gfortran
   - fortran-compiler
   - meson
   - pkg-config

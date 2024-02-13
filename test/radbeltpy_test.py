@@ -2,17 +2,13 @@
 # Test of the f2py-created Python interface.
 #
 
+import sys
+import time
 from pathlib import Path
 
 dir = Path(__file__).resolve().parents[1] # root directory
-
-import sys
-sys.path.insert(0,'.')   # assuming the radbelt lib is in the main directory
-
-import radbelt
-import time
-import os
-# import numpy as np
+sys.path.insert(0,str(dir / 'python'))   # assuming the radbelt lib is in python directory
+import radbelt  # this is the module being tested
 
 #########################################################################################################
 def set_data_files_paths(aep8_dir : str, igrf_dir : str) -> None:
@@ -27,7 +23,6 @@ def get_flux(lon : float, lat : float , height : float, year : float, e : float,
 
 
 # set location of the data files:
-# dir = Path(__file__).resolve().parents[1] # root directory
 aep8_dir = str(dir / 'data' / 'aep8')
 igrf_dir = str(dir / 'data' / 'igrf')
 set_data_files_paths(aep8_dir, igrf_dir)
