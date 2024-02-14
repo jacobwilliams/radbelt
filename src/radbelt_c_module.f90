@@ -1,9 +1,6 @@
 !*****************************************************************************************
 !>
 !  Experimental C interface to the radbelt module.
-!
-!@note Currently, this makes use of a global variable to store the state,
-!      so should not be considered threadsafe.
 
 module radbelt_c_module
 
@@ -13,6 +10,7 @@ use radbelt_module, only: radbelt_type
 
 implicit none
 
+!... how can we eliminate this ?
 integer,parameter :: STR_LEN = 256 !! string length for paths
 
 contains
