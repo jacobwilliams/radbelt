@@ -162,9 +162,9 @@ module trmfun_module
    escale = descr(4)
    fscale = descr(7)
    xnl = min(15.6_wp,abs(fl))
-   nl = xnl*descr(5)
+   nl = int(xnl*descr(5))
    if ( bb0_<1.0_wp ) bb0_ = 1.0_wp
-   nb = (bb0_-1.0_wp)*descr(6)
+   nb = int((bb0_-1.0_wp)*descr(6))
 
    ! i2 is the number of elements in the flux map for the first energy.
    ! i3 is the index of the last element of the second energy map.
@@ -261,192 +261,244 @@ function trara2(me,map,il,ib)
                fkbm , fll1 , fll2 , flog , flog1 , flog2 , flogm , &
                fnb , fnl , sl1 , sl2
    integer :: i1 , i2 , itime , j1 , j2 , kt , l1 , l2
-   integer :: itask
+   logical :: dummy
 
    fistep = me%fistep
 
-   itask = 1
-   main: do
-      select case (itask)
-      case (1)
-         fnl = il
-         fnb = ib
-         itime = 0
-         i2 = 0
-         do
+   !********
+   ! to avoid -Wmaybe-uninitialized warning
+   dfl    = 0.0_wp
+   fincr1 = 0.0_wp
+   fincr2 = 0.0_wp
+   fkb    = 0.0_wp
+   fkb1   = 0.0_wp
+   fkb2   = 0.0_wp
+   fkbm   = 0.0_wp
+   flog   = 0.0_wp
+   flog1  = 0.0_wp
+   flog2  = 0.0_wp
+   flogm  = 0.0_wp
+   fnb    = 0.0_wp
+   fnl    = 0.0_wp
+   sl2    = 0.0_wp
+   i1     = 0
+   i2     = 0
+   itime  = 0
+   j2     = 0
+   l1     = 0
+   l2     = 0
+   !********
 
-            ! find consecutive sub-sub-maps for scaled l-values ls1,ls2,
-            ! with il less or equal ls2.  l1,l2 are lengths of sub-sub-maps.
-            ! i1,i2 are indeces of first elements minus 1.
+   ! these are recursive functions that
+   ! replace the gotos in the original code
+   call task1(dummy)
 
-            l2 = map(i2+1)
-            if ( map(i2+2)<=il ) then
-               i1 = i2
-               l1 = l2
-               i2 = i2 + l2
+   contains
 
-               ! if sub-sub-maps are empty, i. e. length less 4, than trara2=0
-
-            elseif ( (l1<4) .and. (l2<4) ) then
-               trara2 = 0.0_wp
-               return
-            else
-
-               ! if flog2 less flog1, than ls2 first map and ls1 second map
-
-               if ( map(i2+3)<=map(i1+3) ) exit
-               itask = 3
-               cycle main
-            endif
+   recursive subroutine task1(done)
+      logical,intent(out) :: done
+      done = .false.
+      fnl = il
+      fnb = ib
+      itime = 0
+      i2 = 0
+      do
+         ! find consecutive sub-sub-maps for scaled l-values ls1,ls2,
+         ! with il less or equal ls2.  l1,l2 are lengths of sub-sub-maps.
+         ! i1,i2 are indeces of first elements minus 1.
+         l2 = map(i2+1)
+         if ( map(i2+2)<=il ) then
+            i1 = i2
+            l1 = l2
+            i2 = i2 + l2
+            ! if sub-sub-maps are empty, i. e. length less 4, than trara2=0
+         elseif ( (l1<4) .and. (l2<4) ) then
+            trara2 = 0.0_wp
+            done = .true.
+            return
+         else
+            ! if flog2 less flog1, than ls2 first map and ls1 second map
+            if ( map(i2+3)<=map(i1+3) ) exit
+            call task3(done)
+            return
+         endif
+      enddo
+      call task2(done)
+   end subroutine task1
+   recursive subroutine task2(done)
+      logical,intent(out) :: done
+      done = .false.
+      kt = i1
+      i1 = i2
+      i2 = kt
+      kt = l1
+      l1 = l2
+      l2 = kt
+      call task3(done)
+   end subroutine task2
+   recursive subroutine task3(done)
+      logical,intent(out) :: done
+      logical :: check
+      done = .false.
+      ! determine interpolate in scaled l-value
+      fll1 = map(i1+2)
+      fll2 = map(i2+2)
+      dfl = (fnl-fll1)/(fll2-fll1)
+      flog1 = map(i1+3)
+      flog2 = map(i2+3)
+      fkb1 = 0.0_wp
+      fkb2 = 0.0_wp
+      if ( l1>=4 ) then
+         ! b/b0 loop
+         check = .true.
+         do j2 = 4 , l2
+            fincr2 = map(i2+j2)
+            if ( fkb2+fincr2>fnb ) then
+               check = .false.
+               exit
+            end if
+            fkb2 = fkb2 + fincr2
+            flog2 = flog2 - fistep
          enddo
-         itask = 2
-      case (2)
-         kt = i1
-         i1 = i2
-         i2 = kt
-         kt = l1
-         l1 = l2
-         l2 = kt
-         itask = 3
-      case (3)
-
-         ! determine interpolate in scaled l-value
-
-         fll1 = map(i1+2)
-         fll2 = map(i2+2)
-         dfl = (fnl-fll1)/(fll2-fll1)
-         flog1 = map(i1+3)
-         flog2 = map(i2+3)
-         fkb1 = 0.0_wp
-         fkb2 = 0.0_wp
-         if ( l1>=4 ) then
-
-            ! b/b0 loop
-
-            do j2 = 4 , l2
-               fincr2 = map(i2+j2)
-               if ( fkb2+fincr2>fnb ) goto 10
-               fkb2 = fkb2 + fincr2
-               flog2 = flog2 - fistep
-            enddo
+         if (check) then
             itime = itime + 1
             if ( itime==1 ) then
-               itask = 2
-               cycle main
+               call task2(done)
+               return
             endif
             trara2 = 0.0_wp
+            done = .true.
             return
- 10         if ( itime/=1 ) then
-               if ( j2==4 ) then
-                  itask = 4
-                  cycle main
-               endif
-               sl2 = flog2/fkb2
-               do j1 = 4 , l1
-                  fincr1 = map(i1+j1)
-                  fkb1 = fkb1 + fincr1
-                  flog1 = flog1 - fistep
-                  fkbj1 = ((flog1/fistep)*fincr1+fkb1)/((fincr1/fistep)*sl2+1.0_wp)
-                  if ( fkbj1<=fkb1 ) goto 15
-               enddo
+         end if
+         if ( itime/=1 ) then
+            if ( j2==4 ) then
+               call task4(done)
+               return
+            endif
+            sl2 = flog2/fkb2
+            check = .true.
+            do j1 = 4 , l1
+               fincr1 = map(i1+j1)
+               fkb1 = fkb1 + fincr1
+               flog1 = flog1 - fistep
+               fkbj1 = ((flog1/fistep)*fincr1+fkb1)/((fincr1/fistep)*sl2+1.0_wp)
+               if ( fkbj1<=fkb1 ) then
+                  check = .false.
+                  exit
+               end if
+            enddo
+            if (check) then
                if ( fkbj1<=fkb2 ) then
                   trara2 = 0.0_wp
+                  done = .true.
                   return
                endif
- 15            if ( fkbj1<=fkb2 ) then
-                  fkbm = fkbj1 + (fkb2-fkbj1)*dfl
-                  flogm = fkbm*sl2
-                  flog2 = flog2 - fistep
-                  fkb2 = fkb2 + fincr2
-                  sl1 = flog1/fkb1
-                  sl2 = flog2/fkb2
-                  itask = 5
-                  cycle main
-               else
-                  fkb1 = 0.0_wp
-               endif
-            endif
-            fkb2 = 0.0_wp
-         endif
-         j2 = 4
-         fincr2 = map(i2+j2)
-         flog2 = map(i2+3)
-         flog1 = map(i1+3)
-         itask = 4
-      case (4)
-         flogm = flog1 + (flog2-flog1)*dfl
-         fkbm = 0.0_wp
-         fkb2 = fkb2 + fincr2
-         flog2 = flog2 - fistep
-         sl2 = flog2/fkb2
-         if ( l1<4 ) then
-            fincr1 = 0.0_wp
-            sl1 = -900000.0_wp
-            itask = 6
-            cycle main
-         else
-            j1 = 4
-            fincr1 = map(i1+j1)
-            fkb1 = fkb1 + fincr1
-            flog1 = flog1 - fistep
-            sl1 = flog1/fkb1
-         endif
-         itask = 5
-      case (5)
-         do while ( sl1>=sl2 )
-            fkbj2 = ((flog2/fistep)*fincr2+fkb2)/((fincr2/fistep)*sl1+1.0_wp)
-            fkb = fkb1 + (fkbj2-fkb1)*dfl
-            flog = fkb*sl1
-            if ( fkb>=fnb ) then
-               itask = 7
-               cycle main
-            endif
-            fkbm = fkb
-            flogm = flog
-            if ( j1>=l1 ) then
-               trara2 = 0.0_wp
-               return
-            else
-               j1 = j1 + 1
-               fincr1 = map(i1+j1)
-               flog1 = flog1 - fistep
-               fkb1 = fkb1 + fincr1
-               sl1 = flog1/fkb1
-            endif
-         enddo
-         itask = 6
-      case (6)
-         fkbj1 = ((flog1/fistep)*fincr1+fkb1)/((fincr1/fistep)*sl2+1.0_wp)
-         fkb = fkbj1 + (fkb2-fkbj1)*dfl
-         flog = fkb*sl2
-         if ( fkb<fnb ) then
-            fkbm = fkb
-            flogm = flog
-            if ( j2>=l2 ) then
-               trara2 = 0.0_wp
-               return
-            else
-               j2 = j2 + 1
-               fincr2 = map(i2+j2)
+            end if
+            if ( fkbj1<=fkb2 ) then
+               fkbm = fkbj1 + (fkb2-fkbj1)*dfl
+               flogm = fkbm*sl2
                flog2 = flog2 - fistep
                fkb2 = fkb2 + fincr2
+               sl1 = flog1/fkb1
                sl2 = flog2/fkb2
-               itask = 5
-               cycle main
+               call task5(done)
+               return
+            else
+               fkb1 = 0.0_wp
             endif
          endif
-         itask = 7
-      case (7)
-         if ( fkb<fkbm+1.0e-10_wp ) then
-            trara2 = 0.0_wp
-         else
-            trara2 = flogm + (flog-flogm)*((fnb-fkbm)/(fkb-fkbm))
-            trara2 = max(trara2,0.0_wp)
+         fkb2 = 0.0_wp
+      endif
+      j2 = 4
+      fincr2 = map(i2+j2)
+      flog2 = map(i2+3)
+      flog1 = map(i1+3)
+      call task4(done)
+   end subroutine task3
+   recursive subroutine task4(done)
+      logical,intent(out) :: done
+      done = .false.
+      flogm = flog1 + (flog2-flog1)*dfl
+      fkbm = 0.0_wp
+      fkb2 = fkb2 + fincr2
+      flog2 = flog2 - fistep
+      sl2 = flog2/fkb2
+      if ( l1<4 ) then
+         fincr1 = 0.0_wp
+         sl1 = -900000.0_wp
+         call task6(done)
+         return
+      else
+         j1 = 4
+         fincr1 = map(i1+j1)
+         fkb1 = fkb1 + fincr1
+         flog1 = flog1 - fistep
+         sl1 = flog1/fkb1
+      endif
+      call task5(done)
+   end subroutine task4
+   recursive subroutine task5(done)
+      logical,intent(out) :: done
+      done = .false.
+      do while ( sl1>=sl2 )
+         fkbj2 = ((flog2/fistep)*fincr2+fkb2)/((fincr2/fistep)*sl1+1.0_wp)
+         fkb = fkb1 + (fkbj2-fkb1)*dfl
+         flog = fkb*sl1
+         if ( fkb>=fnb ) then
+            call task7(done)
             return
          endif
-         exit main
-      end select
-   enddo main
+         fkbm = fkb
+         flogm = flog
+         if ( j1>=l1 ) then
+            trara2 = 0.0_wp
+            done = .true.
+            return
+         else
+            j1 = j1 + 1
+            fincr1 = map(i1+j1)
+            flog1 = flog1 - fistep
+            fkb1 = fkb1 + fincr1
+            sl1 = flog1/fkb1
+         endif
+      enddo
+      call task6(done)
+   end subroutine task5
+   recursive subroutine task6(done)
+      logical,intent(out) :: done
+      done = .false.
+      fkbj1 = ((flog1/fistep)*fincr1+fkb1)/((fincr1/fistep)*sl2+1.0_wp)
+      fkb = fkbj1 + (fkb2-fkbj1)*dfl
+      flog = fkb*sl2
+      if ( fkb<fnb ) then
+         fkbm = fkb
+         flogm = flog
+         if ( j2>=l2 ) then
+            trara2 = 0.0_wp
+            done = .true.
+            return
+         else
+            j2 = j2 + 1
+            fincr2 = map(i2+j2)
+            flog2 = flog2 - fistep
+            fkb2 = fkb2 + fincr2
+            sl2 = flog2/fkb2
+            call task5(done)
+            return
+         endif
+      endif
+      call task7(done)
+   end subroutine task6
+   recursive subroutine task7(done)
+      logical,intent(out) :: done
+      if ( fkb<fkbm+1.0e-10_wp ) then
+         trara2 = 0.0_wp
+      else
+         trara2 = flogm + (flog-flogm)*((fnb-fkbm)/(fkb-fkbm))
+         trara2 = max(trara2,0.0_wp)
+      endif
+      done = .true.
+   end subroutine task7
 
 end function trara2
 

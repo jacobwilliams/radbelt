@@ -2,59 +2,48 @@
 !>
 !  Experimental C interface to the radbelt module.
 
-module radbelt_c_module
+    module radbelt_c_module
 
-use iso_c_binding, only: c_double, c_int, c_char, c_null_char, &
-                         c_intptr_t, c_ptr, c_loc, c_f_pointer, c_null_ptr, c_associated
-use radbelt_module, only: radbelt_type
+    use iso_c_binding, only: c_double, c_int, c_char, c_null_char, &
+                             c_intptr_t, c_ptr, c_loc, c_f_pointer, &
+                             c_null_ptr, c_associated
+    use radbelt_module, only: radbelt_type
 
-implicit none
+    implicit none
 
-!... how can we eliminate this ?
-integer,parameter :: STR_LEN = 256 !! string length for paths
+    ! can we eliminate this ?
+    integer,parameter :: STR_LEN = 4096 !! string length for paths
 
-contains
+    contains
+!*****************************************************************************************
 
-! function c2f_str(cstr) result(fstr)
-!     character(kind=c_char,len=1),dimension(*),intent(in) :: cstr
-!     character(len=:),allocatable :: fstr
-!     integer :: i
-!     fstr = ''
-!     i = 0
-!     do
-!         i = i + 1
-!         if (cstr(i)==c_null_char) exit
-!         fstr = fstr // cstr(i)
-!     end do
-! end function c2f_str
+!*****************************************************************************************
+!>
+!  Convert C string to Fortran
 
-subroutine initialize_c(ipointer) bind(C, name="initialize_c")
-    !! create a [[radbelt_type]] from C
-    integer(c_intptr_t),intent(out) :: ipointer
-    type(radbelt_type),pointer :: p
-    type(c_ptr) :: cp
+function c2f_str(cstr) result(fstr)
 
-    allocate(p)
-    cp = c_loc(p)
-    ipointer = transfer(cp, 0_c_intptr_t)
+    character(kind=c_char,len=1),dimension(:),intent(in) :: cstr !! string from C
+    character(len=:),allocatable :: fstr !! fortran string
 
-end subroutine initialize_c
+    integer :: i !! counter
 
-subroutine destroy_c(ipointer) bind(C, name="destroy_c")
-    !! destroy a [[radbelt_type]] from C
-    integer(c_intptr_t),intent(in) :: ipointer
-    type(radbelt_type),pointer :: p
-    type(c_ptr) :: cp
+    fstr = ''
+    do i = 1, size(cstr)
+        fstr = fstr//cstr(i)
+    end do
+    fstr = trim(fstr)
 
-    call int_pointer_to_f_pointer(ipointer,p)
-    if (associated(p)) deallocate(p)
+end function c2f_str
 
-end subroutine destroy_c
+!*****************************************************************************************
+!>
+!  Convert an integer pointer to a [[radbelt_type]] pointer.
 
 subroutine int_pointer_to_f_pointer(ipointer, p)
 
-    integer(c_intptr_t),intent(in) :: ipointer
-    type(radbelt_type),pointer :: p
+    integer(c_intptr_t),intent(in) :: ipointer !! integer pointer from C
+    type(radbelt_type),pointer :: p !! fortran pointer
 
     type(c_ptr) :: cp
 
@@ -69,6 +58,36 @@ end subroutine int_pointer_to_f_pointer
 
 !*****************************************************************************************
 !>
+!  create a [[radbelt_type]] from C
+
+subroutine initialize_c(ipointer) bind(C, name="initialize_c")
+
+    integer(c_intptr_t),intent(out) :: ipointer
+    type(radbelt_type),pointer :: p
+    type(c_ptr) :: cp
+
+    allocate(p)
+    cp = c_loc(p)
+    ipointer = transfer(cp, 0_c_intptr_t)
+
+end subroutine initialize_c
+
+!*****************************************************************************************
+!>
+!  destroy a [[radbelt_type]] from C
+
+subroutine destroy_c(ipointer) bind(C, name="destroy_c")
+
+    integer(c_intptr_t),intent(in) :: ipointer
+    type(radbelt_type),pointer :: p
+
+    call int_pointer_to_f_pointer(ipointer,p)
+    if (associated(p)) deallocate(p)
+
+end subroutine destroy_c
+
+!*****************************************************************************************
+!>
 !  C interface for setting the data file paths
 
 subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir) bind(C, name="set_data_files_paths_c")
@@ -80,28 +99,18 @@ subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir) bind(C, name="se
     character(len=:),allocatable :: aep8_dir_, igrf_dir_
     type(radbelt_type),pointer :: p
 
-    c2f : block
-        ! convert to c strings to fortran
-        integer :: i
-        aep8_dir_ = ''
-        igrf_dir_ = ''
-        do i = 1, STR_LEN
-            aep8_dir_ = aep8_dir_//aep8_dir(i)
-            igrf_dir_ = igrf_dir_//igrf_dir(i)
-        end do
-        aep8_dir_ = trim(aep8_dir_)
-        igrf_dir_ = trim(igrf_dir_)
-    end block c2f
-
     call int_pointer_to_f_pointer(ipointer, p)
 
-    ! !... doesn't work this way... ??
-    ! aep8_dir_ = c2f_str(aep8_dir)
-    ! igrf_dir_ = c2f_str(igrf_dir)
-    ! write(*,*) trim(aep8_dir_)
-    ! write(*,*) trim(igrf_dir_)
+    if (associated(p)) then
 
-    call p%set_data_files_paths(aep8_dir_, igrf_dir_)
+        aep8_dir_ = c2f_str(aep8_dir)
+        igrf_dir_ = c2f_str(igrf_dir)
+
+        call p%set_data_files_paths(aep8_dir_, igrf_dir_)
+
+    else
+        error stop 'error in set_data_files_paths_c: class is not associated'
+    end if
 
  end subroutine set_data_files_paths_c
 !*****************************************************************************************
@@ -120,19 +129,27 @@ subroutine get_flux_g_c(ipointer,lon,lat,height,year,e,imname,flux) bind(C, name
                                       !! be calculated (e.g.:1995.5 for day 185 of 1995)
     real(c_double),intent(in) :: e !! minimum energy
     integer(c_int),intent(in) :: imname !! which method to use:
-                                 !!
-                                 !! * 1 -- particle species: electrons, solar activity: min
-                                 !! * 2 -- particle species: electrons, solar activity: max
-                                 !! * 3 -- particle species: protons, solar activity: min
-                                 !! * 4 -- particle species: protons, solar activity: max
+                                        !!
+                                        !! * 1 -- particle species: electrons, solar activity: min
+                                        !! * 2 -- particle species: electrons, solar activity: max
+                                        !! * 3 -- particle species: protons, solar activity: min
+                                        !! * 4 -- particle species: protons, solar activity: max
     real(c_double),intent(out) :: flux !! The flux of particles above the given energy, in units of cm^-2 s^-1.
 
     type(radbelt_type),pointer :: p
 
     call int_pointer_to_f_pointer(ipointer, p)
 
-    flux = p%get_flux(lon,lat,height,year,e,imname)
+    if (associated(p)) then
+
+        flux = p%get_flux(lon,lat,height,year,e,imname)
+
+    else
+        error stop 'error in get_flux_g_c: class is not associated'
+    end if
 
 end subroutine get_flux_g_c
 
-end module radbelt_c_module
+!*****************************************************************************************
+    end module radbelt_c_module
+!*****************************************************************************************

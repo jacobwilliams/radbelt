@@ -19,10 +19,8 @@ python module radbelt ! in
 
             subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
                 integer(c_intptr_t),intent(in) :: ipointer
-                character(kind=c_char,len=256),intent(in) :: aep8_dir
-                character(kind=c_char,len=256),intent(in) :: igrf_dir
-                !character(kind=c_char,len=1),dimension(*),intent(in) :: aep8_dir ! doesn't work
-                !character(kind=c_char,len=1),dimension(*),intent(in) :: igrf_dir
+                character(kind=c_char,len=4096),intent(in) :: aep8_dir
+                character(kind=c_char,len=4096),intent(in) :: igrf_dir
             end subroutine set_data_files_paths_c
 
             subroutine initialize_c(ipointer)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module

@@ -75,7 +75,7 @@
          procedure, public :: feldg, feldc
          procedure, public :: shellg, shellc
          procedure, public :: findb0
-         procedure :: stoer, getshc, intershc, extrashc, feldi
+         procedure :: stoer, feldi
          procedure,public :: set_data_file_dir, get_data_file_dir
 
       end type shellig_type
@@ -873,19 +873,19 @@ end subroutine stoer
    if (read_file) then
       ! get igrf coefficients for the boundary years
       ! [if they have not ready been loaded]
-      call me%getshc(me%name,me%nmax1,erad,me%g,ier)
+      call getshc(me%name,me%nmax1,erad,me%g,ier)
       if ( ier/=0 ) error stop 'error reading file: '//trim(me%name)
       me%g_cache = me%g ! because it is modified below, we have to cache the original values from the file
-      call me%getshc(fil2,me%nmax2,erad,me%gh2,ier)
+      call getshc(fil2,me%nmax2,erad,me%gh2,ier)
       if ( ier/=0 ) error stop 'error reading file: '//trim(fil2)
    else
       me%g = me%g_cache
    end if
    !-- determine igrf coefficients for year
    if ( l<=numye-1 ) then
-      call me%intershc(year,dte1,me%nmax1,me%g,dte2,me%nmax2,me%gh2,me%nmax,gha)
+      call intershc(year,dte1,me%nmax1,me%g,dte2,me%nmax2,me%gh2,me%nmax,gha)
    else
-      call me%extrashc(year,dte1,me%nmax1,me%g,me%nmax2,me%gh2,me%nmax,gha)
+      call extrashc(year,dte1,me%nmax1,me%g,me%nmax2,me%gh2,me%nmax,gha)
    endif
    !-- determine magnetic dipol moment and coeffiecients g
    f0 = 0.0_wp
@@ -929,9 +929,8 @@ end subroutine feldcof
 !  * Version 1.01, A. Zunde, USGS, MS 964,
 !    Box 25046 Federal Center, Denver, CO  80225
 
-subroutine getshc(me,Fspec,Nmax,Erad,Gh,Ier)
+subroutine getshc(Fspec,Nmax,Erad,Gh,Ier)
 
-   class(shellig_type),intent(inout) :: me
    character(len=*),intent(in) :: Fspec !! File specification
    integer,intent(out) :: Nmax !! Maximum degree and order of model
    real(wp),intent(out) :: Erad !! Earth's radius associated with the spherical
@@ -1023,9 +1022,8 @@ END subroutine getshc
 !  * Version 1.01, A. Zunde
 !    USGS, MS 964, Box 25046 Federal Center, Denver, CO  80225
 
-subroutine intershc(me,date,dte1,nmax1,gh1,dte2,nmax2,gh2,nmax,gh)
+subroutine intershc(date,dte1,nmax1,gh1,dte2,nmax2,gh2,nmax,gh)
 
-   class(shellig_type),intent(inout) :: me
    real(wp),intent(in) :: date !! Date of resulting model (in decimal year)
    real(wp),intent(in) :: dte1 !! Date of earlier model
    integer,intent(in) :: nmax1 !! Maximum degree and order of earlier model
@@ -1082,9 +1080,8 @@ end subroutine intershc
 !  * Version 1.01, A. Zunde
 !    USGS, MS 964, Box 25046 Federal Center, Denver, CO  80225
 
-subroutine extrashc(me,date,dte1,nmax1,gh1,nmax2,gh2,nmax,gh)
+subroutine extrashc(date,dte1,nmax1,gh1,nmax2,gh2,nmax,gh)
 
-   class(shellig_type),intent(inout) :: me
    real(wp),intent(in) :: date   !! Date of resulting model (in decimal year)
    real(wp),intent(in) :: dte1   !! Date of base model
    integer,intent(in)  :: nmax1  !! Maximum degree and order of base model
