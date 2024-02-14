@@ -9,5 +9,6 @@ dict(
         int32="int",
         c_int="int",
         c_long="long",
+        c_intptr_t="long long",
         c_long_long="long long"),
 )
