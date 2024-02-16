@@ -36,8 +36,9 @@
       real(wp),dimension(3,3),parameter ::  u = reshape([ +0.3511737_wp , -0.9148385_wp , -0.1993679_wp , &
                                                           +0.9335804_wp , +0.3583680_wp , +0.0000000_wp , &
                                                           +0.0714471_wp , -0.1861260_wp , +0.9799247_wp], [3,3])
+      integer,parameter :: max_loop_index = 3333  !! used in [[shellg]] for the field line integration loop
 
-       type,public :: shellig_type
+      type,public :: shellig_type
          private
 
          character(len=:),allocatable :: igrf_dir !! directory containing the data files
@@ -66,6 +67,11 @@
          ! from feldcof, so we can cache the coefficients
          real(wp),dimension(120) :: gh2 = 0.0_wp   ! JW : why is this 120 and g is 144 ???
 
+         real(wp),dimension(:,:),allocatable :: p !! this was `p(8,100)` in the original code.
+                                                  !! used for the field line integration loop.
+                                                  !! changed it to be allocatable since it was
+                                                  !! changed to be p(8,3334).
+
          contains
          private
 
@@ -77,11 +83,20 @@
          procedure, public :: findb0
          procedure :: stoer, feldi
          procedure,public :: set_data_file_dir, get_data_file_dir
+         procedure,public :: destroy => destroy_shellig_type
 
       end type shellig_type
 
    contains
 !*****************************************************************************************
+
+!*****************************************************************************************
+!>
+!  Destroy a [[shellig_type]].
+
+   subroutine destroy_shellig_type(me)
+      class(shellig_type),intent(out) :: me
+   end subroutine destroy_shellig_type
 
 !*****************************************************************************************
 !>
@@ -361,13 +376,14 @@
 
    real(wp) :: arg1 , arg2 , bequ , bq1 , bq2 , bq3 , c0 , c1 , c2 , c3 , &
                d0 , d1 , d2, dimob0 , e0 , e1 , e2 , ff , fi , gg , &
-               hli , oradik , oterm , p(8,100) , r , r1 , r2 , r3 , r3h , radik , &
+               hli , oradik , oterm , r , r1 , r2 , r3 , r3h , radik , &
                rq , step12 , step2 , stp , t , term , xx , z , zq , zz
    integer :: i , iequ , n
 
    real(wp),parameter :: rmin = 0.05_wp !! boundaries for identification of `icode=2 and 3`
    real(wp),parameter :: rmax = 1.01_wp !! boundaries for identification of `icode=2 and 3`
-   integer,parameter :: max_loop_index = 100  ! 3333   <--- jw : original code had 3333 ... was this a bug ????
+
+   if (.not. allocated(me%p)) allocate(me%p(8,max_loop_index+1)) ! because `p(:,n+1)` in the loop
 
    bequ = 1.0e10_wp
 
@@ -379,173 +395,177 @@
       me%xi = geo_to_cart(glat,glon,alt)
    end if
 
-   ! convert to dipol-oriented co-ordinates
-   rq = 1.0_wp/(me%xi(1)*me%xi(1)+me%xi(2)*me%xi(2)+me%xi(3)*me%xi(3))
-   r3h = sqrt(rq*sqrt(rq))
-   p(1,2) = (me%xi(1)*u(1,1)+me%xi(2)*u(2,1)+me%xi(3)*u(3,1))*r3h
-   p(2,2) = (me%xi(1)*u(1,2)+me%xi(2)*u(2,2))*r3h
-   p(3,2) = (me%xi(1)*u(1,3)+me%xi(2)*u(2,3)+me%xi(3)*u(3,3))*rq
-   ! first three points of field line
-   me%step = -sign(me%step,p(3,2))
-   call me%stoer(p(1,2),bq2,r2)
-   b0 = sqrt(bq2)
-   p(1,3) = p(1,2) + 0.5_wp*me%step*p(4,2)
-   p(2,3) = p(2,2) + 0.5_wp*me%step*p(5,2)
-   p(3,3) = p(3,2) + 0.5_wp*me%step
-   call me%stoer(p(1,3),bq3,r3)
-   p(1,1) = p(1,2) - me%step*(2.0_wp*p(4,2)-p(4,3))
-   p(2,1) = p(2,2) - me%step*(2.0_wp*p(5,2)-p(5,3))
-   p(3,1) = p(3,2) - me%step
-   call me%stoer(p(1,1),bq1,r1)
-   p(1,3) = p(1,2) + me%step*(20.0_wp*p(4,3)-3.*p(4,2)+p(4,1))/18.0_wp
-   p(2,3) = p(2,2) + me%step*(20.0_wp*p(5,3)-3.*p(5,2)+p(5,1))/18.0_wp
-   p(3,3) = p(3,2) + me%step
-   call me%stoer(p(1,3),bq3,r3)
-   ! invert sense if required
-   if ( bq3>bq1 ) then
-      me%step = -me%step
-      r3 = r1
-      bq3 = bq1
-      do i = 1 , 7
-         zz = p(i,1)
-         p(i,1) = p(i,3)
-         p(i,3) = zz
-      enddo
-   endif
-   ! search for lowest magnetic field strength
-   if ( bq1<bequ ) then
-      bequ = bq1
-      iequ = 1
-   endif
-   if ( bq2<bequ ) then
-      bequ = bq2
-      iequ = 2
-   endif
-   if ( bq3<bequ ) then
-      bequ = bq3
-      iequ = 3
-   endif
-   ! initialization of integration loops
-   step12 = me%step/12.0_wp
-   step2 = me%step + me%step
-   me%steq = sign(me%steq,me%step)
-   fi = 0.0_wp
-   icode = 1
-   oradik = 0.0_wp
-   oterm = 0.0_wp
-   stp = r2*me%steq
-   z = p(3,2) + stp
-   stp = stp/0.75_wp
-   p(8,1) = step2*(p(1,1)*p(4,1)+p(2,1)*p(5,1))
-   p(8,2) = step2*(p(1,2)*p(4,2)+p(2,2)*p(5,2))
-   ! main loop (field line tracing)
-   main: do n = 3 , max_loop_index
-      ! corrector (field line tracing)
-      p(1,n) = p(1,n-1) + step12*(5.0_wp*p(4,n)+8.0_wp*p(4,n-1)-p(4,n-2))
-      p(2,n) = p(2,n-1) + step12*(5.0_wp*p(5,n)+8.0_wp*p(5,n-1)-p(5,n-2))
-      ! prepare expansion coefficients for interpolation
-      ! of slowly varying quantities
-      p(8,n) = step2*(p(1,n)*p(4,n)+p(2,n)*p(5,n))
-      c0 = p(1,n-1)**2 + p(2,n-1)**2
-      c1 = p(8,n-1)
-      c2 = (p(8,n)-p(8,n-2))*0.25_wp
-      c3 = (p(8,n)+p(8,n-2)-c1-c1)/6.0_wp
-      d0 = p(6,n-1)
-      d1 = (p(6,n)-p(6,n-2))*0.5_wp
-      d2 = (p(6,n)+p(6,n-2)-d0-d0)*0.5_wp
-      e0 = p(7,n-1)
-      e1 = (p(7,n)-p(7,n-2))*0.5_wp
-      e2 = (p(7,n)+p(7,n-2)-e0-e0)*0.5_wp
-      inner: do
-         ! inner loop (for quadrature)
-         t = (z-p(3,n-1))/me%step
-         if ( t>1.0_wp ) then
-            ! predictor (field line tracing)
-            p(1,n+1) = p(1,n) + step12*(23.0_wp*p(4,n)-16.0_wp*p(4,n-1)+5.0_wp*p(4,n-2))
-            p(2,n+1) = p(2,n) + step12*(23.0_wp*p(5,n)-16.0_wp*p(5,n-1)+5.0_wp*p(5,n-2))
-            p(3,n+1) = p(3,n) + me%step
-            call me%stoer(p(1,n+1),bq3,r3)
-            ! search for lowest magnetic field strength
-            if ( bq3<bequ ) then
-               iequ = n + 1
-               bequ = bq3
-            endif
-            exit inner
-         else
-            hli = 0.5_wp*(((c3*t+c2)*t+c1)*t+c0)
-            zq = z*z
-            r = hli + sqrt(hli*hli+zq)
-            if ( r<=rmin ) then
-               ! approximation for high values of l.
-               icode = 3
-               t = -p(3,n-1)/me%step
-               fl = 1.0_wp/(abs(((c3*t+c2)*t+c1)*t+c0)+1.0e-15_wp)
-               return
-            endif
-            rq = r*r
-            ff = sqrt(1.0_wp+3.0_wp*zq/rq)
-            radik = b0 - ((d2*t+d1)*t+d0)*r*rq*ff
-            if ( r>rmax ) then
-               icode = 2
-               radik = radik - 12.0_wp*(r-rmax)**2
-            endif
-            if ( radik+radik<=oradik ) exit main
-            term = sqrt(radik)*ff*((e2*t+e1)*t+e0)/(rq+zq)
-            fi = fi + stp*(oterm+term)
-            oradik = radik
-            oterm = term
-            stp = r*me%steq
-            z = z + stp
-         endif
-      enddo inner
-   enddo main
-   if ( iequ<2 ) iequ = 2
-   me%sp(1) = p(1,iequ-1)
-   me%sp(2) = p(2,iequ-1)
-   me%sp(3) = p(3,iequ-1)
-   if ( oradik>=1.0e-15_wp ) fi = fi + stp/0.75_wp*oterm*oradik/(oradik-radik)
+   associate (p => me%p)
 
-   ! the minimal allowable value of fi was changed from 1e-15 to 1e-12,
-   ! because 1e-38 is the minimal allowable arg. for alog in our envir.
-   ! d. bilitza, nov 87.
-   fi = 0.5_wp*abs(fi)/sqrt(b0) + 1.0e-12_wp
+      ! convert to dipol-oriented co-ordinates
+      rq = 1.0_wp/(me%xi(1)*me%xi(1)+me%xi(2)*me%xi(2)+me%xi(3)*me%xi(3))
+      r3h = sqrt(rq*sqrt(rq))
+      p(1,2) = (me%xi(1)*u(1,1)+me%xi(2)*u(2,1)+me%xi(3)*u(3,1))*r3h
+      p(2,2) = (me%xi(1)*u(1,2)+me%xi(2)*u(2,2))*r3h
+      p(3,2) = (me%xi(1)*u(1,3)+me%xi(2)*u(2,3)+me%xi(3)*u(3,3))*rq
+      ! first three points of field line
+      me%step = -sign(me%step,p(3,2))
+      call me%stoer(p(1,2),bq2,r2)
+      b0 = sqrt(bq2)
+      p(1,3) = p(1,2) + 0.5_wp*me%step*p(4,2)
+      p(2,3) = p(2,2) + 0.5_wp*me%step*p(5,2)
+      p(3,3) = p(3,2) + 0.5_wp*me%step
+      call me%stoer(p(1,3),bq3,r3)
+      p(1,1) = p(1,2) - me%step*(2.0_wp*p(4,2)-p(4,3))
+      p(2,1) = p(2,2) - me%step*(2.0_wp*p(5,2)-p(5,3))
+      p(3,1) = p(3,2) - me%step
+      call me%stoer(p(1,1),bq1,r1)
+      p(1,3) = p(1,2) + me%step*(20.0_wp*p(4,3)-3.*p(4,2)+p(4,1))/18.0_wp
+      p(2,3) = p(2,2) + me%step*(20.0_wp*p(5,3)-3.*p(5,2)+p(5,1))/18.0_wp
+      p(3,3) = p(3,2) + me%step
+      call me%stoer(p(1,3),bq3,r3)
+      ! invert sense if required
+      if ( bq3>bq1 ) then
+         me%step = -me%step
+         r3 = r1
+         bq3 = bq1
+         do i = 1 , 7
+            zz = p(i,1)
+            p(i,1) = p(i,3)
+            p(i,3) = zz
+         enddo
+      endif
+      ! search for lowest magnetic field strength
+      if ( bq1<bequ ) then
+         bequ = bq1
+         iequ = 1
+      endif
+      if ( bq2<bequ ) then
+         bequ = bq2
+         iequ = 2
+      endif
+      if ( bq3<bequ ) then
+         bequ = bq3
+         iequ = 3
+      endif
+      ! initialization of integration loops
+      step12 = me%step/12.0_wp
+      step2 = me%step + me%step
+      me%steq = sign(me%steq,me%step)
+      fi = 0.0_wp
+      icode = 1
+      oradik = 0.0_wp
+      oterm = 0.0_wp
+      stp = r2*me%steq
+      z = p(3,2) + stp
+      stp = stp/0.75_wp
+      p(8,1) = step2*(p(1,1)*p(4,1)+p(2,1)*p(5,1))
+      p(8,2) = step2*(p(1,2)*p(4,2)+p(2,2)*p(5,2))
+      ! main loop (field line tracing)
+      main: do n = 3 , max_loop_index
+         ! corrector (field line tracing)
+         p(1,n) = p(1,n-1) + step12*(5.0_wp*p(4,n)+8.0_wp*p(4,n-1)-p(4,n-2))
+         p(2,n) = p(2,n-1) + step12*(5.0_wp*p(5,n)+8.0_wp*p(5,n-1)-p(5,n-2))
+         ! prepare expansion coefficients for interpolation
+         ! of slowly varying quantities
+         p(8,n) = step2*(p(1,n)*p(4,n)+p(2,n)*p(5,n))
+         c0 = p(1,n-1)**2 + p(2,n-1)**2
+         c1 = p(8,n-1)
+         c2 = (p(8,n)-p(8,n-2))*0.25_wp
+         c3 = (p(8,n)+p(8,n-2)-c1-c1)/6.0_wp
+         d0 = p(6,n-1)
+         d1 = (p(6,n)-p(6,n-2))*0.5_wp
+         d2 = (p(6,n)+p(6,n-2)-d0-d0)*0.5_wp
+         e0 = p(7,n-1)
+         e1 = (p(7,n)-p(7,n-2))*0.5_wp
+         e2 = (p(7,n)+p(7,n-2)-e0-e0)*0.5_wp
+         inner: do
+            ! inner loop (for quadrature)
+            t = (z-p(3,n-1))/me%step
+            if ( t>1.0_wp ) then
+               ! predictor (field line tracing)
+               p(1,n+1) = p(1,n) + step12*(23.0_wp*p(4,n)-16.0_wp*p(4,n-1)+5.0_wp*p(4,n-2))
+               p(2,n+1) = p(2,n) + step12*(23.0_wp*p(5,n)-16.0_wp*p(5,n-1)+5.0_wp*p(5,n-2))
+               p(3,n+1) = p(3,n) + me%step
+               call me%stoer(p(1,n+1),bq3,r3)
+               ! search for lowest magnetic field strength
+               if ( bq3<bequ ) then
+                  iequ = n + 1
+                  bequ = bq3
+               endif
+               exit inner
+            else
+               hli = 0.5_wp*(((c3*t+c2)*t+c1)*t+c0)
+               zq = z*z
+               r = hli + sqrt(hli*hli+zq)
+               if ( r<=rmin ) then
+                  ! approximation for high values of l.
+                  icode = 3
+                  t = -p(3,n-1)/me%step
+                  fl = 1.0_wp/(abs(((c3*t+c2)*t+c1)*t+c0)+1.0e-15_wp)
+                  return
+               endif
+               rq = r*r
+               ff = sqrt(1.0_wp+3.0_wp*zq/rq)
+               radik = b0 - ((d2*t+d1)*t+d0)*r*rq*ff
+               if ( r>rmax ) then
+                  icode = 2
+                  radik = radik - 12.0_wp*(r-rmax)**2
+               endif
+               if ( radik+radik<=oradik ) exit main
+               term = sqrt(radik)*ff*((e2*t+e1)*t+e0)/(rq+zq)
+               fi = fi + stp*(oterm+term)
+               oradik = radik
+               oterm = term
+               stp = r*me%steq
+               z = z + stp
+            endif
+         enddo inner
+      enddo main
+      if ( iequ<2 ) iequ = 2
+      me%sp(1) = p(1,iequ-1)
+      me%sp(2) = p(2,iequ-1)
+      me%sp(3) = p(3,iequ-1)
+      if ( oradik>=1.0e-15_wp ) fi = fi + stp/0.75_wp*oterm*oradik/(oradik-radik)
 
-   ! compute l from b and i.  same as carmel in invar.
-   ! correct dipole moment is used here. d. bilitza, nov 87.
-   dimob0 = dimo/b0
-   arg1 = log(fi)
-   arg2 = log(dimob0)
-   ! arg = fi*fi*fi/dimob0
-   ! if(abs(arg)>88.0_wp) arg=88.0_wp
-   xx = 3*arg1 - arg2
-   if ( xx>23.0_wp ) then
-      gg = xx - 3.0460681_wp
-   elseif ( xx>11.7_wp ) then
-      gg = (((((2.8212095e-8_wp*xx-3.8049276e-6_wp)*xx+&
-                  2.170224e-4_wp)*xx-6.7310339e-3_wp)*xx+&
-                  1.2038224e-1_wp)*xx-1.8461796e-1_wp)*xx + 2.0007187_wp
-   elseif ( xx>+3.0_wp ) then
-      gg = ((((((((6.3271665e-10_wp*xx-3.958306e-8_wp)*xx+&
-                     9.9766148e-07_wp)*xx-1.2531932e-5_wp)*xx+&
-                     7.9451313e-5_wp)*xx-3.2077032e-4_wp)*xx+&
-                     2.1680398e-3_wp)*xx+1.2817956e-2_wp)*xx+&
-                     4.3510529e-1_wp)*xx + 6.222355e-1_wp
-   elseif ( xx>-3.0_wp ) then
-      gg = ((((((((2.6047023e-10_wp*xx+2.3028767e-9_wp)*xx-&
-                     2.1997983e-8_wp)*xx-5.3977642e-7_wp)*xx-&
-                     3.3408822e-6_wp)*xx+3.8379917e-5_wp)*xx+&
-                     1.1784234e-3_wp)*xx+1.4492441e-2_wp)*xx+&
-                     4.3352788e-1_wp)*xx + 6.228644e-1_wp
-   elseif ( xx>-22.0_wp ) then
-      gg = ((((((((-8.1537735e-14_wp*xx+8.3232531e-13_wp)*xx+&
-                     1.0066362e-9_wp)*xx+8.1048663e-8_wp)*xx+&
-                     3.2916354e-6_wp)*xx+8.2711096e-5_wp)*xx+&
-                     1.3714667e-3_wp)*xx+1.5017245e-2_wp)*xx+&
-                     4.3432642e-1_wp)*xx + 6.2337691e-1_wp
-   else
-      gg = 3.33338e-1_wp*xx + 3.0062102e-1_wp
-   endif
-   fl = exp(log((1.0_wp+exp(gg))*dimob0)/3.0_wp)
+      ! the minimal allowable value of fi was changed from 1e-15 to 1e-12,
+      ! because 1e-38 is the minimal allowable arg. for alog in our envir.
+      ! d. bilitza, nov 87.
+      fi = 0.5_wp*abs(fi)/sqrt(b0) + 1.0e-12_wp
+
+      ! compute l from b and i.  same as carmel in invar.
+      ! correct dipole moment is used here. d. bilitza, nov 87.
+      dimob0 = dimo/b0
+      arg1 = log(fi)
+      arg2 = log(dimob0)
+      ! arg = fi*fi*fi/dimob0
+      ! if(abs(arg)>88.0_wp) arg=88.0_wp
+      xx = 3*arg1 - arg2
+      if ( xx>23.0_wp ) then
+         gg = xx - 3.0460681_wp
+      elseif ( xx>11.7_wp ) then
+         gg = (((((2.8212095e-8_wp*xx-3.8049276e-6_wp)*xx+&
+                     2.170224e-4_wp)*xx-6.7310339e-3_wp)*xx+&
+                     1.2038224e-1_wp)*xx-1.8461796e-1_wp)*xx + 2.0007187_wp
+      elseif ( xx>+3.0_wp ) then
+         gg = ((((((((6.3271665e-10_wp*xx-3.958306e-8_wp)*xx+&
+                        9.9766148e-07_wp)*xx-1.2531932e-5_wp)*xx+&
+                        7.9451313e-5_wp)*xx-3.2077032e-4_wp)*xx+&
+                        2.1680398e-3_wp)*xx+1.2817956e-2_wp)*xx+&
+                        4.3510529e-1_wp)*xx + 6.222355e-1_wp
+      elseif ( xx>-3.0_wp ) then
+         gg = ((((((((2.6047023e-10_wp*xx+2.3028767e-9_wp)*xx-&
+                        2.1997983e-8_wp)*xx-5.3977642e-7_wp)*xx-&
+                        3.3408822e-6_wp)*xx+3.8379917e-5_wp)*xx+&
+                        1.1784234e-3_wp)*xx+1.4492441e-2_wp)*xx+&
+                        4.3352788e-1_wp)*xx + 6.228644e-1_wp
+      elseif ( xx>-22.0_wp ) then
+         gg = ((((((((-8.1537735e-14_wp*xx+8.3232531e-13_wp)*xx+&
+                        1.0066362e-9_wp)*xx+8.1048663e-8_wp)*xx+&
+                        3.2916354e-6_wp)*xx+8.2711096e-5_wp)*xx+&
+                        1.3714667e-3_wp)*xx+1.5017245e-2_wp)*xx+&
+                        4.3432642e-1_wp)*xx + 6.2337691e-1_wp
+      else
+         gg = 3.33338e-1_wp*xx + 3.0062102e-1_wp
+      endif
+      fl = exp(log((1.0_wp+exp(gg))*dimob0)/3.0_wp)
+
+   end associate
 
 end subroutine shellg
 
