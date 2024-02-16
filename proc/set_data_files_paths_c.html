@@ -10,7 +10,7 @@
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
 
-    <title>set_data_file_dir &ndash; radbelt</title>
+    <title>set_data_files_paths_c &ndash; radbelt</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -62,7 +62,7 @@
 
     <div class="container">
   <div class="row">
-    <h1>set_data_file_dir
+    <h1>set_data_files_paths_c
       <small>Subroutine</small>
       
     </h1>
@@ -74,21 +74,21 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title=" 0.4% of total for procedures.">5 statements</a>
+                 title=" 1.3% of total for procedures.">15 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
-              <a href="../src/trmfun.f90"> Source File</a>
+              <a href="../src/radbelt_c_module.f90"> Source File</a>
             </li>
         </ul>
       </div>
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/trmfun.f90.html'>trmfun.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/trmfun_module.html'>trmfun_module</a></li>
-            <li class="breadcrumb-item active" aria-current="page">set_data_file_dir</li>
+                <li class="breadcrumb-item"><a href='../sourcefile/radbelt_c_module.f90.html'>radbelt_c_module.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/radbelt_c_module.html'>radbelt_c_module</a></li>
+            <li class="breadcrumb-item active" aria-current="page">set_data_files_paths_c</li>
           </ol>
         </nav>
       </div>
@@ -129,7 +129,7 @@
     <div class="card card-primary">
       <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
       <div class="list-group">
-        <a class="list-group-item" href="../proc/set_data_file_dir.html#src">set_data_file_dir</a>
+        <a class="list-group-item" href="../proc/set_data_files_paths_c.html#src">set_data_files_paths_c</a>
       </div>
     </div>
 
@@ -139,14 +139,12 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>private  subroutine set_data_file_dir(me, dir)  
+    <h2>public  subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir) bind(C, name="set_data_files_paths_c")  
 </h2>
     
 
-    <p>Set the directory containing the data files.</p>
+    <p>C interface for setting the data file paths</p>
 
-    <h3>Type Bound</h3>
-    <p><a href='../type/trm_type.html'>trm_type</a></p>
 
     <h3>Arguments</h3>
         <table class="table table-striped varlist">
@@ -161,30 +159,45 @@
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me"></span>
-              class(<a href='../type/trm_type.html'>trm_type</a>),
-            </td>
-<td>intent(inout)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>me</strong></td>
-            <td>
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-dir"></span>
-              character(len=*),
+              <span class="anchor" id="variable-ipointer~4"></span>
+              integer(kind=c_intptr_t),
             </td>
 <td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
-            <td><strong>dir</strong></td>
+            <td><strong>ipointer</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-aep8_dir~3"></span>
+              character(kind=c_char, len=1),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(STR_LEN)
+            </td>
+            <td>::</td>
+            <td><strong>aep8_dir</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-igrf_dir~3"></span>
+              character(kind=c_char, len=1),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(STR_LEN)
+            </td>
+            <td>::</td>
+            <td><strong>igrf_dir</strong></td>
             <td>
                 
             </td>
@@ -195,7 +208,7 @@
     <br>
     <div class="card">
       <div class="card-header">
-  <h3 class="card-title">Called by</h3>
+  <h3 class="card-title">Calls</h3>
       </div>
       <div class="card-body">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -203,58 +216,88 @@
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
-<!-- Title: proc~~set_data_file_dir~~CalledByGraph Pages: 1 -->
-<svg id="procset_data_file_dirCalledByGraph" width="641pt" height="24pt"
- viewBox="0.00 0.00 641.00 24.27" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~set_data_file_dir~~CalledByGraph" class="graph" transform="scale(1.32 1.32) rotate(0) translate(4 28)">
-<title>proc~~set_data_file_dir~~CalledByGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 841,-28 841,4 -4,4"/>
-<!-- proc~set_data_file_dir -->
-<g id="proc~~set_data_file_dir~~CalledByGraph_node1" class="node">
-<title>proc~set_data_file_dir</title>
-<polygon fill="none" stroke="black" points="837,-24 592,-24 592,0 837,0 837,-24"/>
-<text text-anchor="middle" x="714.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">trmfun_module::trm_type%set_data_file_dir</text>
+<!-- Title: proc~~set_data_files_paths_c~~CallsGraph Pages: 1 -->
+<svg id="procset_data_files_paths_cCallsGraph" width="641pt" height="88pt"
+ viewBox="0.00 0.00 641.00 88.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~set_data_files_paths_c~~CallsGraph" class="graph" transform="scale(1.32 1.32) rotate(0) translate(4 112)">
+<title>proc~~set_data_files_paths_c~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 841,-112 841,4 -4,4"/>
+<!-- proc~set_data_files_paths_c -->
+<g id="proc~~set_data_files_paths_c~~CallsGraph_node1" class="node">
+<title>proc~set_data_files_paths_c</title>
+<polygon fill="none" stroke="black" points="233,-66 0,-66 0,-42 233,-42 233,-66"/>
+<text text-anchor="middle" x="116.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50">radbelt_c_module::set_data_files_paths_c</text>
+</g>
+<!-- proc~c2f_str -->
+<g id="proc~~set_data_files_paths_c~~CallsGraph_node2" class="node">
+<title>proc~c2f_str</title>
+<g id="a_proc~~set_data_files_paths_c~~CallsGraph_node2"><a xlink:href="../proc/c2f_str.html" xlink:title="radbelt_c_module::c2f_str">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="488,-108 337,-108 337,-84 488,-84 488,-108"/>
+<text text-anchor="middle" x="412.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">radbelt_c_module::c2f_str</text>
+</a>
+</g>
+</g>
+<!-- proc~set_data_files_paths_c&#45;&gt;proc~c2f_str -->
+<g id="proc~~set_data_files_paths_c~~CallsGraph_edge1" class="edge">
+<title>proc~set_data_files_paths_c&#45;&gt;proc~c2f_str</title>
+<path fill="none" stroke="#000000" d="M201.75,-66.04C240.93,-71.63 287.43,-78.28 326.68,-83.88"/>
+<polygon fill="#000000" stroke="#000000" points="326.36,-87.37 336.75,-85.32 327.35,-80.44 326.36,-87.37"/>
+</g>
+<!-- proc~int_pointer_to_f_pointer -->
+<g id="proc~~set_data_files_paths_c~~CallsGraph_node3" class="node">
+<title>proc~int_pointer_to_f_pointer</title>
+<g id="a_proc~~set_data_files_paths_c~~CallsGraph_node3"><a xlink:href="../proc/int_pointer_to_f_pointer.html" xlink:title="radbelt_c_module::int_pointer_to_f_pointer">
+<polygon fill="#d9534f" stroke="#d9534f" points="533,-66 292,-66 292,-42 533,-42 533,-66"/>
+<text text-anchor="middle" x="412.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">radbelt_c_module::int_pointer_to_f_pointer</text>
+</a>
+</g>
+</g>
+<!-- proc~set_data_files_paths_c&#45;&gt;proc~int_pointer_to_f_pointer -->
+<g id="proc~~set_data_files_paths_c~~CallsGraph_edge2" class="edge">
+<title>proc~set_data_files_paths_c&#45;&gt;proc~int_pointer_to_f_pointer</title>
+<path fill="none" stroke="#000000" d="M233.27,-54C249.24,-54 265.73,-54 281.92,-54"/>
+<polygon fill="#000000" stroke="#000000" points="281.97,-57.5 291.97,-54 281.97,-50.5 281.97,-57.5"/>
 </g>
 <!-- proc~set_data_files_paths -->
-<g id="proc~~set_data_file_dir~~CalledByGraph_node2" class="node">
+<g id="proc~~set_data_files_paths_c~~CallsGraph_node4" class="node">
 <title>proc~set_data_files_paths</title>
-<g id="a_proc~~set_data_file_dir~~CalledByGraph_node2"><a xlink:href="../proc/set_data_files_paths.html" xlink:title="radbelt_module::radbelt_type%set_data_files_paths">
+<g id="a_proc~~set_data_files_paths_c~~CallsGraph_node4"><a xlink:href="../proc/set_data_files_paths.html" xlink:title="radbelt_module::radbelt_type%set_data_files_paths">
 <polygon fill="#d9534f" stroke="#d9534f" points="556,-24 269,-24 269,0 556,0 556,-24"/>
 <text text-anchor="middle" x="412.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">radbelt_module::radbelt_type%set_data_files_paths</text>
 </a>
 </g>
 </g>
+<!-- proc~set_data_files_paths_c&#45;&gt;proc~set_data_files_paths -->
+<g id="proc~~set_data_files_paths_c~~CallsGraph_edge3" class="edge">
+<title>proc~set_data_files_paths_c&#45;&gt;proc~set_data_files_paths</title>
+<path fill="none" stroke="#000000" d="M201.75,-41.96C237.81,-36.81 280.07,-30.78 317.17,-25.48"/>
+<polygon fill="#000000" stroke="#000000" points="318.09,-28.88 327.49,-24 317.1,-21.95 318.09,-28.88"/>
+</g>
+<!-- proc~set_data_file_dir -->
+<g id="proc~~set_data_files_paths_c~~CallsGraph_node5" class="node">
+<title>proc~set_data_file_dir</title>
+<g id="a_proc~~set_data_files_paths_c~~CallsGraph_node5"><a xlink:href="../proc/set_data_file_dir.html" xlink:title="trmfun_module::trm_type%set_data_file_dir">
+<polygon fill="#d9534f" stroke="#d9534f" points="837,-24 592,-24 592,0 837,0 837,-24"/>
+<text text-anchor="middle" x="714.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">trmfun_module::trm_type%set_data_file_dir</text>
+</a>
+</g>
+</g>
 <!-- proc~set_data_files_paths&#45;&gt;proc~set_data_file_dir -->
-<g id="proc~~set_data_file_dir~~CalledByGraph_edge1" class="edge">
+<g id="proc~~set_data_files_paths_c~~CallsGraph_edge4" class="edge">
 <title>proc~set_data_files_paths&#45;&gt;proc~set_data_file_dir</title>
 <path fill="none" stroke="#000000" d="M556.03,-12C564.52,-12 573.05,-12 581.49,-12"/>
 <polygon fill="#000000" stroke="#000000" points="581.75,-15.5 591.75,-12 581.75,-8.5 581.75,-15.5"/>
 </g>
-<!-- proc~set_data_files_paths_c -->
-<g id="proc~~set_data_file_dir~~CalledByGraph_node3" class="node">
-<title>proc~set_data_files_paths_c</title>
-<g id="a_proc~~set_data_file_dir~~CalledByGraph_node3"><a xlink:href="../proc/set_data_files_paths_c.html" xlink:title="radbelt_c_module::set_data_files_paths_c">
-<polygon fill="#d9534f" stroke="#d9534f" points="233,-24 0,-24 0,0 233,0 233,-24"/>
-<text text-anchor="middle" x="116.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">radbelt_c_module::set_data_files_paths_c</text>
-</a>
-</g>
-</g>
-<!-- proc~set_data_files_paths_c&#45;&gt;proc~set_data_files_paths -->
-<g id="proc~~set_data_file_dir~~CalledByGraph_edge2" class="edge">
-<title>proc~set_data_files_paths_c&#45;&gt;proc~set_data_files_paths</title>
-<path fill="none" stroke="#000000" d="M233.27,-12C241.71,-12 250.28,-12 258.88,-12"/>
-<polygon fill="#000000" stroke="#000000" points="258.98,-15.5 268.98,-12 258.98,-8.5 258.98,-15.5"/>
-</g>
 </g>
 </svg>
 </div>                <script>
-                  var panprocset_data_file_dirCalledByGraph = svgPanZoom('#procset_data_file_dirCalledByGraph',
+                  var panprocset_data_files_paths_cCallsGraph = svgPanZoom('#procset_data_files_paths_cCallsGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
                 </script>          <div>
-            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
           </div>
-          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -344,11 +387,29 @@ implementation in a submodule of an interface in a parent module.
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">subroutine </span><span class="n">set_data_file_dir</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">dir</span><span class="p">)</span>
-<span class="w">      </span><span class="k">class</span><span class="p">(</span><span class="n">trm_type</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span>
-<span class="w">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dir</span>
-<span class="w">      </span><span class="n">me</span><span class="p">%</span><span class="n">aep8_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">trim</span><span class="p">(</span><span class="n">dir</span><span class="p">)</span>
-<span class="w">   </span><span class="k">end subroutine </span><span class="n">set_data_file_dir</span>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">set_data_files_paths_c</span><span class="p">(</span><span class="n">ipointer</span><span class="p">,</span><span class="w"> </span><span class="n">aep8_dir</span><span class="p">,</span><span class="w"> </span><span class="n">igrf_dir</span><span class="p">)</span><span class="w"> </span><span class="k">bind</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;set_data_files_paths_c&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="kt">c_intptr_t</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ipointer</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="kt">c_char</span><span class="p">,</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">STR_LEN</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">aep8_dir</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="kt">c_char</span><span class="p">,</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">STR_LEN</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">igrf_dir</span>
+
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">aep8_dir_</span><span class="p">,</span><span class="w"> </span><span class="n">igrf_dir_</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">radbelt_type</span><span class="p">),</span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span>
+
+<span class="w">    </span><span class="k">call </span><span class="n">int_pointer_to_f_pointer</span><span class="p">(</span><span class="n">ipointer</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">associated</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+
+<span class="k">        </span><span class="n">aep8_dir_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c2f_str</span><span class="p">(</span><span class="n">aep8_dir</span><span class="p">)</span>
+<span class="w">        </span><span class="n">igrf_dir_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c2f_str</span><span class="p">(</span><span class="n">igrf_dir</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">call </span><span class="n">p</span><span class="p">%</span><span class="n">set_data_files_paths</span><span class="p">(</span><span class="n">aep8_dir_</span><span class="p">,</span><span class="w"> </span><span class="n">igrf_dir_</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">else</span>
+<span class="k">        error stop</span><span class="w"> </span><span class="s1">&#39;error in set_data_files_paths_c: class is not associated&#39;</span>
+<span class="w">    </span><span class="k">end if</span>
+
+<span class="k"> end subroutine </span><span class="n">set_data_files_paths_c</span>
 </pre></div>
 
     </section>

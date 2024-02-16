@@ -93,17 +93,17 @@ fpm test --profile release
 <p>The latest API documentation can be found <a href="https://jacobwilliams.github.io/radbelt/">here</a>. This was generated from the source code using <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>.</p>
 <h3>Original source</h3>
 <ul>
-<li>The original sourcecode was hosted at GSFC "Modelweb", which no longer exists, but an archive can be found at the <a href="https://web.archive.org/web/20210318113325/https://ccmc.gsfc.nasa.gov/pub/modelweb/">Internet Archive</a>. It is presumed to be in the public domain. Reference: National Space Science Data Center, Data set PT-11B, Mar 1996. Dieter Bilitza, GSFC/NSSDC code 633, Greenbelt, MD 20771, tel. (301) 286-0190, dbilitza@pop600.gsfc.nasa.gov</li>
+<li>The original sourcecode was hosted at GSFC "Modelweb", an archive of which can be found <a href="https://git.smce.nasa.gov/ccmc-share/modelwebarchive">here</a>. It is presumed to be in the public domain. Reference: National Space Science Data Center, Data set PT-11B, Mar 1996. Dieter Bilitza, GSFC/NSSDC code 633, Greenbelt, MD 20771.</li>
 </ul>
 <h3>See also</h3>
 <ul>
-<li><a href="https://git.smce.nasa.gov/ccmc-share/modelwebarchive">NASA ModelWebArchive</a></li>
+<li><a href="https://git.smce.nasa.gov/ccmc-share/modelwebarchive/-/tree/main/IGRF">NASA ModelWebArchive Archive (IGRF)</a></li>
+<li><a href="https://git.smce.nasa.gov/ccmc-share/modelwebarchive/-/tree/main/RADBELT">NASA ModelWebArchive Archive (RADBELT)</a></li>
+<li><a href="https://www.ngdc.noaa.gov/IAGA/vmod/igrf.html">International Geomagnetic Reference Field</a></li>
 <li><a href="https://github.com/nasa/radbelt">An Astropy-friendly wrapper for the AE-8/AP-8 Van Allen belt model</a></li>
 <li><a href="https://github.com/rilma/pyIGRF">pyIGRF</a></li>
 <li>https://github.com/lanl/RAM-SCB/blob/master/srcExternal/igrf.f</li>
 <li>https://github.com/space-physics/igrf/blob/main/src/igrf/fortran/igrf13.f</li>
-<li>https://web.archive.org/web/20210318113325/https://ccmc.gsfc.nasa.gov/pub/modelweb/</li>
-<li>Model parameters can be computed and plotted online at http://nssdc.gsfc.nasa.gov/space/model/ [broken link]</li>
 </ul>
 <h3>Test case</h3>
 <p>See the <code>radbelt_test.f90</code> and <code>test.py</code> files:</p>
@@ -193,29 +193,16 @@ and Beliaev (1995) had found and corrected a small error in the AP8MIN map;
 two lines had been exchanged.</p>
 <h3>References</h3>
 <ul>
-<li>G.W. Singley, and J.I. Vette, The AE-4 Model of the Outer Radiation
-  Zone Electron Environment, NSSDC/WDC-A-R&amp;S 72-06, 1972.</li>
-<li>M.J. Teague, and J.I. Vette, A Model of the Trapped Electron
-  Population for Solar Minimum (AE-5), NSSDC/WDC-A-R&amp;S 74-03, 1974.</li>
-<li>M.J. Teague, K.W. Chan, and J.I. Vette, AE-6: A Model Environment
-  of Trapped Electrons for Solar Maximum, NSSDC/WDC-A-R&amp;S 76-04, 1976</li>
-<li>D.W. Sawyer, and J.I. Vette, AP-8 Trapped Proton Environment for
-  Solar Maximum and Minimum, NSSDC/WDC-A-R&amp;S 76-06, 1976.</li>
-<li>J.I. Vette, K.W. Chan, and M.J. Teague, Problems in Modeling the
-  Earth's Trapped Radiation Environment, AFGL-TR-78-0130, 1978.</li>
-<li>K.W. Chan, M.J. Teague, N.J. Schofield, and J.I. Vette, Modeling of
-  Electron Time Variation in the Radiation Belts, p. 121-149, in:
-  Quantitative Modeling of Magnetospheric Processes, W.P. Olson
-  (ed.), geophysical monograph 21, American Geophysical Union, 1979.</li>
-<li>M.T. Teague, N.J. Schofield, K.W. Chan, and J.I. Vette, A Study of
-  Inner Zone Electron Data and their Comparison with Trapped
-  Radiation Models, NSSDC/WDC-A-R&amp;S 79-06, 1979.</li>
-<li>J.I. Vette, The AE-8 Trapped Electron Model Environment,
-  NSSDC/WDC-A-R&amp;S 91-24, 1991.</li>
-<li>J.I. Vette, The NASA/National Space Science Data Center Trapped
-  Radiation Environment Model Program (1964-1991), NSSDC/WDC-A-R&amp;S
-  91-29, 1991.</li>
-<li>D. Heynderickx and A. Beliaev, J. Spacecraft and Rockets 32, 190-192, 1995.</li>
+<li>G.W. Singley, and J.I. Vette, <a href="https://ntrs.nasa.gov/api/citations/19740012390/downloads/19740012390.pdf">The AE-4 Model of the Outer Radiation Zone Electron Environment</a>, NSSDC/WDC-A-R&amp;S 72-06, 1972.</li>
+<li>M.J. Teague, and J.I. Vette, <a href="https://ntrs.nasa.gov/api/citations/19740018161/downloads/19740018161.pdf">A Model of the Trapped Electron Population for Solar Minimum (AE-5)</a>, NSSDC/WDC-A-R&amp;S 74-03, 1974.</li>
+<li>M.J. Teague, K.W. Chan, and J.I. Vette, <a href="https://ntrs.nasa.gov/api/citations/19760016051/downloads/19760016051.pdf">AE-6: A Model Environment of Trapped Electrons for Solar Maximum</a>, NSSDC/WDC-A-R&amp;S 76-04, 1976</li>
+<li>D.W. Sawyer, and J.I. Vette, AP-8 Trapped Proton Environment for Solar Maximum and Minimum, NSSDC/WDC-A-R&amp;S 76-06, 1976.</li>
+<li>J.I. Vette, K.W. Chan, and M.J. Teague, <a href="https://apps.dtic.mil/sti/pdfs/ADA059273.pdf">Problems in Modeling the Earth's Trapped Radiation Environment</a>, AFGL-TR-78-0130, 1978.</li>
+<li>K.W. Chan, M.J. Teague, N.J. Schofield, and J.I. Vette, Modeling of Electron Time Variation in the Radiation Belts, p. 121-149, in: Quantitative Modeling of Magnetospheric Processes, W.P. Olson (ed.), geophysical monograph 21, American Geophysical Union, 1979.</li>
+<li>M.T. Teague, N.J. Schofield, K.W. Chan, and J.I. Vette, <a href="https://ntrs.nasa.gov/api/citations/19790025500/downloads/19790025500.pdf">A Study of Inner Zone Electron Data and their Comparison with Trapped Radiation Models</a>, NSSDC/WDC-A-R&amp;S 79-06, 1979.</li>
+<li>J.I. Vette, <a href="https://ntrs.nasa.gov/api/citations/19920014985/downloads/19920014985.pdf">The AE-8 Trapped Electron Model Environment</a>, NSSDC/WDC-A-R&amp;S 91-24, 1991.</li>
+<li>J.I. Vette, <a href="https://ntrs.nasa.gov/api/citations/19930001815/downloads/19930001815.pdf">The NASA/National Space Science Data Center Trapped Radiation Environment Model Program (1964-1991)</a>, NSSDC/WDC-A-R&amp;S 91-29, 1991.</li>
+<li>D. Heynderickx and A. Beliaev, <a href="https://arc.aiaa.org/doi/10.2514/3.26595">Identification of an error in the distribution of the NASA model AP-8 MIN</a>, J. Spacecraft and Rockets 32, 190-192, 1995.</li>
 </ul>
         </div>
           <div class="col-md-4">
@@ -234,7 +221,7 @@ two lines had been exchanged.</p>
           <div class="col-xs-6 col-sm-3">
             <div>
               <h3>Source Files</h3>
-              <ul><li><a href='sourcefile/radbelt_kinds_module.f90.html'>radbelt_kinds_module.F90</a></li><li><a href='sourcefile/redbelt_module.f90.html'>redbelt_module.f90</a></li><li><a href='sourcefile/shellig.f90.html'>shellig.f90</a></li><li><a href='sourcefile/trmfun.f90.html'>trmfun.f90</a></li></ul>
+              <ul><li><a href='sourcefile/radbelt_c_module.f90.html'>radbelt_c_module.f90</a></li><li><a href='sourcefile/radbelt_kinds_module.f90.html'>radbelt_kinds_module.F90</a></li><li><a href='sourcefile/radbelt_module.f90.html'>radbelt_module.f90</a></li><li><a href='sourcefile/shellig.f90.html'>shellig.f90</a></li><li><a href='sourcefile/trmfun.f90.html'>trmfun.f90</a></li></ul>
             </div>
             <div>
               <ul>
@@ -245,7 +232,7 @@ two lines had been exchanged.</p>
           <div class="col-xs-6 col-sm-3">
             <div>
               <h3>Modules</h3>
-              <ul><li><a href='module/radbelt_kinds_module.html'>radbelt_kinds_module</a></li><li><a href='module/redbelt_module.html'>redbelt_module</a></li><li><a href='module/shellig_module.html'>shellig_module</a></li><li><a href='module/trmfun_module.html'>trmfun_module</a></li></ul>
+              <ul><li><a href='module/radbelt_c_module.html'>radbelt_c_module</a></li><li><a href='module/radbelt_kinds_module.html'>radbelt_kinds_module</a></li><li><a href='module/radbelt_module.html'>radbelt_module</a></li><li><a href='module/shellig_module.html'>shellig_module</a></li><li><a href='module/trmfun_module.html'>trmfun_module</a></li></ul>
             </div>
             <div>
               <ul>
@@ -256,7 +243,7 @@ two lines had been exchanged.</p>
           <div class="col-xs-6 col-sm-3">
             <div>
               <h3>Procedures</h3>
-              <ul><li><a href='proc/aep8.html'>aep8</a></li><li><a href='proc/extrashc.html'>extrashc</a></li><li><a href='proc/feldc.html'>feldc</a></li><li><a href='proc/feldcof.html'>feldcof</a></li><li><a href='proc/feldg.html'>feldg</a></li><li><a href='proc/feldi.html'>feldi</a></li><li><a href='proc/findb0.html'>findb0</a></li><li><a href='proc/get_data_file_dir.html'>get_data_file_dir</a></li><li><a href='proc/get_data_file_dir~2.html'>get_data_file_dir</a></li><li><a href='interface/get_flux.html'>get_flux</a></li></ul>
+              <ul><li><a href='proc/aep8.html'>aep8</a></li><li><a href='proc/c2f_str.html'>c2f_str</a></li><li><a href='proc/destroy_c.html'>destroy_c</a></li><li><a href='proc/extrashc.html'>extrashc</a></li><li><a href='proc/feldc.html'>feldc</a></li><li><a href='proc/feldcof.html'>feldcof</a></li><li><a href='proc/feldg.html'>feldg</a></li><li><a href='proc/feldi.html'>feldi</a></li><li><a href='proc/findb0.html'>findb0</a></li><li><a href='proc/geo_to_cart.html'>geo_to_cart</a></li></ul>
             </div>
             <div>
               <ul>

@@ -1,0 +1,873 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="radbelt">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>radbelt_c_module &ndash; radbelt</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">radbelt </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>radbelt_c_module
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 5.9% of total for modules and submodules.">74 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/radbelt_c_module.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/radbelt_c_module.f90.html'>radbelt_c_module.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">radbelt_c_module</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/radbelt_c_module.html#variable-str_len">STR_LEN</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/radbelt_c_module.html#proc-c2f_str">c2f_str</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/radbelt_c_module.html#proc-int_pointer_to_f_pointer">int_pointer_to_f_pointer</a>
+            <a class="list-group-item" href="../module/radbelt_c_module.html#proc-initialize_c">initialize_c</a>
+            <a class="list-group-item" href="../module/radbelt_c_module.html#proc-destroy_c">destroy_c</a>
+            <a class="list-group-item" href="../module/radbelt_c_module.html#proc-set_data_files_paths_c">set_data_files_paths_c</a>
+            <a class="list-group-item" href="../module/radbelt_c_module.html#proc-get_flux_g_c">get_flux_g_c</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <p>Experimental C interface to the radbelt module.</p>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_c_binding'>iso_c_binding</a></li>
+                  <li class="list-inline-item"><a href='radbelt_module.html'>radbelt_module</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: module~~radbelt_c_module~~UsesGraph Pages: 1 -->
+<svg id="moduleradbelt_c_moduleUsesGraph" width="641pt" height="110pt"
+ viewBox="0.00 0.00 641.00 110.16" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~radbelt_c_module~~UsesGraph" class="graph" transform="scale(1.05 1.05) rotate(0) translate(4 112)">
+<title>module~~radbelt_c_module~~UsesGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 671,-112 671,4 -4,4"/>
+<!-- module~radbelt_c_module -->
+<g id="module~~radbelt_c_module~~UsesGraph_node1" class="node">
+<title>module~radbelt_c_module</title>
+<polygon fill="none" stroke="black" points="667,-87 559,-87 559,-63 667,-63 667,-87"/>
+<text text-anchor="middle" x="613" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50">radbelt_c_module</text>
+</g>
+<!-- iso_c_binding -->
+<g id="module~~radbelt_c_module~~UsesGraph_node2" class="node">
+<title>iso_c_binding</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="516.5,-108 432.5,-108 432.5,-84 516.5,-84 516.5,-108"/>
+<text text-anchor="middle" x="474.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_c_binding</text>
+</g>
+<!-- module~radbelt_c_module&#45;&gt;iso_c_binding -->
+<g id="module~~radbelt_c_module~~UsesGraph_edge1" class="edge">
+<title>module~radbelt_c_module&#45;&gt;iso_c_binding</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M558.83,-83.18C548.39,-84.79 537.45,-86.47 527.06,-88.07"/>
+<polygon fill="#000000" stroke="#000000" points="526.25,-84.65 516.9,-89.63 527.31,-91.57 526.25,-84.65"/>
+</g>
+<!-- module~radbelt_module -->
+<g id="module~~radbelt_c_module~~UsesGraph_node3" class="node">
+<title>module~radbelt_module</title>
+<g id="a_module~~radbelt_c_module~~UsesGraph_node3"><a xlink:href="../module/radbelt_module.html" xlink:title="radbelt_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="523,-66 426,-66 426,-42 523,-42 523,-66"/>
+<text text-anchor="middle" x="474.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">radbelt_module</text>
+</a>
+</g>
+</g>
+<!-- module~radbelt_c_module&#45;&gt;module~radbelt_module -->
+<g id="module~~radbelt_c_module~~UsesGraph_edge2" class="edge">
+<title>module~radbelt_c_module&#45;&gt;module~radbelt_module</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M558.83,-66.82C550.53,-65.54 541.92,-64.22 533.51,-62.93"/>
+<polygon fill="#000000" stroke="#000000" points="533.82,-59.43 523.4,-61.37 532.75,-66.35 533.82,-59.43"/>
+</g>
+<!-- module~radbelt_kinds_module -->
+<g id="module~~radbelt_c_module~~UsesGraph_node4" class="node">
+<title>module~radbelt_kinds_module</title>
+<g id="a_module~~radbelt_c_module~~UsesGraph_node4"><a xlink:href="../module/radbelt_kinds_module.html" xlink:title="radbelt_kinds_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="260,-66 130,-66 130,-42 260,-42 260,-66"/>
+<text text-anchor="middle" x="195" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">radbelt_kinds_module</text>
+</a>
+</g>
+</g>
+<!-- module~radbelt_module&#45;&gt;module~radbelt_kinds_module -->
+<g id="module~~radbelt_c_module~~UsesGraph_edge3" class="edge">
+<title>module~radbelt_module&#45;&gt;module~radbelt_kinds_module</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M433.95,-66.07C420.18,-69.7 404.54,-73.2 390,-75 348.54,-80.13 337.55,-79.32 296,-75 282.01,-73.55 267.1,-70.98 253.18,-68.13"/>
+<polygon fill="#000000" stroke="#000000" points="253.75,-64.67 243.24,-66.02 252.3,-71.52 253.75,-64.67"/>
+</g>
+<!-- module~shellig_module -->
+<g id="module~~radbelt_c_module~~UsesGraph_node5" class="node">
+<title>module~shellig_module</title>
+<g id="a_module~~radbelt_c_module~~UsesGraph_node5"><a xlink:href="../module/shellig_module.html" xlink:title="shellig_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="389.5,-66 296.5,-66 296.5,-42 389.5,-42 389.5,-66"/>
+<text text-anchor="middle" x="343" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shellig_module</text>
+</a>
+</g>
+</g>
+<!-- module~radbelt_module&#45;&gt;module~shellig_module -->
+<g id="module~~radbelt_c_module~~UsesGraph_edge4" class="edge">
+<title>module~radbelt_module&#45;&gt;module~shellig_module</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M425.65,-54C417.15,-54 408.24,-54 399.56,-54"/>
+<polygon fill="#000000" stroke="#000000" points="399.51,-50.5 389.51,-54 399.51,-57.5 399.51,-50.5"/>
+</g>
+<!-- module~trmfun_module -->
+<g id="module~~radbelt_c_module~~UsesGraph_node6" class="node">
+<title>module~trmfun_module</title>
+<g id="a_module~~radbelt_c_module~~UsesGraph_node6"><a xlink:href="../module/trmfun_module.html" xlink:title="trmfun_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="390,-24 296,-24 296,0 390,0 390,-24"/>
+<text text-anchor="middle" x="343" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">trmfun_module</text>
+</a>
+</g>
+</g>
+<!-- module~radbelt_module&#45;&gt;module~trmfun_module -->
+<g id="module~~radbelt_c_module~~UsesGraph_edge5" class="edge">
+<title>module~radbelt_module&#45;&gt;module~trmfun_module</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M436.39,-41.96C422.17,-37.35 405.75,-32.03 390.74,-27.16"/>
+<polygon fill="#000000" stroke="#000000" points="391.71,-23.79 381.11,-24.04 389.55,-30.45 391.71,-23.79"/>
+</g>
+<!-- iso_fortran_env -->
+<g id="module~~radbelt_c_module~~UsesGraph_node7" class="node">
+<title>iso_fortran_env</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="94,-66 0,-66 0,-42 94,-42 94,-66"/>
+<text text-anchor="middle" x="47" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+</g>
+<!-- module~radbelt_kinds_module&#45;&gt;iso_fortran_env -->
+<g id="module~~radbelt_c_module~~UsesGraph_edge6" class="edge">
+<title>module~radbelt_kinds_module&#45;&gt;iso_fortran_env</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M129.96,-54C121.36,-54 112.58,-54 104.13,-54"/>
+<polygon fill="#000000" stroke="#000000" points="104,-50.5 94,-54 104,-57.5 104,-50.5"/>
+</g>
+<!-- module~shellig_module&#45;&gt;module~radbelt_kinds_module -->
+<g id="module~~radbelt_c_module~~UsesGraph_edge7" class="edge">
+<title>module~shellig_module&#45;&gt;module~radbelt_kinds_module</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M296.21,-54C287.88,-54 279.01,-54 270.11,-54"/>
+<polygon fill="#000000" stroke="#000000" points="270.08,-50.5 260.08,-54 270.08,-57.5 270.08,-50.5"/>
+</g>
+<!-- module~trmfun_module&#45;&gt;module~radbelt_kinds_module -->
+<g id="module~~radbelt_c_module~~UsesGraph_edge8" class="edge">
+<title>module~trmfun_module&#45;&gt;module~radbelt_kinds_module</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M300.16,-24.04C283.82,-28.74 264.91,-34.18 247.73,-39.12"/>
+<polygon fill="#000000" stroke="#000000" points="246.49,-35.83 237.84,-41.96 248.42,-42.56 246.49,-35.83"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panmoduleradbelt_c_moduleUsesGraph = svgPanZoom('#moduleradbelt_c_moduleUsesGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="518pt" height="32pt"
+ viewBox="0.00 0.00 517.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 513.5,-28 513.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="145.5,-24 72.5,-24 72.5,0 145.5,0 145.5,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 164,-24 164,0 234,0 234,-24"/>
+<text text-anchor="middle" x="199" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="310,-24 252,-24 252,0 310,0 310,-24"/>
+<text text-anchor="middle" x="281" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="386,-24 328,-24 328,0 386,0 386,-24"/>
+<text text-anchor="middle" x="357" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="509.5,-24 404.5,-24 404.5,0 509.5,0 509.5,-24"/>
+<text text-anchor="middle" x="457" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      
+      <br>
+
+
+        <section>
+          <h2>Variables</h2>
+            <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-str_len"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>STR_LEN</strong></td>
+<td> =</td>
+                <td>4096</td>
+            <td>
+                <p>string length for paths</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+        </section>
+        <br>
+
+
+
+
+
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-c2f_str"></span> <h3>public  function <a href='../proc/c2f_str.html'>c2f_str</a>(cstr) result(fstr)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Convert C string to Fortran</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cstr"></span>
+              character(kind=c_char, len=1),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>cstr</strong></td>
+            <td>
+<p>string from C</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=:), allocatable</small>
+    </h4>
+    <p>fortran string</p>
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-int_pointer_to_f_pointer"></span> <h3>public  subroutine <a href='../proc/int_pointer_to_f_pointer.html'>int_pointer_to_f_pointer</a>(ipointer, p)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Convert an integer pointer to a <a href="../type/radbelt_type.html">radbelt_type</a> pointer.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ipointer"></span>
+              integer(kind=c_intptr_t),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ipointer</strong></td>
+            <td>
+<p>integer pointer from C</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~4"></span>
+              type(<a href='../type/radbelt_type.html'>radbelt_type</a>),
+            </td>
+<td></td>
+              <td></td>            <td>
+              pointer
+            </td>
+            <td>::</td>
+            <td><strong>p</strong></td>
+            <td>
+<p>fortran pointer</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-initialize_c"></span> <h3>public  subroutine <a href='../proc/initialize_c.html'>initialize_c</a>(ipointer) bind(C, name="initialize_c")  
+</h3></div>
+    <div class="card-body">
+          
+  <p>create a <a href="../type/radbelt_type.html">radbelt_type</a> from C</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ipointer~2"></span>
+              integer(kind=c_intptr_t),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ipointer</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-destroy_c"></span> <h3>public  subroutine <a href='../proc/destroy_c.html'>destroy_c</a>(ipointer) bind(C, name="destroy_c")  
+</h3></div>
+    <div class="card-body">
+          
+  <p>destroy a <a href="../type/radbelt_type.html">radbelt_type</a> from C</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ipointer~3"></span>
+              integer(kind=c_intptr_t),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ipointer</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-set_data_files_paths_c"></span> <h3>public  subroutine <a href='../proc/set_data_files_paths_c.html'>set_data_files_paths_c</a>(ipointer, aep8_dir, igrf_dir) bind(C, name="set_data_files_paths_c")  
+</h3></div>
+    <div class="card-body">
+          
+  <p>C interface for setting the data file paths</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ipointer~4"></span>
+              integer(kind=c_intptr_t),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ipointer</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-aep8_dir~3"></span>
+              character(kind=c_char, len=1),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(STR_LEN)
+            </td>
+            <td>::</td>
+            <td><strong>aep8_dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-igrf_dir~3"></span>
+              character(kind=c_char, len=1),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(STR_LEN)
+            </td>
+            <td>::</td>
+            <td><strong>igrf_dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-get_flux_g_c"></span> <h3>public  subroutine <a href='../proc/get_flux_g_c.html'>get_flux_g_c</a>(ipointer, lon, lat, height, year, e, imname, flux) bind(C, name="get_flux_g_c")  
+</h3></div>
+    <div class="card-body">
+          
+  <p>C interface to <a href="../proc/get_flux_g.html">get_flux_g</a>.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ipointer~5"></span>
+              integer(kind=c_intptr_t),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ipointer</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lon~4"></span>
+              real(kind=c_double),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lon</strong></td>
+            <td>
+<p>geodetic longitude in degrees (east)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lat~4"></span>
+              real(kind=c_double),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lat</strong></td>
+            <td>
+<p>geodetic latitude in degrees (north)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-height~4"></span>
+              real(kind=c_double),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>height</strong></td>
+            <td>
+<p>altitude in km above sea level</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-year~8"></span>
+              real(kind=c_double),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>year</strong></td>
+            <td>
+<p>decimal year for which geomagnetic field is to
+be calculated (e.g.:1995.5 for day 185 of 1995)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-e~7"></span>
+              real(kind=c_double),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>e</strong></td>
+            <td>
+<p>minimum energy</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-imname~6"></span>
+              integer(kind=c_int),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>imname</strong></td>
+            <td>
+<p>which method to use:</p><a href="../proc/get_flux_g_c.html#variable-imname~6" class="pull-right"><emph>Read more&hellip;</emph></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-flux~6"></span>
+              real(kind=c_double),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>flux</strong></td>
+            <td>
+<p>The flux of particles above the given energy, in units of cm^-2 s^-1.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col"><p>radbelt was developed by Jacob Williams<br>&copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>
