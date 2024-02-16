@@ -37,16 +37,6 @@ class radbelt_class:
 
         return radbelt.radbelt_c_module.get_flux_g_c(self.ip, lon,lat,height,year,e,imname)
 
-#########################################################################################################
-def set_data_files_paths(aep8_dir : str, igrf_dir : str) -> None:
-    """Python function to set the file paths"""
-    radbelt.radbelt_c_module.set_data_files_paths_c(aep8_dir, igrf_dir)
-
-#########################################################################################################
-#@np.vectorize   <-- makes it run slower for scalar inputs??
-def get_flux(lon : float, lat : float , height : float, year : float, e : float, imname :int) -> float:
-    """Python function to get the flux"""
-    return radbelt.radbelt_c_module.get_flux_g_c(lon,lat,height,year,e,imname)
 
 model = radbelt_class()
 
