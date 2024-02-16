@@ -29,17 +29,17 @@ The latest API documentation can be found [here](https://jacobwilliams.github.io
 
 ### Original source
 
-* The original sourcecode was hosted at GSFC "Modelweb", which no longer exists, but an archive can be found at the [Internet Archive](https://web.archive.org/web/20210318113325/https://ccmc.gsfc.nasa.gov/pub/modelweb/). It is presumed to be in the public domain. Reference: National Space Science Data Center, Data set PT-11B, Mar 1996. Dieter Bilitza, GSFC/NSSDC code 633, Greenbelt, MD 20771, tel. (301) 286-0190, dbilitza@pop600.gsfc.nasa.gov
+* The original sourcecode was hosted at GSFC "Modelweb", an archive of which can be found [here](https://git.smce.nasa.gov/ccmc-share/modelwebarchive). It is presumed to be in the public domain. Reference: National Space Science Data Center, Data set PT-11B, Mar 1996. Dieter Bilitza, GSFC/NSSDC code 633, Greenbelt, MD 20771.
 
 ### See also
 
-* [NASA ModelWebArchive](https://git.smce.nasa.gov/ccmc-share/modelwebarchive)
+* [NASA ModelWebArchive Archive (IGRF)](https://git.smce.nasa.gov/ccmc-share/modelwebarchive/-/tree/main/IGRF)
+* [NASA ModelWebArchive Archive (RADBELT)](https://git.smce.nasa.gov/ccmc-share/modelwebarchive/-/tree/main/RADBELT)
+* [International Geomagnetic Reference Field](https://www.ngdc.noaa.gov/IAGA/vmod/igrf.html)
 * [An Astropy-friendly wrapper for the AE-8/AP-8 Van Allen belt model](https://github.com/nasa/radbelt)
 * [pyIGRF](https://github.com/rilma/pyIGRF)
 * https://github.com/lanl/RAM-SCB/blob/master/srcExternal/igrf.f
 * https://github.com/space-physics/igrf/blob/main/src/igrf/fortran/igrf13.f
-* https://web.archive.org/web/20210318113325/https://ccmc.gsfc.nasa.gov/pub/modelweb/
-* Model parameters can be computed and plotted online at http://nssdc.gsfc.nasa.gov/space/model/ [broken link]
 
 ### Test case
 
@@ -94,26 +94,13 @@ two lines had been exchanged.
 
 ### References
 
-* G.W. Singley, and J.I. Vette, The AE-4 Model of the Outer Radiation
-  Zone Electron Environment, NSSDC/WDC-A-R&S 72-06, 1972.
-* M.J. Teague, and J.I. Vette, A Model of the Trapped Electron
-  Population for Solar Minimum (AE-5), NSSDC/WDC-A-R&S 74-03, 1974.
-* M.J. Teague, K.W. Chan, and J.I. Vette, AE-6: A Model Environment
-  of Trapped Electrons for Solar Maximum, NSSDC/WDC-A-R&S 76-04, 1976
-* D.W. Sawyer, and J.I. Vette, AP-8 Trapped Proton Environment for
-  Solar Maximum and Minimum, NSSDC/WDC-A-R&S 76-06, 1976.
-* J.I. Vette, K.W. Chan, and M.J. Teague, Problems in Modeling the
-  Earth's Trapped Radiation Environment, AFGL-TR-78-0130, 1978.
-* K.W. Chan, M.J. Teague, N.J. Schofield, and J.I. Vette, Modeling of
-  Electron Time Variation in the Radiation Belts, p. 121-149, in:
-  Quantitative Modeling of Magnetospheric Processes, W.P. Olson
-  (ed.), geophysical monograph 21, American Geophysical Union, 1979.
-* M.T. Teague, N.J. Schofield, K.W. Chan, and J.I. Vette, A Study of
-  Inner Zone Electron Data and their Comparison with Trapped
-  Radiation Models, NSSDC/WDC-A-R&S 79-06, 1979.
-* J.I. Vette, The AE-8 Trapped Electron Model Environment,
-  NSSDC/WDC-A-R&S 91-24, 1991.
-* J.I. Vette, The NASA/National Space Science Data Center Trapped
-  Radiation Environment Model Program (1964-1991), NSSDC/WDC-A-R&S
-  91-29, 1991.
-* D. Heynderickx and A. Beliaev, J. Spacecraft and Rockets 32, 190-192, 1995.
+* G.W. Singley, and J.I. Vette, [The AE-4 Model of the Outer Radiation Zone Electron Environment](https://ntrs.nasa.gov/api/citations/19740012390/downloads/19740012390.pdf), NSSDC/WDC-A-R&S 72-06, 1972.
+* M.J. Teague, and J.I. Vette, [A Model of the Trapped Electron Population for Solar Minimum (AE-5)](https://ntrs.nasa.gov/api/citations/19740018161/downloads/19740018161.pdf), NSSDC/WDC-A-R&S 74-03, 1974.
+* M.J. Teague, K.W. Chan, and J.I. Vette, [AE-6: A Model Environment of Trapped Electrons for Solar Maximum](https://ntrs.nasa.gov/api/citations/19760016051/downloads/19760016051.pdf), NSSDC/WDC-A-R&S 76-04, 1976
+* D.W. Sawyer, and J.I. Vette, AP-8 Trapped Proton Environment for Solar Maximum and Minimum, NSSDC/WDC-A-R&S 76-06, 1976.
+* J.I. Vette, K.W. Chan, and M.J. Teague, [Problems in Modeling the Earth's Trapped Radiation Environment](https://apps.dtic.mil/sti/pdfs/ADA059273.pdf), AFGL-TR-78-0130, 1978.
+* K.W. Chan, M.J. Teague, N.J. Schofield, and J.I. Vette, Modeling of Electron Time Variation in the Radiation Belts, p. 121-149, in: Quantitative Modeling of Magnetospheric Processes, W.P. Olson (ed.), geophysical monograph 21, American Geophysical Union, 1979.
+* M.T. Teague, N.J. Schofield, K.W. Chan, and J.I. Vette, [A Study of Inner Zone Electron Data and their Comparison with Trapped Radiation Models](https://ntrs.nasa.gov/api/citations/19790025500/downloads/19790025500.pdf), NSSDC/WDC-A-R&S 79-06, 1979.
+* J.I. Vette, [The AE-8 Trapped Electron Model Environment](https://ntrs.nasa.gov/api/citations/19920014985/downloads/19920014985.pdf), NSSDC/WDC-A-R&S 91-24, 1991.
+* J.I. Vette, [The NASA/National Space Science Data Center Trapped Radiation Environment Model Program (1964-1991)](https://ntrs.nasa.gov/api/citations/19930001815/downloads/19930001815.pdf), NSSDC/WDC-A-R&S 91-29, 1991.
+* D. Heynderickx and A. Beliaev, [Identification of an error in the distribution of the NASA model AP-8 MIN](https://arc.aiaa.org/doi/10.2514/3.26595), J. Spacecraft and Rockets 32, 190-192, 1995.

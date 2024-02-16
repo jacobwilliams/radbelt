@@ -18,5 +18,6 @@ graph: true
 externalize: true
 preprocessor: gfortran -E
 extra_mods: iso_fortran_env: https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html
+            iso_c_binding: https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fC_005fBINDING.html
 
 {!README.md!}

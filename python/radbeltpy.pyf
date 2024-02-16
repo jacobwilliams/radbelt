@@ -1,0 +1,38 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module radbelt ! in
+    interface  ! in :radbelt
+        module radbelt_c_module ! in :radbelt:radbelt_c_module.f90
+            use iso_c_binding, only: c_double,c_int,c_char,c_intptr_t
+
+            subroutine get_flux_g_c(ipointer,lon,lat,height,year,e,imname,flux)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
+                integer(c_intptr_t),intent(in) :: ipointer
+                real(c_double),intent(in) :: lon
+                real(c_double),intent(in) :: lat
+                real(c_double),intent(in) :: height
+                real(c_double),intent(in) :: year
+                real(c_double),intent(in) :: e
+                integer(c_int),intent(in) :: imname
+                real(c_double),intent(out) :: flux
+            end subroutine get_flux_g_c
+
+            subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
+                integer(c_intptr_t),intent(in) :: ipointer
+                character(kind=c_char,len=4096),intent(in) :: aep8_dir
+                character(kind=c_char,len=4096),intent(in) :: igrf_dir
+            end subroutine set_data_files_paths_c
+
+            subroutine initialize_c(ipointer)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
+                integer(c_intptr_t),intent(out) :: ipointer
+            end subroutine initialize_c
+
+            subroutine destroy_c(ipointer)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
+                integer(c_intptr_t),intent(in) :: ipointer
+            end subroutine destroy_c
+
+        end module radbelt_c_module
+    end interface
+end python module radbelt
+
+! This file was manually created
