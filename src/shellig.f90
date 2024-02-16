@@ -222,7 +222,7 @@
             value=.false.
             exit main
         endif
-        !*********************first three points
+        ! first three points
         p(1,2)=me%sp(1)
         p(2,2)=me%sp(2)
         p(3,2)=me%sp(3)
@@ -240,7 +240,7 @@
         p(2,3)=p(2,2)+step*(20.0_wp*p(5,3)-3.*p(5,2)+p(5,1))/18.0_wp
         p(3,3)=p(3,2)+step
         call me%stoer(p(1,3),bq3,r3)
-        !******************invert sense if required
+        ! invert sense if required
         if (bq3>bq1) then
             step=-step
             r3=r1
@@ -251,18 +251,18 @@
                 p(i,3)=zz
             end do
         end if
-        !******************initialization
+        ! initialization
         step12=step/12.0_wp
         value=.true.
         bmin=1.0e4_wp
         bold=1.0e4_wp
-        !******************corrector (field line tracing)
+        ! corrector (field line tracing)
         n=0
         corrector : do
             p(1,3)=p(1,2)+step12*(5.0_wp*p(4,3)+8.0_wp*p(4,2)-p(4,1))
             n=n+1
             p(2,3)=p(2,2)+step12*(5.0_wp*p(5,3)+8.0_wp*p(5,2)-p(5,1))
-            !******************predictor (field line tracing)
+            ! predictor (field line tracing)
             p(1,4)=p(1,3)+step12*(23.0_wp*p(4,3)-16.0_wp*p(4,2)+5.0_wp*p(4,1))
             p(2,4)=p(2,3)+step12*(23.0_wp*p(5,3)-16.0_wp*p(5,2)+5.0_wp*p(5,1))
             p(3,4)=p(3,3)+step
@@ -379,13 +379,13 @@
       me%xi = geo_to_cart(glat,glon,alt)
    end if
 
-   !*****convert to dipol-oriented co-ordinates
+   ! convert to dipol-oriented co-ordinates
    rq = 1.0_wp/(me%xi(1)*me%xi(1)+me%xi(2)*me%xi(2)+me%xi(3)*me%xi(3))
    r3h = sqrt(rq*sqrt(rq))
    p(1,2) = (me%xi(1)*u(1,1)+me%xi(2)*u(2,1)+me%xi(3)*u(3,1))*r3h
    p(2,2) = (me%xi(1)*u(1,2)+me%xi(2)*u(2,2))*r3h
    p(3,2) = (me%xi(1)*u(1,3)+me%xi(2)*u(2,3)+me%xi(3)*u(3,3))*rq
-   !     *****first three points of field line
+   ! first three points of field line
    me%step = -sign(me%step,p(3,2))
    call me%stoer(p(1,2),bq2,r2)
    b0 = sqrt(bq2)
@@ -401,7 +401,7 @@
    p(2,3) = p(2,2) + me%step*(20.0_wp*p(5,3)-3.*p(5,2)+p(5,1))/18.0_wp
    p(3,3) = p(3,2) + me%step
    call me%stoer(p(1,3),bq3,r3)
-   !*****invert sense if required
+   ! invert sense if required
    if ( bq3>bq1 ) then
       me%step = -me%step
       r3 = r1
@@ -412,7 +412,7 @@
          p(i,3) = zz
       enddo
    endif
-   !*****search for lowest magnetic field strength
+   ! search for lowest magnetic field strength
    if ( bq1<bequ ) then
       bequ = bq1
       iequ = 1
@@ -425,7 +425,7 @@
       bequ = bq3
       iequ = 3
    endif
-   !*****initialization of integration loops
+   ! initialization of integration loops
    step12 = me%step/12.0_wp
    step2 = me%step + me%step
    me%steq = sign(me%steq,me%step)
@@ -438,13 +438,13 @@
    stp = stp/0.75_wp
    p(8,1) = step2*(p(1,1)*p(4,1)+p(2,1)*p(5,1))
    p(8,2) = step2*(p(1,2)*p(4,2)+p(2,2)*p(5,2))
-   !*****main loop (field line tracing)
+   ! main loop (field line tracing)
    main: do n = 3 , max_loop_index
-      !*****corrector (field line tracing)
+      ! corrector (field line tracing)
       p(1,n) = p(1,n-1) + step12*(5.0_wp*p(4,n)+8.0_wp*p(4,n-1)-p(4,n-2))
       p(2,n) = p(2,n-1) + step12*(5.0_wp*p(5,n)+8.0_wp*p(5,n-1)-p(5,n-2))
-      !*****prepare expansion coefficients for interpolation
-      !*****of slowly varying quantities
+      ! prepare expansion coefficients for interpolation
+      ! of slowly varying quantities
       p(8,n) = step2*(p(1,n)*p(4,n)+p(2,n)*p(5,n))
       c0 = p(1,n-1)**2 + p(2,n-1)**2
       c1 = p(8,n-1)
@@ -457,15 +457,15 @@
       e1 = (p(7,n)-p(7,n-2))*0.5_wp
       e2 = (p(7,n)+p(7,n-2)-e0-e0)*0.5_wp
       inner: do
-         !*****inner loop (for quadrature)
+         ! inner loop (for quadrature)
          t = (z-p(3,n-1))/me%step
          if ( t>1.0_wp ) then
-            !*****predictor (field line tracing)
+            ! predictor (field line tracing)
             p(1,n+1) = p(1,n) + step12*(23.0_wp*p(4,n)-16.0_wp*p(4,n-1)+5.0_wp*p(4,n-2))
             p(2,n+1) = p(2,n) + step12*(23.0_wp*p(5,n)-16.0_wp*p(5,n-1)+5.0_wp*p(5,n-2))
             p(3,n+1) = p(3,n) + me%step
             call me%stoer(p(1,n+1),bq3,r3)
-            !*****search for lowest magnetic field strength
+            ! search for lowest magnetic field strength
             if ( bq3<bequ ) then
                iequ = n + 1
                bequ = bq3
@@ -476,7 +476,7 @@
             zq = z*z
             r = hli + sqrt(hli*hli+zq)
             if ( r<=rmin ) then
-               !*****approximation for high values of l.
+               ! approximation for high values of l.
                icode = 3
                t = -p(3,n-1)/me%step
                fl = 1.0_wp/(abs(((c3*t+c2)*t+c1)*t+c0)+1.0e-15_wp)
@@ -504,21 +504,19 @@
    me%sp(2) = p(2,iequ-1)
    me%sp(3) = p(3,iequ-1)
    if ( oradik>=1.0e-15_wp ) fi = fi + stp/0.75_wp*oterm*oradik/(oradik-radik)
-   !
-   !-- the minimal allowable value of fi was changed from 1e-15 to 1e-12,
-   !-- because 1e-38 is the minimal allowable arg. for alog in our envir.
-   !-- d. bilitza, nov 87.
-   !
+
+   ! the minimal allowable value of fi was changed from 1e-15 to 1e-12,
+   ! because 1e-38 is the minimal allowable arg. for alog in our envir.
+   ! d. bilitza, nov 87.
    fi = 0.5_wp*abs(fi)/sqrt(b0) + 1.0e-12_wp
-   !*****compute l from b and i.  same as carmel in invar.
-   !
-   !-- correct dipole moment is used here. d. bilitza, nov 87.
-   !
+
+   ! compute l from b and i.  same as carmel in invar.
+   ! correct dipole moment is used here. d. bilitza, nov 87.
    dimob0 = dimo/b0
    arg1 = log(fi)
    arg2 = log(dimob0)
-!       arg = fi*fi*fi/dimob0
-!       if(abs(arg)>88.0_wp) arg=88.0_wp
+   ! arg = fi*fi*fi/dimob0
+   ! if(abs(arg)>88.0_wp) arg=88.0_wp
    xx = 3*arg1 - arg2
    if ( xx>23.0_wp ) then
       gg = xx - 3.0460681_wp
@@ -566,7 +564,7 @@ subroutine stoer(me,p,bq,r)
    real(wp) :: dr , dsq , dx , dxm , dy , dym , dz , &
                dzm , fli , q , rq , wr , xm , ym , zm
 
-!*****XM,YM,ZM ARE GEOMAGNETIC CARTESIAN INVERSE CO-ORDINATES
+   ! xm,ym,zm are geomagnetic cartesian inverse co-ordinates
    zm = P(3)
    fli = P(1)*P(1) + P(2)*P(2) + 1.0e-15_wp
    R = 0.5_wp*(fli+sqrt(fli*fli+(zm+zm)**2))
@@ -574,31 +572,32 @@ subroutine stoer(me,p,bq,r)
    wr = sqrt(R)
    xm = P(1)*wr
    ym = P(2)*wr
-!*****TRANSFORM TO GEOGRAPHIC CO-ORDINATE SYSTEM
+   ! transform to geographic co-ordinate system
    me%Xi(1) = xm*u(1,1) + ym*u(1,2) + zm*u(1,3)
    me%Xi(2) = xm*u(2,1) + ym*u(2,2) + zm*u(2,3)
    me%Xi(3) = xm*u(3,1) + zm*u(3,3)
-!*****COMPUTE DERIVATIVES
-! Changed from CALL FELDI(XI,H); XI, H are in COMMON block; results
-! are the same; dkb Feb 1998.
-! JW : feb 2024 : xi, h now class variables.
+   ! compute derivatives
+   ! Changed from CALL FELDI(XI,H); XI, H are in COMMON block; results
+   ! are the same; dkb Feb 1998.
+   ! JW : feb 2024 : xi, h now class variables.
    call me%feldi()
    q = me%H(1)/rq
    dx = me%H(3) + me%H(3) + q*me%Xi(1)
    dy = me%H(4) + me%H(4) + q*me%Xi(2)
    dz = me%H(2) + me%H(2) + q*me%Xi(3)
-!*****TRANSFORM BACK TO GEOMAGNETIC CO-ORDINATE SYSTEM
+   ! transform back to geomagnetic co-ordinate system
    dxm = u(1,1)*dx + u(2,1)*dy + u(3,1)*dz
    dym = u(1,2)*dx + u(2,2)*dy
    dzm = u(1,3)*dx + u(2,3)*dy + u(3,3)*dz
    dr = (xm*dxm+ym*dym+zm*dzm)/R
-!*****FORM SLOWLY VARYING EXPRESSIONS
+   ! form slowly varying expressions
    P(4) = (wr*dxm-0.5_wp*P(1)*dr)/(R*dzm)
    P(5) = (wr*dym-0.5_wp*P(2)*dr)/(R*dzm)
    dsq = rq*(dxm*dxm+dym*dym+dzm*dzm)
    Bq = dsq*rq*rq
    P(6) = sqrt(dsq/(rq+3.0_wp*zm*zm))
    P(7) = P(6)*(rq+zm*zm)/(rq*dzm)
+
 end subroutine stoer
 
 !*****************************************************************************************

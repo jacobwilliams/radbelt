@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title=" 1.3% of total for procedures.">15 statements</a>
+                 title=" 1.5% of total for procedures.">17 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -139,7 +139,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>public  subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir) bind(C, name="set_data_files_paths_c")  
+    <h2>public  subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir, n, m) bind(C, name="set_data_files_paths_c")  
 </h2>
     
 
@@ -174,12 +174,12 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-aep8_dir~3"></span>
+              <span class="anchor" id="variable-aep8_dir~2"></span>
               character(kind=c_char, len=1),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(STR_LEN)
+              dimension(n)
             </td>
             <td>::</td>
             <td><strong>aep8_dir</strong></td>
@@ -189,17 +189,47 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-igrf_dir~3"></span>
+              <span class="anchor" id="variable-igrf_dir~2"></span>
               character(kind=c_char, len=1),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(STR_LEN)
+              dimension(m)
             </td>
             <td>::</td>
             <td><strong>igrf_dir</strong></td>
             <td>
                 
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~6"></span>
+              integer(kind=c_int),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+                <p>size of <code>aep8_dir</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-m~6"></span>
+              integer(kind=c_int),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>m</strong></td>
+            <td>
+                <p>size of <code>igrf_dir</code></p>
             </td>
         </tr>
     </tbody>
@@ -273,18 +303,18 @@
 <path fill="none" stroke="#000000" d="M201.75,-41.96C237.81,-36.81 280.07,-30.78 317.17,-25.48"/>
 <polygon fill="#000000" stroke="#000000" points="318.09,-28.88 327.49,-24 317.1,-21.95 318.09,-28.88"/>
 </g>
-<!-- proc~set_data_file_dir -->
+<!-- proc~set_data_file_dir~2 -->
 <g id="proc~~set_data_files_paths_c~~CallsGraph_node5" class="node">
-<title>proc~set_data_file_dir</title>
-<g id="a_proc~~set_data_files_paths_c~~CallsGraph_node5"><a xlink:href="../proc/set_data_file_dir.html" xlink:title="trmfun_module::trm_type%set_data_file_dir">
+<title>proc~set_data_file_dir~2</title>
+<g id="a_proc~~set_data_files_paths_c~~CallsGraph_node5"><a xlink:href="../proc/set_data_file_dir~2.html" xlink:title="trmfun_module::trm_type%set_data_file_dir">
 <polygon fill="#d9534f" stroke="#d9534f" points="837,-24 592,-24 592,0 837,0 837,-24"/>
 <text text-anchor="middle" x="714.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">trmfun_module::trm_type%set_data_file_dir</text>
 </a>
 </g>
 </g>
-<!-- proc~set_data_files_paths&#45;&gt;proc~set_data_file_dir -->
+<!-- proc~set_data_files_paths&#45;&gt;proc~set_data_file_dir~2 -->
 <g id="proc~~set_data_files_paths_c~~CallsGraph_edge4" class="edge">
-<title>proc~set_data_files_paths&#45;&gt;proc~set_data_file_dir</title>
+<title>proc~set_data_files_paths&#45;&gt;proc~set_data_file_dir~2</title>
 <path fill="none" stroke="#000000" d="M556.03,-12C564.52,-12 573.05,-12 581.49,-12"/>
 <polygon fill="#000000" stroke="#000000" points="581.75,-15.5 591.75,-12 581.75,-8.5 581.75,-15.5"/>
 </g>
@@ -387,11 +417,13 @@ implementation in a submodule of an interface in a parent module.
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">set_data_files_paths_c</span><span class="p">(</span><span class="n">ipointer</span><span class="p">,</span><span class="w"> </span><span class="n">aep8_dir</span><span class="p">,</span><span class="w"> </span><span class="n">igrf_dir</span><span class="p">)</span><span class="w"> </span><span class="k">bind</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;set_data_files_paths_c&quot;</span><span class="p">)</span>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">set_data_files_paths_c</span><span class="p">(</span><span class="n">ipointer</span><span class="p">,</span><span class="w"> </span><span class="n">aep8_dir</span><span class="p">,</span><span class="w"> </span><span class="n">igrf_dir</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="k">bind</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;set_data_files_paths_c&quot;</span><span class="p">)</span>
 
 <span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="kt">c_intptr_t</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ipointer</span>
-<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="kt">c_char</span><span class="p">,</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">STR_LEN</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">aep8_dir</span>
-<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="kt">c_char</span><span class="p">,</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">STR_LEN</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">igrf_dir</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="kt">c_int</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="c">!! size of `aep8_dir`</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="kt">c_char</span><span class="p">,</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">aep8_dir</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="kt">c_int</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="c">!! size of `igrf_dir`</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="kt">c_char</span><span class="p">,</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">m</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">igrf_dir</span>
 
 <span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">aep8_dir_</span><span class="p">,</span><span class="w"> </span><span class="n">igrf_dir_</span>
 <span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">radbelt_type</span><span class="p">),</span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span>
