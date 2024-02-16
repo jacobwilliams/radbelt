@@ -30,7 +30,7 @@ class radbelt_class:
     def set_data_files_paths(self, aep8_dir : str, igrf_dir : str) -> None:
         """Set the file paths"""
 
-        radbelt.radbelt_c_module.set_data_files_paths_c(self.ip, aep8_dir, igrf_dir)
+        radbelt.radbelt_c_module.set_data_files_paths_c(self.ip, aep8_dir, igrf_dir, len(aep8_dir), len(igrf_dir))
 
     def get_flux(self, lon : float, lat : float , height : float, year : float, e : float, imname : int) -> float:
         """Get the flux"""

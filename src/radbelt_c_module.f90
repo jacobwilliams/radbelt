@@ -11,9 +11,6 @@
 
     implicit none
 
-    ! can we eliminate this ?
-    integer,parameter :: STR_LEN = 4096 !! string length for paths
-
     contains
 !*****************************************************************************************
 
@@ -90,11 +87,13 @@ end subroutine destroy_c
 !>
 !  C interface for setting the data file paths
 
-subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir) bind(C, name="set_data_files_paths_c")
+subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir, n, m) bind(C, name="set_data_files_paths_c")
 
     integer(c_intptr_t),intent(in) :: ipointer
-    character(kind=c_char,len=1),dimension(STR_LEN),intent(in) :: aep8_dir
-    character(kind=c_char,len=1),dimension(STR_LEN),intent(in) :: igrf_dir
+    integer(c_int),intent(in) :: n !! size of `aep8_dir`
+    character(kind=c_char,len=1),dimension(n),intent(in) :: aep8_dir
+    integer(c_int),intent(in) :: m !! size of `igrf_dir`
+    character(kind=c_char,len=1),dimension(m),intent(in) :: igrf_dir
 
     character(len=:),allocatable :: aep8_dir_, igrf_dir_
     type(radbelt_type),pointer :: p

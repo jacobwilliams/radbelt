@@ -17,10 +17,12 @@ python module radbelt ! in
                 real(c_double),intent(out) :: flux
             end subroutine get_flux_g_c
 
-            subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
+            subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir, n, m)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
                 integer(c_intptr_t),intent(in) :: ipointer
-                character(kind=c_char,len=4096),intent(in) :: aep8_dir
-                character(kind=c_char,len=4096),intent(in) :: igrf_dir
+                character(kind=c_char,len=n),intent(in),depend(n) :: aep8_dir
+                character(kind=c_char,len=m),intent(in),depend(m) :: igrf_dir
+                integer(c_int),intent(in) :: n
+                integer(c_int),intent(in) :: m
             end subroutine set_data_files_paths_c
 
             subroutine initialize_c(ipointer)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
