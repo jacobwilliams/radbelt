@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title="58.1% of total for modules and submodules.">726 statements</a>
+                 title="58.4% of total for modules and submodules.">734 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -121,6 +121,7 @@
             <a class="list-group-item" href="../module/shellig_module.html#variable-bquad">Bquad</a>
             <a class="list-group-item" href="../module/shellig_module.html#variable-umr">Umr</a>
             <a class="list-group-item" href="../module/shellig_module.html#variable-u">u</a>
+            <a class="list-group-item" href="../module/shellig_module.html#variable-max_loop_index">max_loop_index</a>
         </div>
       </div>
     </div>
@@ -165,6 +166,7 @@
       </a>
       <div id="subs-0" class="collapse">
         <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/shellig_module.html#proc-destroy_shellig_type">destroy_shellig_type</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-set_data_file_dir">set_data_file_dir</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-igrf">igrf</a>
             <a class="list-group-item" href="../module/shellig_module.html#proc-igrfc">igrfc</a>
@@ -623,6 +625,23 @@ parameter,               dimension(3,3)
                 
             </td>
         </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-max_loop_index"></span>
+              integer,
+            </td>
+              <td>private,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>max_loop_index</strong></td>
+<td> =</td>
+                <td>3333</td>
+            <td>
+                <p>used in <a href="../proc/shellg.html">shellg</a> for the field line integration loop</p>
+            </td>
+        </tr>
     </tbody>
   </table>
 
@@ -912,6 +931,26 @@ parameter,               dimension(3,3)
 
             </td>
         </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:,:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>p</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+<p>this was <code>p(8,100)</code> in the original code.
+used for the field line integration loop.
+changed it to be allocatable since it was
+changed to be p(8,3334).</p>
+            </td>
+        </tr>
     </tbody>
   </table>
 
@@ -981,6 +1020,11 @@ parameter,               dimension(3,3)
   <strong><a href='../type/shellig_type.html#boundprocedure-set_data_file_dir'>set_data_file_dir</a></strong></td>
                 <td></td>
               </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/shellig_type.html#boundprocedure-destroy'>destroy</a></strong> => <a href='/home/runner/work/radbelt/radbelt/doc/proc/destroy_shellig_type.html'>destroy_shellig_type</a></td>
+                <td></td>
+              </tr>
           </tbody>
         </table>
     </div>
@@ -1011,7 +1055,7 @@ parameter,               dimension(3,3)
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~2"></span>
+              <span class="anchor" id="variable-me~3"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(in)</td>
@@ -1122,6 +1166,46 @@ parameter,               dimension(3,3)
         <section>
           <h2>Subroutines</h2>
               <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-destroy_shellig_type"></span> <h3>private  subroutine <a href='../proc/destroy_shellig_type.html'>destroy_shellig_type</a>(me)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Destroy a <a href="../type/shellig_type.html">shellig_type</a>.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me"></span>
+              class(<a href='../type/shellig_type.html'>shellig_type</a>),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
     <div class="card-header codesum"><span class="anchor" id="proc-set_data_file_dir"></span> <h3>private  subroutine <a href='../proc/set_data_file_dir.html'>set_data_file_dir</a>(me, dir)  
 </h3></div>
     <div class="card-body">
@@ -1141,7 +1225,7 @@ parameter,               dimension(3,3)
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me"></span>
+              <span class="anchor" id="variable-me~2"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1196,7 +1280,7 @@ parameter,               dimension(3,3)
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~3"></span>
+              <span class="anchor" id="variable-me~4"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1327,7 +1411,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~4"></span>
+              <span class="anchor" id="variable-me~5"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1431,7 +1515,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~5"></span>
+              <span class="anchor" id="variable-me~6"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1546,7 +1630,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~6"></span>
+              <span class="anchor" id="variable-me~7"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1665,7 +1749,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~7"></span>
+              <span class="anchor" id="variable-me~8"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1826,7 +1910,7 @@ calls entry point <a href="../proc/feldi.html">feldi</a> in geomagnetic field su
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~8"></span>
+              <span class="anchor" id="variable-me~9"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1911,7 +1995,7 @@ calls entry point <a href="../proc/feldi.html">feldi</a> in geomagnetic field su
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~9"></span>
+              <span class="anchor" id="variable-me~10"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -2065,7 +2149,7 @@ and downward.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~10"></span>
+              <span class="anchor" id="variable-me~11"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -2138,7 +2222,7 @@ z-axis pointing to north pole</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~11"></span>
+              <span class="anchor" id="variable-me~12"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -2178,7 +2262,7 @@ z-axis pointing to north pole</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~12"></span>
+              <span class="anchor" id="variable-me~13"></span>
               class(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
 <td>intent(inout)</td>
