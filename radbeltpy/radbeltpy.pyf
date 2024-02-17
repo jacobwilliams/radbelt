@@ -1,12 +1,12 @@
 !    -*- f90 -*-
 ! Note: the context of this file is case sensitive.
 
-python module radbelt ! in
-    interface  ! in :radbelt
-        module radbelt_c_module ! in :radbelt:radbelt_c_module.f90
+python module radbelt_fortran ! in
+    interface  ! in :radbelt_fortran
+        module radbelt_c_module ! in :radbelt_fortran:radbelt_c_module.f90
             use iso_c_binding, only: c_double,c_int,c_char,c_intptr_t
 
-            subroutine get_flux_g_c(ipointer,lon,lat,height,year,e,imname,flux)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
+            subroutine get_flux_g_c(ipointer,lon,lat,height,year,e,imname,flux)  ! in :radbelt_fortran:radbelt_c_module.f90:radbelt_c_module
                 integer(c_intptr_t),intent(in) :: ipointer
                 real(c_double),intent(in) :: lon
                 real(c_double),intent(in) :: lat
@@ -17,7 +17,7 @@ python module radbelt ! in
                 real(c_double),intent(out) :: flux
             end subroutine get_flux_g_c
 
-            subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir, n, m)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
+            subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir, n, m)  ! in :radbelt_fortran:radbelt_c_module.f90:radbelt_c_module
                 integer(c_intptr_t),intent(in) :: ipointer
                 character(kind=c_char,len=n),intent(in),depend(n) :: aep8_dir
                 character(kind=c_char,len=m),intent(in),depend(m) :: igrf_dir
@@ -25,16 +25,16 @@ python module radbelt ! in
                 integer(c_int),intent(in) :: m
             end subroutine set_data_files_paths_c
 
-            subroutine initialize_c(ipointer)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
+            subroutine initialize_c(ipointer)  ! in :radbelt_fortran:radbelt_c_module.f90:radbelt_c_module
                 integer(c_intptr_t),intent(out) :: ipointer
             end subroutine initialize_c
 
-            subroutine destroy_c(ipointer)  ! in :radbelt:radbelt_c_module.f90:radbelt_c_module
+            subroutine destroy_c(ipointer)  ! in :radbelt_fortran:radbelt_c_module.f90:radbelt_c_module
                 integer(c_intptr_t),intent(in) :: ipointer
             end subroutine destroy_c
 
         end module radbelt_c_module
     end interface
-end python module radbelt
+end python module radbelt_fortran
 
 ! This file was manually created

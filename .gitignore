@@ -36,6 +36,9 @@
 /results.txt
 /env
 
+# python
+__pycache__
+
 # directories
 /build
 /doc

@@ -7,38 +7,10 @@ import time
 from pathlib import Path
 
 dir = Path(__file__).resolve().parents[1] # root directory
-sys.path.insert(0,str(dir / 'python'))   # assuming the radbelt lib is in python directory
-import radbelt  # this is the module being tested
+sys.path.insert(0,str(dir))   # assuming the radbelt lib is in python directory
+from radbeltpy import RadbeltClass  # this is the module being tested
 
-class radbelt_class:
-    """
-    Class for using the radbelt model.
-    """
-
-    def __init__(self) -> None:
-        """constructor for the fortran class"""
-
-        #`ip` is an integer that represents a c pointer
-        # to a `radbelt_type` in the Fortran library.
-        self.ip = radbelt.radbelt_c_module.initialize_c()
-
-    def __del__(self) -> None:
-        """destructor for the fortran class"""
-
-        radbelt.radbelt_c_module.destroy_c(self.ip)
-
-    def set_data_files_paths(self, aep8_dir : str, igrf_dir : str) -> None:
-        """Set the file paths"""
-
-        radbelt.radbelt_c_module.set_data_files_paths_c(self.ip, aep8_dir, igrf_dir, len(aep8_dir), len(igrf_dir))
-
-    def get_flux(self, lon : float, lat : float , height : float, year : float, e : float, imname : int) -> float:
-        """Get the flux"""
-
-        return radbelt.radbelt_c_module.get_flux_g_c(self.ip, lon,lat,height,year,e,imname)
-
-
-model = radbelt_class()
+model = RadbeltClass()
 
 # set location of the data files:
 aep8_dir = str(dir / 'data' / 'aep8')
@@ -50,10 +22,11 @@ lon = -45.0
 lat = -30.0
 height = 500.0
 year = 2021.1616438356164  # decimal year
-imname = 4 # 'p', 'max'
+particle = 'p'
+solar = 'max'
 e = 20.0
 
-flux = model.get_flux(lon,lat,height,year,e,imname)
+flux = model.get_flux(lon,lat,height,year,e,particle,solar)
 
 print(f'flux = {flux}')
 
@@ -74,34 +47,6 @@ for lat in range(-90, 91, 5):
     for lon in range(-180, 181, 45):
         for alt in range(500, 1001, 100):
             n_cases = n_cases + 1
-            f = model.get_flux(lon,lat,height,year, e, 4)
+            f = model.get_flux(lon,lat,height,year, e, particle,solar)
 tend = time.time()
 print(f'Python version runtime: {tend-tstart} sec. {int(n_cases/(tend-tstart))} (cases/sec)')
-
-# print('... VECTORIZE ...')
-# n_cases = 0
-# tstart = time.time()
-
-# lon_vec = []
-# lat_vec = []
-# height_vec = []
-# year_vec = []
-# e_vec = []
-# ifile_vec = []
-
-# for lat in range(-90, 91, 5):
-#     for lon in range(-180, 181, 45):
-#         for alt in range(500, 1001, 100):
-#             n_cases = n_cases + 1
-#             lon_vec.append(lon)
-#             lat_vec.append(lat)
-#             height_vec.append(height)
-#             year_vec.append(year)
-#             e_vec.append(e)
-#             ifile_vec.append(4)
-#             #f = get_flux(lon,lat,height,year, e, 4)
-
-# f_vec = get_flux(lon_vec,lat_vec,height_vec,year_vec,e_vec,ifile_vec)
-# tend = time.time()
-# print(f'Python version runtime: {tend-tstart} sec. {int(n_cases/(tend-tstart))} (cases/sec)')
-
