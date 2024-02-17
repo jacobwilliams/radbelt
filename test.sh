@@ -8,7 +8,7 @@ rm -rf ./env
 conda env create --prefix ./env -f ./python/environment.yml
 conda activate ./env
 
-cd python
+cd radbeltpy
 chmod +x ./build_python.sh
 ./build_python.sh
 cd ..
