@@ -9,24 +9,46 @@ class RadbeltClass:
     Class for using the radbelt model.
     """
 
-    def __init__(self) -> None:
-        """constructor for the fortran class"""
+    def __init__(self, aep8_dir : str = None, igrf_dir: str = None) -> None:
+        """
+        Constructor for the fortran class
+
+        Parameters
+        ----------
+        aep8_dir : str
+            The directory containing the aep8 files. If None, then use the default directory ('data/aep8/')
+        igrf_dir : str
+            The directory containing the igrf files. If None, then use the default directory ('data/igrf/')
+        """
 
         #`ip` is an integer that represents a c pointer
         # to a `radbelt_type` in the Fortran library.
         self.ip = radbelt_fortran.radbelt_c_module.initialize_c()
 
-        #TODO should allow for passing in the data directories here
+        # note that None means use defaults,
+        # but '' means current directory
+        if aep8_dir is not None:
+            self.set_trm_file_path(aep8_dir)
+        if igrf_dir is not None:
+            self.set_igrf_file_path(igrf_dir)
 
     def __del__(self) -> None:
         """destructor for the fortran class"""
 
         radbelt_fortran.radbelt_c_module.destroy_c(self.ip)
 
-    def set_data_files_paths(self, aep8_dir : str, igrf_dir : str) -> None:
-        """Set the file paths"""
+    def set_trm_file_path(self, aep8_dir : str) -> None:
+        """Set just the aep8 file path"""
 
-        #TODO split these up so they can be called separately
+        radbelt_fortran.radbelt_c_module.set_trm_file_path_c(self.ip, aep8_dir, len(aep8_dir))
+
+    def set_igrf_file_path(self, igrf_dir : str) -> None:
+        """Set just the igrf file path"""
+
+        radbelt_fortran.radbelt_c_module.set_igrf_file_path_c(self.ip, igrf_dir, len(igrf_dir))
+
+    def set_data_files_paths(self, aep8_dir : str, igrf_dir : str) -> None:
+        """Set both the file paths"""
 
         radbelt_fortran.radbelt_c_module.set_data_files_paths_c(self.ip, aep8_dir, igrf_dir,
                                                                 len(aep8_dir), len(igrf_dir))

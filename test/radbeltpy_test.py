@@ -10,12 +10,12 @@ dir = Path(__file__).resolve().parents[1] # root directory
 sys.path.insert(0,str(dir))   # assuming the radbelt lib is in python directory
 from radbeltpy import RadbeltClass  # this is the module being tested
 
-model = RadbeltClass()
-
-# set location of the data files:
+# location of the data files:
 aep8_dir = str(dir / 'data' / 'aep8')
 igrf_dir = str(dir / 'data' / 'igrf')
-model.set_data_files_paths(aep8_dir, igrf_dir)
+
+# create the class:
+model = RadbeltClass(aep8_dir = aep8_dir, igrf_dir = igrf_dir)
 
 EPS = sys.float_info.epsilon # machine precision for error checking
 lon = -45.0
@@ -36,7 +36,7 @@ relerror = abs(error/flux)
 print(f'Flux      = {flux}')
 print(f'Error     = {error}')
 print(f'Rel Error = {relerror}')
-if relerror>10*EPS:
+if relerror > 10.0*EPS:
     raise Exception('error')
 
 print('')
