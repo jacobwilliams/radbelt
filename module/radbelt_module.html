@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title=" 6.0% of total for modules and submodules.">75 statements</a>
+                 title=" 6.6% of total for modules and submodules.">85 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -160,6 +160,8 @@
       </a>
       <div id="subs-0" class="collapse">
         <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/radbelt_module.html#proc-set_trm_file_path">set_trm_file_path</a>
+            <a class="list-group-item" href="../module/radbelt_module.html#proc-set_igrf_file_path">set_igrf_file_path</a>
             <a class="list-group-item" href="../module/radbelt_module.html#proc-set_data_files_paths">set_data_files_paths</a>
         </div>
       </div>
@@ -191,9 +193,9 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <ul class="list-inline">
-                  <li class="list-inline-item"><a href='shellig_module.html'>shellig_module</a></li>
-                  <li class="list-inline-item"><a href='radbelt_kinds_module.html'>radbelt_kinds_module</a></li>
                   <li class="list-inline-item"><a href='trmfun_module.html'>trmfun_module</a></li>
+                  <li class="list-inline-item"><a href='radbelt_kinds_module.html'>radbelt_kinds_module</a></li>
+                  <li class="list-inline-item"><a href='shellig_module.html'>shellig_module</a></li>
               </ul>
             </li>
             <li class="list-group-item">
@@ -563,7 +565,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~5"></span>
+              <span class="anchor" id="variable-year~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -579,7 +581,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~4"></span>
+              <span class="anchor" id="variable-e~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -644,7 +646,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-v~6"></span>
+              <span class="anchor" id="variable-v~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in),</td>
@@ -659,7 +661,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~7"></span>
+              <span class="anchor" id="variable-year~5"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -675,7 +677,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~6"></span>
+              <span class="anchor" id="variable-e~5"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -764,7 +766,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-igrf~2"></span>
+              <span class="anchor" id="variable-igrf"></span>
               type(<a href='../type/shellig_type.html'>shellig_type</a>),
             </td>
               <td>private</td>
@@ -808,6 +810,16 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
   <strong><a href='../type/radbelt_type.html#boundprocedure-set_data_files_paths'>set_data_files_paths</a></strong></td>
                 <td></td>
               </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/radbelt_type.html#boundprocedure-set_igrf_file_path'>set_igrf_file_path</a></strong></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>  procedure, public ::
+  <strong><a href='../type/radbelt_type.html#boundprocedure-set_trm_file_path'>set_trm_file_path</a></strong></td>
+                <td></td>
+              </tr>
           </tbody>
         </table>
     </div>
@@ -838,7 +850,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~20"></span>
+              <span class="anchor" id="variable-me~4"></span>
               class(<a href='../type/radbelt_type.html'>radbelt_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -898,7 +910,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~4"></span>
+              <span class="anchor" id="variable-year~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -914,7 +926,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~3"></span>
+              <span class="anchor" id="variable-e~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1020,7 +1032,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~5"></span>
+              <span class="anchor" id="variable-year~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1036,7 +1048,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~4"></span>
+              <span class="anchor" id="variable-e~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1097,7 +1109,7 @@ This is an alternate version of <a href="../proc/get_flux_g_.html">get_flux_g_</
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~21"></span>
+              <span class="anchor" id="variable-me~5"></span>
               class(<a href='../type/radbelt_type.html'>radbelt_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1112,7 +1124,7 @@ This is an alternate version of <a href="../proc/get_flux_g_.html">get_flux_g_</
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-v~5"></span>
+              <span class="anchor" id="variable-v"></span>
               real(kind=wp),
             </td>
 <td>intent(in),</td>
@@ -1127,7 +1139,7 @@ This is an alternate version of <a href="../proc/get_flux_g_.html">get_flux_g_</
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~6"></span>
+              <span class="anchor" id="variable-year~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1143,7 +1155,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~5"></span>
+              <span class="anchor" id="variable-e~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1204,7 +1216,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-v~6"></span>
+              <span class="anchor" id="variable-v~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in),</td>
@@ -1219,7 +1231,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~7"></span>
+              <span class="anchor" id="variable-year~5"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1235,7 +1247,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~6"></span>
+              <span class="anchor" id="variable-e~5"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1281,6 +1293,116 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         <section>
           <h2>Subroutines</h2>
               <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-set_trm_file_path"></span> <h3>public  subroutine <a href='../proc/set_trm_file_path.html'>set_trm_file_path</a>(me, dir)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Set the <code>trm</code> path.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me"></span>
+              class(<a href='../type/radbelt_type.html'>radbelt_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dir"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-set_igrf_file_path"></span> <h3>public  subroutine <a href='../proc/set_igrf_file_path.html'>set_igrf_file_path</a>(me, dir)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Set the <code>igrf</code> path.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me~2"></span>
+              class(<a href='../type/radbelt_type.html'>radbelt_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dir~2"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
     <div class="card-header codesum"><span class="anchor" id="proc-set_data_files_paths"></span> <h3>public  subroutine <a href='../proc/set_data_files_paths.html'>set_data_files_paths</a>(me, aep8_dir, igrf_dir)  
 </h3></div>
     <div class="card-body">
@@ -1302,7 +1424,7 @@ current working directory is assumed</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-me~19"></span>
+              <span class="anchor" id="variable-me~3"></span>
               class(<a href='../type/radbelt_type.html'>radbelt_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1317,7 +1439,7 @@ current working directory is assumed</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-aep8_dir~2"></span>
+              <span class="anchor" id="variable-aep8_dir~3"></span>
               character(len=*),
             </td>
 <td>intent(in)</td>
@@ -1332,7 +1454,7 @@ current working directory is assumed</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-igrf_dir~2"></span>
+              <span class="anchor" id="variable-igrf_dir~3"></span>
               character(len=*),
             </td>
 <td>intent(in)</td>

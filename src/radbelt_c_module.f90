@@ -85,9 +85,59 @@ end subroutine destroy_c
 
 !*****************************************************************************************
 !>
+!  C interface for setting the `trm` data file path
+
+subroutine set_trm_file_path_c(ipointer, aep8_dir, n) bind(C, name="set_trm_file_path_c")
+
+    integer(c_intptr_t),intent(in) :: ipointer
+    integer(c_int),intent(in) :: n !! size of `aep8_dir`
+    character(kind=c_char,len=1),dimension(n),intent(in) :: aep8_dir
+
+    character(len=:),allocatable :: aep8_dir_
+    type(radbelt_type),pointer :: p
+
+    call int_pointer_to_f_pointer(ipointer, p)
+
+    if (associated(p)) then
+        aep8_dir_ = c2f_str(aep8_dir)
+        call p%set_trm_file_path(aep8_dir_)
+    else
+        error stop 'error in set_trm_file_path_c: class is not associated'
+    end if
+
+ end subroutine set_trm_file_path_c
+!*****************************************************************************************
+
+!*****************************************************************************************
+!>
+!  C interface for setting the `igrf` data file path
+
+ subroutine set_igrf_file_path_c(ipointer, igrf_dir, n) bind(C, name="set_igrf_file_path")
+
+    integer(c_intptr_t),intent(in) :: ipointer
+    integer(c_int),intent(in) :: n !! size of `igrf_dir`
+    character(kind=c_char,len=1),dimension(n),intent(in) :: igrf_dir
+
+    character(len=:),allocatable :: igrf_dir_
+    type(radbelt_type),pointer :: p
+
+    call int_pointer_to_f_pointer(ipointer, p)
+
+    if (associated(p)) then
+        igrf_dir_ = c2f_str(igrf_dir)
+        call p%set_igrf_file_path(igrf_dir_)
+    else
+        error stop 'error in set_igrf_file_path: class is not associated'
+    end if
+
+ end subroutine set_igrf_file_path_c
+!*****************************************************************************************
+
+!*****************************************************************************************
+!>
 !  C interface for setting the data file paths
 
-subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir, n, m) bind(C, name="set_data_files_paths_c")
+ subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir, n, m) bind(C, name="set_data_files_paths_c")
 
     integer(c_intptr_t),intent(in) :: ipointer
     integer(c_int),intent(in) :: n !! size of `aep8_dir`

@@ -23,7 +23,9 @@ module radbelt_module
       private
       generic,public :: get_flux => get_flux_g_, get_flux_c_
       procedure :: get_flux_g_, get_flux_c_
-      procedure,public :: set_data_files_paths
+      procedure,public :: set_trm_file_path, &
+                          set_igrf_file_path, &
+                          set_data_files_paths
    end type radbelt_type
 
    interface get_flux
@@ -37,6 +39,34 @@ module radbelt_module
 
 !*****************************************************************************************
 !>
+!  Set the `trm` path.
+
+   subroutine set_trm_file_path(me, dir)
+
+      class(radbelt_type),intent(inout) :: me
+      character(len=*),intent(in) :: dir
+
+      call me%trm%set_data_file_dir(trim(dir))
+
+   end subroutine set_trm_file_path
+!*****************************************************************************************
+
+!*****************************************************************************************
+!>
+!  Set the `igrf` path.
+
+   subroutine set_igrf_file_path(me, dir)
+
+      class(radbelt_type),intent(inout) :: me
+      character(len=*),intent(in) :: dir
+
+      call me%igrf%set_data_file_dir(trim(dir))
+
+   end subroutine set_igrf_file_path
+!*****************************************************************************************
+
+!*****************************************************************************************
+!>
 !  Set the paths to the data files.
 !  If not used or blank, the folder `data/aep8` and `data/igrf` in the
 !  current working directory is assumed
@@ -47,8 +77,8 @@ module radbelt_module
       character(len=*),intent(in) :: aep8_dir
       character(len=*),intent(in) :: igrf_dir
 
-      call me%trm%set_data_file_dir(trim(aep8_dir))
-      call me%igrf%set_data_file_dir(trim(igrf_dir))
+      call me%set_trm_file_path(trim(aep8_dir))
+      call me%set_igrf_file_path(trim(igrf_dir))
 
    end subroutine set_data_files_paths
 !*****************************************************************************************

@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title="<p>18.5% of total for derived types.</p>Including implementation: 43 statements,  4.3% of total for derived types.">10 statements</a>
+                 title="<p>18.5% of total for derived types.</p>Including implementation: 53 statements,  5.3% of total for derived types.">10 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -115,7 +115,7 @@
       <div id="vars-0" class="collapse">
         <div class="list-group list-group-flush">
             <a class="list-group-item" href="../type/radbelt_type.html#variable-trm">trm</a>
-            <a class="list-group-item" href="../type/radbelt_type.html#variable-igrf~2">igrf</a>
+            <a class="list-group-item" href="../type/radbelt_type.html#variable-igrf">igrf</a>
         </div>
       </div>
     </div>
@@ -146,6 +146,8 @@
             <a class="list-group-item" href="../type/radbelt_type.html#boundprocedure-get_flux_c_">get_flux_c_</a>
             <a class="list-group-item" href="../type/radbelt_type.html#boundprocedure-get_flux_g_">get_flux_g_</a>
             <a class="list-group-item" href="../type/radbelt_type.html#boundprocedure-set_data_files_paths">set_data_files_paths</a>
+            <a class="list-group-item" href="../type/radbelt_type.html#boundprocedure-set_igrf_file_path">set_igrf_file_path</a>
+            <a class="list-group-item" href="../type/radbelt_type.html#boundprocedure-set_trm_file_path">set_trm_file_path</a>
         </div>
       </div>
     </div>
@@ -306,7 +308,7 @@ said component(s).
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-igrf~2"></span>
+              <span class="anchor" id="variable-igrf"></span>
               type(<a href='shellig_type.html'>shellig_type</a>),
             </td>
               <td>private</td>
@@ -944,6 +946,144 @@ current working directory is assumed</p>
   </div>
 
           </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-set_igrf_file_path"></span>
+      <h3>
+          procedure, public ::
+  <strong>set_igrf_file_path</strong>
+        
+      </h3>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+                  <h3>
+    public  subroutine <a href='../proc/set_igrf_file_path.html'>set_igrf_file_path</a>(me, dir)  
+</h3>
+    
+
+  <p>Set the <code>igrf</code> path.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='radbelt_type.html'>radbelt_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        </li>
+    </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-set_trm_file_path"></span>
+      <h3>
+          procedure, public ::
+  <strong>set_trm_file_path</strong>
+        
+      </h3>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+                  <h3>
+    public  subroutine <a href='../proc/set_trm_file_path.html'>set_trm_file_path</a>(me, dir)  
+</h3>
+    
+
+  <p>Set the <code>trm</code> path.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='radbelt_type.html'>radbelt_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        </li>
+    </ul>
+  </div>
+
+          </div>
       </section>
 
     <section>
@@ -957,7 +1097,9 @@ current working directory is assumed</p>
 <span class="k">      private</span>
 <span class="k">      generic</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">get_flux</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">get_flux_g_</span><span class="p">,</span><span class="w"> </span><span class="n">get_flux_c_</span>
 <span class="w">      </span><span class="k">procedure</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">get_flux_g_</span><span class="p">,</span><span class="w"> </span><span class="n">get_flux_c_</span>
-<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">set_data_files_paths</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">set_trm_file_path</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">set_igrf_file_path</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">set_data_files_paths</span>
 <span class="w">   </span><span class="k">end type </span><span class="n">radbelt_type</span>
 </pre></div>
 

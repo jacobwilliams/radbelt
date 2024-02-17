@@ -74,7 +74,7 @@
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip"
                  data-bs-placement="bottom" data-html="true"
-                 title=" 6.0% of total for modules and submodules.">75 statements</a>
+                 title=" 8.0% of total for modules and submodules.">103 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -138,6 +138,8 @@
             <a class="list-group-item" href="../module/radbelt_c_module.html#proc-int_pointer_to_f_pointer">int_pointer_to_f_pointer</a>
             <a class="list-group-item" href="../module/radbelt_c_module.html#proc-initialize_c">initialize_c</a>
             <a class="list-group-item" href="../module/radbelt_c_module.html#proc-destroy_c">destroy_c</a>
+            <a class="list-group-item" href="../module/radbelt_c_module.html#proc-set_trm_file_path_c">set_trm_file_path_c</a>
+            <a class="list-group-item" href="../module/radbelt_c_module.html#proc-set_igrf_file_path_c">set_igrf_file_path_c</a>
             <a class="list-group-item" href="../module/radbelt_c_module.html#proc-set_data_files_paths_c">set_data_files_paths_c</a>
             <a class="list-group-item" href="../module/radbelt_c_module.html#proc-get_flux_g_c">get_flux_g_c</a>
         </div>
@@ -460,7 +462,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-p~4"></span>
+              <span class="anchor" id="variable-p"></span>
               type(<a href='../type/radbelt_type.html'>radbelt_type</a>),
             </td>
 <td></td>
@@ -561,11 +563,11 @@ modules which it uses.
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-set_data_files_paths_c"></span> <h3>public  subroutine <a href='../proc/set_data_files_paths_c.html'>set_data_files_paths_c</a>(ipointer, aep8_dir, igrf_dir, n, m) bind(C, name="set_data_files_paths_c")  
+    <div class="card-header codesum"><span class="anchor" id="proc-set_trm_file_path_c"></span> <h3>public  subroutine <a href='../proc/set_trm_file_path_c.html'>set_trm_file_path_c</a>(ipointer, aep8_dir, n) bind(C, name="set_trm_file_path_c")  
 </h3></div>
     <div class="card-body">
           
-  <p>C interface for setting the data file paths</p>
+  <p>C interface for setting the <code>trm</code> data file path</p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -595,7 +597,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-aep8_dir~3"></span>
+              <span class="anchor" id="variable-aep8_dir"></span>
               character(kind=c_char, len=1),
             </td>
 <td>intent(in),</td>
@@ -610,7 +612,147 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-igrf_dir~3"></span>
+              <span class="anchor" id="variable-n"></span>
+              integer(kind=c_int),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>size of <code>aep8_dir</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-set_igrf_file_path_c"></span> <h3>public  subroutine <a href='../proc/set_igrf_file_path_c.html'>set_igrf_file_path_c</a>(ipointer, igrf_dir, n) bind(C, name="set_igrf_file_path")  
+</h3></div>
+    <div class="card-body">
+          
+  <p>C interface for setting the <code>igrf</code> data file path</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ipointer~5"></span>
+              integer(kind=c_intptr_t),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ipointer</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-igrf_dir"></span>
+              character(kind=c_char, len=1),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(n)
+            </td>
+            <td>::</td>
+            <td><strong>igrf_dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~2"></span>
+              integer(kind=c_int),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>size of <code>igrf_dir</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-set_data_files_paths_c"></span> <h3>public  subroutine <a href='../proc/set_data_files_paths_c.html'>set_data_files_paths_c</a>(ipointer, aep8_dir, igrf_dir, n, m) bind(C, name="set_data_files_paths_c")  
+</h3></div>
+    <div class="card-body">
+          
+  <p>C interface for setting the data file paths</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ipointer~6"></span>
+              integer(kind=c_intptr_t),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ipointer</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-aep8_dir~2"></span>
+              character(kind=c_char, len=1),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(n)
+            </td>
+            <td>::</td>
+            <td><strong>aep8_dir</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-igrf_dir~2"></span>
               character(kind=c_char, len=1),
             </td>
 <td>intent(in),</td>
@@ -625,7 +767,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n~6"></span>
+              <span class="anchor" id="variable-n~3"></span>
               integer(kind=c_int),
             </td>
 <td>intent(in)</td>
@@ -640,7 +782,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-m~6"></span>
+              <span class="anchor" id="variable-m"></span>
               integer(kind=c_int),
             </td>
 <td>intent(in)</td>
@@ -680,7 +822,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-ipointer~5"></span>
+              <span class="anchor" id="variable-ipointer~7"></span>
               integer(kind=c_intptr_t),
             </td>
 <td>intent(in)</td>
@@ -695,7 +837,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lon~4"></span>
+              <span class="anchor" id="variable-lon"></span>
               real(kind=c_double),
             </td>
 <td>intent(in)</td>
@@ -710,7 +852,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lat~4"></span>
+              <span class="anchor" id="variable-lat"></span>
               real(kind=c_double),
             </td>
 <td>intent(in)</td>
@@ -725,7 +867,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-height~4"></span>
+              <span class="anchor" id="variable-height"></span>
               real(kind=c_double),
             </td>
 <td>intent(in)</td>
@@ -740,7 +882,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~8"></span>
+              <span class="anchor" id="variable-year"></span>
               real(kind=c_double),
             </td>
 <td>intent(in)</td>
@@ -756,7 +898,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~7"></span>
+              <span class="anchor" id="variable-e"></span>
               real(kind=c_double),
             </td>
 <td>intent(in)</td>
@@ -771,7 +913,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-imname~6"></span>
+              <span class="anchor" id="variable-imname"></span>
               integer(kind=c_int),
             </td>
 <td>intent(in)</td>
@@ -781,12 +923,12 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             <td>::</td>
             <td><strong>imname</strong></td>
             <td>
-<p>which method to use:</p><a href="../proc/get_flux_g_c.html#variable-imname~6" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>which method to use:</p><a href="../proc/get_flux_g_c.html#variable-imname" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-flux~6"></span>
+              <span class="anchor" id="variable-flux"></span>
               real(kind=c_double),
             </td>
 <td>intent(out)</td>
