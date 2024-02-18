@@ -7,7 +7,7 @@ import time
 from pathlib import Path
 
 dir = Path(__file__).resolve().parents[1] # root directory
-sys.path.insert(0,str(dir))   # assuming the radbelt lib is in python directory
+sys.path.insert(0,str(dir / 'build-python'))   # assuming the radbelt lib is in python directory
 from radbeltpy import RadbeltClass  # this is the module being tested
 
 # location of the data files:

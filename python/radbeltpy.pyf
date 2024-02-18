@@ -7,6 +7,7 @@ python module radbelt_fortran ! in
             use iso_c_binding, only: c_double,c_int,c_char,c_intptr_t
 
             subroutine get_flux_g_c(ipointer,lon,lat,height,year,e,imname,flux)  ! in :radbelt_fortran:radbelt_c_module.f90:radbelt_c_module
+                threadsafe
                 integer(c_intptr_t),intent(in) :: ipointer
                 real(c_double),intent(in) :: lon
                 real(c_double),intent(in) :: lat
@@ -18,18 +19,21 @@ python module radbelt_fortran ! in
             end subroutine get_flux_g_c
 
             subroutine set_trm_file_path_c(ipointer, aep8_dir, n)  ! in :radbelt_fortran:radbelt_c_module.f90:radbelt_c_module
+                threadsafe
                 integer(c_intptr_t),intent(in) :: ipointer
                 character(kind=c_char,len=n),intent(in),depend(n) :: aep8_dir
                 integer(c_int),intent(in) :: n
             end subroutine set_trm_file_path_c
 
             subroutine set_igrf_file_path_c(ipointer, igrf_dir, n)  ! in :radbelt_fortran:radbelt_c_module.f90:radbelt_c_module
+                threadsafe
                 integer(c_intptr_t),intent(in) :: ipointer
                 character(kind=c_char,len=n),intent(in),depend(n) :: igrf_dir
                 integer(c_int),intent(in) :: n
             end subroutine set_igrf_file_path_c
 
             subroutine set_data_files_paths_c(ipointer, aep8_dir, igrf_dir, n, m)  ! in :radbelt_fortran:radbelt_c_module.f90:radbelt_c_module
+                threadsafe
                 integer(c_intptr_t),intent(in) :: ipointer
                 character(kind=c_char,len=n),intent(in),depend(n) :: aep8_dir
                 character(kind=c_char,len=m),intent(in),depend(m) :: igrf_dir
@@ -38,10 +42,12 @@ python module radbelt_fortran ! in
             end subroutine set_data_files_paths_c
 
             subroutine initialize_c(ipointer)  ! in :radbelt_fortran:radbelt_c_module.f90:radbelt_c_module
+                threadsafe
                 integer(c_intptr_t),intent(out) :: ipointer
             end subroutine initialize_c
 
             subroutine destroy_c(ipointer)  ! in :radbelt_fortran:radbelt_c_module.f90:radbelt_c_module
+                threadsafe
                 integer(c_intptr_t),intent(in) :: ipointer
             end subroutine destroy_c
 
