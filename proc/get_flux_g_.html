@@ -176,7 +176,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lon~2"></span>
+              <span class="anchor" id="variable-lon"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -191,7 +191,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lat~2"></span>
+              <span class="anchor" id="variable-lat"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -206,7 +206,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-height~2"></span>
+              <span class="anchor" id="variable-height"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -221,7 +221,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~2"></span>
+              <span class="anchor" id="variable-year"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -237,7 +237,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~2"></span>
+              <span class="anchor" id="variable-e"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -252,7 +252,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-imname~2"></span>
+              <span class="anchor" id="variable-imname"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -276,7 +276,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
 
       <h3>Return Value
         <small>
-          <span class="anchor" id="variable-flux~2"></span>
+          <span class="anchor" id="variable-flux"></span>
           real(kind=wp)
         </small>
       </h3>
@@ -837,30 +837,30 @@ implementation in a submodule of an interface in a parent module.
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">function </span><span class="n">get_flux_g_</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">imname</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">flux</span><span class="p">)</span>
+    <div class="hl codehilite"><pre><span></span><span class="w">    </span><span class="k">function </span><span class="n">get_flux_g_</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="w"> </span><span class="n">lon</span><span class="p">,</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">imname</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">flux</span><span class="p">)</span>
 
-<span class="w">      </span><span class="k">class</span><span class="p">(</span><span class="n">radbelt_type</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lon</span><span class="w"> </span><span class="c">!! geodetic longitude in degrees (east)</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lat</span><span class="w"> </span><span class="c">!! geodetic latitude in degrees (north)</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="c">!! altitude in km above sea level</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="c">!! decimal year for which geomagnetic field is to</span>
+<span class="w">        </span><span class="k">class</span><span class="p">(</span><span class="n">radbelt_type</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lon</span><span class="w"> </span><span class="c">!! geodetic longitude in degrees (east)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lat</span><span class="w"> </span><span class="c">!! geodetic latitude in degrees (north)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="c">!! altitude in km above sea level</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="c">!! decimal year for which geomagnetic field is to</span>
 <span class="w">                                  </span><span class="c">!! be calculated (e.g.:1995.5 for day 185 of 1995)</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="c">!! minimum energy</span>
-<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">imname</span><span class="w"> </span><span class="c">!! which method to use:</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="c">!! minimum energy</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">imname</span><span class="w"> </span><span class="c">!! which method to use:</span>
 <span class="w">                                   </span><span class="c">!!</span>
 <span class="w">                                   </span><span class="c">!! * 1 -- particle species: electrons, solar activity: min</span>
 <span class="w">                                   </span><span class="c">!! * 2 -- particle species: electrons, solar activity: max</span>
 <span class="w">                                   </span><span class="c">!! * 3 -- particle species: protons, solar activity: min</span>
 <span class="w">                                   </span><span class="c">!! * 4 -- particle species: protons, solar activity: max</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">flux</span><span class="w"> </span><span class="c">!! The flux of particles above the given energy, in units of cm^-2 s^-1.</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">flux</span><span class="w"> </span><span class="c">!! The flux of particles above the given energy, in units of cm^-2 s^-1.</span>
 
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="c">!! l value</span>
-<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bbx</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="c">!! l value</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bbx</span>
 
-<span class="w">      </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">igrf</span><span class="p">%</span><span class="n">igrf</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">,</span><span class="n">height</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">xl</span><span class="p">,</span><span class="n">bbx</span><span class="p">)</span>
-<span class="w">      </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">trm</span><span class="p">%</span><span class="n">aep8</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="n">xl</span><span class="p">,</span><span class="n">bbx</span><span class="p">,</span><span class="n">imname</span><span class="p">,</span><span class="n">flux</span><span class="p">)</span>
+<span class="w">        </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">igrf</span><span class="p">%</span><span class="n">igrf</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="p">,</span><span class="w"> </span><span class="n">bbx</span><span class="p">)</span>
+<span class="w">        </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">trm</span><span class="p">%</span><span class="n">aep8</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="p">,</span><span class="w"> </span><span class="n">bbx</span><span class="p">,</span><span class="w"> </span><span class="n">imname</span><span class="p">,</span><span class="w"> </span><span class="n">flux</span><span class="p">)</span>
 
-<span class="w">   </span><span class="k">end function </span><span class="n">get_flux_g_</span>
+<span class="w">    </span><span class="k">end function </span><span class="n">get_flux_g_</span>
 </pre></div>
 
     </section>

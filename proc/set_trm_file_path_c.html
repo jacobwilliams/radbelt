@@ -174,7 +174,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-aep8_dir"></span>
+              <span class="anchor" id="variable-aep8_dir~3"></span>
               character(kind=c_char, len=1),
             </td>
 <td>intent(in),</td>
@@ -189,7 +189,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n"></span>
+              <span class="anchor" id="variable-n~6"></span>
               integer(kind=c_int),
             </td>
 <td>intent(in)</td>
@@ -387,25 +387,25 @@ implementation in a submodule of an interface in a parent module.
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">set_trm_file_path_c</span><span class="p">(</span><span class="n">ipointer</span><span class="p">,</span><span class="w"> </span><span class="n">aep8_dir</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">bind</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;set_trm_file_path_c&quot;</span><span class="p">)</span>
+    <div class="hl codehilite"><pre><span></span><span class="w">    </span><span class="k">subroutine </span><span class="n">set_trm_file_path_c</span><span class="p">(</span><span class="n">ipointer</span><span class="p">,</span><span class="w"> </span><span class="n">aep8_dir</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">bind</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;set_trm_file_path_c&quot;</span><span class="p">)</span>
 
-<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="kt">c_intptr_t</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ipointer</span>
-<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="kt">c_int</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="c">!! size of `aep8_dir`</span>
-<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="kt">c_char</span><span class="p">,</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">aep8_dir</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="kt">c_intptr_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ipointer</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="kt">c_int</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="c">!! size of `aep8_dir`</span>
+<span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="kt">c_char</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">aep8_dir</span>
 
-<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">aep8_dir_</span>
-<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">radbelt_type</span><span class="p">),</span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span>
+<span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">aep8_dir_</span>
+<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">radbelt_type</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span>
 
-<span class="w">    </span><span class="k">call </span><span class="n">int_pointer_to_f_pointer</span><span class="p">(</span><span class="n">ipointer</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">)</span>
+<span class="w">        </span><span class="k">call </span><span class="n">int_pointer_to_f_pointer</span><span class="p">(</span><span class="n">ipointer</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">associated</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        </span><span class="n">aep8_dir_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c2f_str</span><span class="p">(</span><span class="n">aep8_dir</span><span class="p">)</span>
-<span class="w">        </span><span class="k">call </span><span class="n">p</span><span class="p">%</span><span class="n">set_trm_file_path</span><span class="p">(</span><span class="n">aep8_dir_</span><span class="p">)</span>
-<span class="w">    </span><span class="k">else</span>
-<span class="k">        error stop</span><span class="w"> </span><span class="s1">&#39;error in set_trm_file_path_c: class is not associated&#39;</span>
-<span class="w">    </span><span class="k">end if</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">associated</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">aep8_dir_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c2f_str</span><span class="p">(</span><span class="n">aep8_dir</span><span class="p">)</span>
+<span class="w">            </span><span class="k">call </span><span class="n">p</span><span class="p">%</span><span class="n">set_trm_file_path</span><span class="p">(</span><span class="n">aep8_dir_</span><span class="p">)</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="k">            error stop</span><span class="w"> </span><span class="s1">&#39;error in set_trm_file_path_c: class is not associated&#39;</span>
+<span class="w">        </span><span class="k">end if</span>
 
-<span class="k"> end subroutine </span><span class="n">set_trm_file_path_c</span>
+<span class="k">    end subroutine </span><span class="n">set_trm_file_path_c</span>
 </pre></div>
 
     </section>

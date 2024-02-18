@@ -193,9 +193,9 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <ul class="list-inline">
-                  <li class="list-inline-item"><a href='trmfun_module.html'>trmfun_module</a></li>
                   <li class="list-inline-item"><a href='radbelt_kinds_module.html'>radbelt_kinds_module</a></li>
                   <li class="list-inline-item"><a href='shellig_module.html'>shellig_module</a></li>
+                  <li class="list-inline-item"><a href='trmfun_module.html'>trmfun_module</a></li>
               </ul>
             </li>
             <li class="list-group-item">
@@ -520,7 +520,7 @@ modules which it uses.
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-lon~3"></span>
+              <span class="anchor" id="variable-lon~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -535,7 +535,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-lat~3"></span>
+              <span class="anchor" id="variable-lat~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -550,7 +550,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-height~3"></span>
+              <span class="anchor" id="variable-height~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -565,7 +565,7 @@ modules which it uses.
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~3"></span>
+              <span class="anchor" id="variable-year~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -581,7 +581,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~3"></span>
+              <span class="anchor" id="variable-e~2"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -596,7 +596,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-imname~3"></span>
+              <span class="anchor" id="variable-imname~2"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -606,7 +606,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             <td>::</td>
             <td><strong>imname</strong></td>
             <td>
-<p>which method to use:</p><a href="../proc/get_flux_g.html#variable-imname~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>which method to use:</p><a href="../proc/get_flux_g.html#variable-imname~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -661,7 +661,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~5"></span>
+              <span class="anchor" id="variable-year~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -677,7 +677,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~5"></span>
+              <span class="anchor" id="variable-e~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -692,7 +692,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-imname~5"></span>
+              <span class="anchor" id="variable-imname~4"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -702,7 +702,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             <td>::</td>
             <td><strong>imname</strong></td>
             <td>
-<p>which method to use:</p><a href="../proc/get_flux_c.html#variable-imname~5" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>which method to use:</p><a href="../proc/get_flux_c.html#variable-imname~4" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -865,6 +865,128 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
+              <span class="anchor" id="variable-lon"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lon</strong></td>
+            <td>
+<p>geodetic longitude in degrees (east)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lat"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lat</strong></td>
+            <td>
+<p>geodetic latitude in degrees (north)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-height"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>height</strong></td>
+            <td>
+<p>altitude in km above sea level</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-year"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>year</strong></td>
+            <td>
+<p>decimal year for which geomagnetic field is to
+be calculated (e.g.:1995.5 for day 185 of 1995)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-e"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>e</strong></td>
+            <td>
+<p>minimum energy</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-imname"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>imname</strong></td>
+            <td>
+<p>which method to use:</p><a href="../proc/get_flux_g_.html#variable-imname" class="pull-right"><emph>Read more&hellip;</emph></a>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=wp)</small>
+    </h4>
+    <p>The flux of particles above the given energy, in units of cm^-2 s^-1.</p>
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-get_flux_g"></span> <h3>public  function <a href='../proc/get_flux_g.html'>get_flux_g</a>(lon, lat, height, year, e, imname) result(flux)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Calculate the flux of trapped particles at a specific location and time.
+  This is just a function version of the class method from <a href="../type/radbelt_type.html">radbelt_type</a>.</p><a href="../proc/get_flux_g.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
               <span class="anchor" id="variable-lon~2"></span>
               real(kind=wp),
             </td>
@@ -951,129 +1073,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             <td>::</td>
             <td><strong>imname</strong></td>
             <td>
-<p>which method to use:</p><a href="../proc/get_flux_g_.html#variable-imname~2" class="pull-right"><emph>Read more&hellip;</emph></a>
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-    <h4>
-    Return Value
-    <small>real(kind=wp)</small>
-    </h4>
-    <p>The flux of particles above the given energy, in units of cm^-2 s^-1.</p>
-
-    </div>
-  </div>
-
-              <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-get_flux_g"></span> <h3>public  function <a href='../proc/get_flux_g.html'>get_flux_g</a>(lon, lat, height, year, e, imname) result(flux)  
-</h3></div>
-    <div class="card-body">
-          
-  <p>Calculate the flux of trapped particles at a specific location and time.
-  This is just a function version of the class method from <a href="../type/radbelt_type.html">radbelt_type</a>.</p><a href="../proc/get_flux_g.html" class="pull-right"><emph>Read more&hellip;</emph></a>
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-lon~3"></span>
-              real(kind=wp),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>lon</strong></td>
-            <td>
-<p>geodetic longitude in degrees (east)</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-lat~3"></span>
-              real(kind=wp),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>lat</strong></td>
-            <td>
-<p>geodetic latitude in degrees (north)</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-height~3"></span>
-              real(kind=wp),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>height</strong></td>
-            <td>
-<p>altitude in km above sea level</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-year~3"></span>
-              real(kind=wp),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>year</strong></td>
-            <td>
-<p>decimal year for which geomagnetic field is to
-be calculated (e.g.:1995.5 for day 185 of 1995)</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-e~3"></span>
-              real(kind=wp),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>e</strong></td>
-            <td>
-<p>minimum energy</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-imname~3"></span>
-              integer,
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>imname</strong></td>
-            <td>
-<p>which method to use:</p><a href="../proc/get_flux_g.html#variable-imname~3" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>which method to use:</p><a href="../proc/get_flux_g.html#variable-imname~2" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -1139,7 +1139,7 @@ This is an alternate version of <a href="../proc/get_flux_g_.html">get_flux_g_</
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~4"></span>
+              <span class="anchor" id="variable-year~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1155,7 +1155,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~4"></span>
+              <span class="anchor" id="variable-e~3"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1170,7 +1170,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-imname~4"></span>
+              <span class="anchor" id="variable-imname~3"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -1180,7 +1180,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             <td>::</td>
             <td><strong>imname</strong></td>
             <td>
-<p>which method to use:</p><a href="../proc/get_flux_c_.html#variable-imname~4" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>which method to use:</p><a href="../proc/get_flux_c_.html#variable-imname~3" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -1231,7 +1231,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-year~5"></span>
+              <span class="anchor" id="variable-year~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1247,7 +1247,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-e~5"></span>
+              <span class="anchor" id="variable-e~4"></span>
               real(kind=wp),
             </td>
 <td>intent(in)</td>
@@ -1262,7 +1262,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-imname~5"></span>
+              <span class="anchor" id="variable-imname~4"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -1272,7 +1272,7 @@ be calculated (e.g.:1995.5 for day 185 of 1995)</p>
             <td>::</td>
             <td><strong>imname</strong></td>
             <td>
-<p>which method to use:</p><a href="../proc/get_flux_c.html#variable-imname~5" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>which method to use:</p><a href="../proc/get_flux_c.html#variable-imname~4" class="pull-right"><emph>Read more&hellip;</emph></a>
             </td>
         </tr>
     </tbody>
@@ -1439,7 +1439,7 @@ current working directory is assumed</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-aep8_dir~3"></span>
+              <span class="anchor" id="variable-aep8_dir"></span>
               character(len=*),
             </td>
 <td>intent(in)</td>
@@ -1454,7 +1454,7 @@ current working directory is assumed</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-igrf_dir~3"></span>
+              <span class="anchor" id="variable-igrf_dir"></span>
               character(len=*),
             </td>
 <td>intent(in)</td>
