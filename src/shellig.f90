@@ -397,6 +397,8 @@ contains
 
         associate (p => me%p)
 
+            radik = 0.0_wp ! to avoid -Wmaybe-uninitialized warnings
+
             ! convert to dipol-oriented co-ordinates
             rq = 1.0_wp / (me%xi(1) * me%xi(1) + me%xi(2) * me%xi(2) + me%xi(3) * me%xi(3))
             r3h = sqrt(rq * sqrt(rq))
@@ -521,7 +523,9 @@ contains
             me%sp(1) = p(1, iequ - 1)
             me%sp(2) = p(2, iequ - 1)
             me%sp(3) = p(3, iequ - 1)
-            if (oradik >= 1.0e-15_wp) fi = fi + stp / 0.75_wp * oterm * oradik / (oradik - radik)
+            if (oradik >= 1.0e-15_wp) fi = fi + stp / &
+                                           0.75_wp * oterm * oradik / &
+                                           (oradik - radik)
 
             ! the minimal allowable value of fi was changed from 1e-15 to 1e-12,
             ! because 1e-38 is the minimal allowable arg. for alog in our envir.
